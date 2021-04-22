@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AstroWeather Extended</string>
+
+    <string name="title_activity_settings">Ustawienia</string>
+
+    <string name="location_header">Lokalizacja</string>
+    <string name="sync_header">Synchronizacja</string>
+
+    <string name="latitude_title">Szerokość geograficzna</string>
+    <string name="longtitude_title">Długość geograficzna</string>
+
+    <string name="auto_sync_title">Synchronizuj dane automatycznie</string>
+    <string name="sync_frequency_title">Częstotliwość odświeżania</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="synchronize">Synchronizuj</string>
+    <string name="sun">Słońce</string>
+    <string name="rise_title">Wschód</string>
+    <string name="time">Czas</string>
+    <string name="azimuth">Azymut</string>
+    <string name="set_title">Zachód</string>
+    <string name="dusk_dawn_title">Zmierzch i świt cywilny</string>
+    <string name="dusk">Zmierzch</string>
+    <string name="dawn">Świt</string>
+    <string name="moon">Księżyc</string>
+    <string name="rise_set_title">Wschód i zachód</string>
+    <string name="new_full_moon">Nów i pełnia</string>
+    <string name="new_moon">Nów</string>
+    <string name="full_moon">Pełnia</string>
+    <string name="moon_phase_title">Faza</string>
+    <string name="visibility">Widoczność</string>
+    <string name="lunar_month_title">Miesiąc synodyczny</string>
+    <string name="date">Data</string>
+    <string name="day">Dzień</string>
+    <string name="last_update_check_title">Ostatnie sprawdzenie:</string>
+    <string name="save">Zapisz</string>
+</resources>

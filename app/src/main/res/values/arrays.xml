@@ -1,0 +1,21 @@
+<resources>
+    <string-array name="sync_frequency_entries">
+        <item>30 sekund</item>
+        <item>30 minut</item>
+        <item>1 godzina</item>
+        <item>2 godziny</item>
+        <item>5 godzin</item>
+        <item>12 godzin</item>
+        <item>24 godziny</item>
+    </string-array>
+
+    <string-array name="sync_frequency_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="@string/location_header">
+
+        <pl.piasta.astroweatherextended.ui.settings.CoordinatesPreference
+            app:defaultValue="52.050000"
+            app:key="longtitude"
+            app:title="@string/longtitude_title"
+            app:type="longtitude"
+            app:useSimpleSummaryProvider="true" />
+
+        <pl.piasta.astroweatherextended.ui.settings.CoordinatesPreference
+            app:defaultValue="19.450000"
+            app:key="latitude"
+            app:title="@string/latitude_title"
+            app:type="latitude"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sync_header">
+
+        <SwitchPreferenceCompat
+            app:key="auto_sync"
+            app:title="@string/auto_sync_title" />
+
+        <ListPreference
+            app:defaultValue="3"
+            app:dependency="auto_sync"
+            app:entries="@array/sync_frequency_entries"
+            app:entryValues="@array/sync_frequency_values"
+            app:key="sync_frequency"
+            app:title="@string/sync_frequency_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

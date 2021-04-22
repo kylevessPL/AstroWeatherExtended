@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="content_main" type="layout">@layout/content_main_shared</item>
+	<item name="ic_baseline_refresh_32" type="drawable">@drawable/ic_baseline_refresh_32_shared</item>
+	<item name="ic_baseline_refresh_32_pressed" type="drawable">@drawable/ic_baseline_refresh_32_pressed_shared</item>
+</resources>
