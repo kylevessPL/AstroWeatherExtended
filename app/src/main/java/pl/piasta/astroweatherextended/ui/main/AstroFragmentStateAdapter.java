@@ -17,7 +17,9 @@ public class AstroFragmentStateAdapter extends FragmentStateAdapter {
 
     public AstroFragmentStateAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
-        mFragmentList = Arrays.asList(new SunFragment(), new MoonFragment());
+        mFragmentList = Arrays.asList(
+                new TodayForecastFragment(), new SevenDaysForecastFragment(),
+                new SunFragment(), new MoonFragment());
     }
 
     @NonNull

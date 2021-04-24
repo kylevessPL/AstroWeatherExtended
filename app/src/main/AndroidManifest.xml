@@ -21,8 +21,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="pl.piasta.astroweatherextended.ui.favourites.FavouritesActivity"
+            android:label="@string/title_activity_favourites"
+            android:parentActivityName="pl.piasta.astroweatherextended.ui.main.MainActivity">
+            <intent-filter>
+                <action android:name="pl.piasta.astroweatherextended.FAVOURITES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="pl.piasta.astroweatherextended.ui.settings.SettingsActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_settings"
             android:parentActivityName="pl.piasta.astroweatherextended.ui.main.MainActivity">
             <intent-filter>
                 <action android:name="pl.piasta.astroweatherextended.SETTINGS" />

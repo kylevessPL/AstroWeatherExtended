@@ -2,36 +2,42 @@
 <resources>
     <string name="app_name">AstroWeather Extended</string>
 
-    <string name="title_activity_settings">Ustawienia</string>
+    <string name="title_activity_favourites">Favourites</string>
+    <string name="title_activity_settings">Settings</string>
 
-    <string name="location_header">Lokalizacja</string>
-    <string name="sync_header">Synchronizacja</string>
+    <string name="location_header">Location</string>
+    <string name="sync_header">Data sync</string>
 
-    <string name="latitude_title">Szerokość geograficzna</string>
-    <string name="longtitude_title">Długość geograficzna</string>
-
-    <string name="auto_sync_title">Synchronizuj dane automatycznie</string>
-    <string name="sync_frequency_title">Częstotliwość odświeżania</string>
-    <string name="action_settings">Ustawienia</string>
-    <string name="synchronize">Synchronizuj</string>
-    <string name="sun">Słońce</string>
-    <string name="rise_title">Wschód</string>
-    <string name="time">Czas</string>
-    <string name="azimuth">Azymut</string>
-    <string name="set_title">Zachód</string>
-    <string name="dusk_dawn_title">Zmierzch i świt cywilny</string>
-    <string name="dusk">Zmierzch</string>
-    <string name="dawn">Świt</string>
-    <string name="moon">Księżyc</string>
-    <string name="rise_set_title">Wschód i zachód</string>
-    <string name="new_full_moon">Nów i pełnia</string>
-    <string name="new_moon">Nów</string>
-    <string name="full_moon">Pełnia</string>
-    <string name="moon_phase_title">Faza</string>
-    <string name="visibility">Widoczność</string>
-    <string name="lunar_month_title">Miesiąc synodyczny</string>
-    <string name="date">Data</string>
-    <string name="day">Dzień</string>
-    <string name="last_update_check_title">Ostatnie sprawdzenie:</string>
-    <string name="save">Zapisz</string>
+    <string name="auto_sync_title">Sync data automatically</string>
+    <string name="sync_frequency_title">Sync frequency</string>
+    <string name="action_settings">Settings</string>
+    <string name="synchronize">Sync</string>
+    <string name="sun">Sun</string>
+    <string name="rise_title">Rise</string>
+    <string name="time">Time</string>
+    <string name="azimuth">Azimuth</string>
+    <string name="set_title">Set</string>
+    <string name="dusk_dawn_title">Civil dusk and dawn</string>
+    <string name="dusk">Dusk</string>
+    <string name="dawn">Dawn</string>
+    <string name="moon">Moon</string>
+    <string name="rise_set_title">Rise and set</string>
+    <string name="new_full_moon">New and full moon</string>
+    <string name="new_moon">New moon</string>
+    <string name="full_moon">Full moon</string>
+    <string name="moon_phase_title">Moon phase</string>
+    <string name="visibility">Visibility</string>
+    <string name="lunar_month_title">Lunar month</string>
+    <string name="date">Date</string>
+    <string name="day">Day</string>
+    <string name="last_update_check_title">Last update check:</string>
+    <string name="save">Save</string>
+    <string name="town_title">Town</string>
+    <string name="town_default">Warszawa</string>
+    <string name="temperature_unit_title">Temperature unit</string>
+    <string name="favourites">Favourites</string>
+    <string name="delete">Delete</string>
+    <string name="set">Set</string>
+    <string name="measurement_units_header">Measurement units</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

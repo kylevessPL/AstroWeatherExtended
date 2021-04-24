@@ -33,8 +33,7 @@ import pl.piasta.astroweatherextended.R;
 public class MainActivity extends AppCompatActivity {
 
     public static final String SYNC_FREQUENCY_DEFAULT = "3";
-    public static final String LATITUDE_DEFAULT = "19.450000";
-    public static final String LONGTITUDE_DEFAULT = "52.050000";
+    public static final String TOWN_DEFAULT = "Warszawa";
     public static final boolean AUTO_SYNC_DEFAULT = false;
 
     private MainViewModel model;
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
 
     private TextView mTime;
-    private TextView mDate;
+    private TextView mTown;
     private TextView mLastUpdateCheck;
     private TextView mLatitude;
     private TextView mLongitude;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             setupPager();
         }
         mTime = findViewById(R.id.time);
-        mDate = findViewById(R.id.date);
+        mTown = findViewById(R.id.town);
         mLatitude = findViewById(R.id.latitude);
         mLongitude = findViewById(R.id.longitude);
         mLastUpdateCheck = findViewById(R.id.last_update_check);
@@ -97,9 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
             Intent settings = new Intent("pl.piasta.astroweatherextended.SETTINGS");
             startActivity(settings);
+            return true;
+        } else if (id == R.id.action_favourites) {
+            Intent favourites = new Intent("pl.piasta.astroweatherextended.FAVOURITES");
+            startActivity(favourites);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -183,20 +187,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void observeModel() {
-        model.getDate().observe(this, mDate::setText);
         model.getTime().observe(this, mTime::setText);
         model.getLastUpdateCheck().observe(this, mLastUpdateCheck::setText);
     }
 
     private void loadPreferences() {
-        String latitude = mPreferences.getString("latitude", LATITUDE_DEFAULT);
-        String longtitide = mPreferences.getString("longtitude", LONGTITUDE_DEFAULT);
-        setCoordinates(latitude, longtitide);
-    }
-
-    private void setCoordinates(String latitude, String longtitude) {
-        this.mLatitude.setText(latitude);
-        this.mLongitude.setText(longtitude);
+        String town = mPreferences.getString("town", TOWN_DEFAULT);
+        this.mTown.setText(town);
     }
 
     private void updateData() {

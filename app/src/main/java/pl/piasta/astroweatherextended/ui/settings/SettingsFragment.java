@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
@@ -12,8 +13,8 @@ import pl.piasta.astroweatherextended.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    private CoordinatesPreference latitude;
-    private CoordinatesPreference longtitude;
+    private EditTextPreference town;
+    private ListPreference temperatureUnit;
     private SwitchPreferenceCompat autoSync;
     private ListPreference syncFrequency;
 
@@ -21,10 +22,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
         setHasOptionsMenu(true);
-        latitude = (CoordinatesPreference) findPreference("latitude");
-        longtitude = (CoordinatesPreference) findPreference("longtitude");
-        autoSync = (SwitchPreferenceCompat) findPreference("auto_sync");
-        syncFrequency = (ListPreference) findPreference("sync_frequency");
+        town = findPreference("town");
+        temperatureUnit = findPreference("temperature_unit");
+        autoSync = findPreference("auto_sync");
+        syncFrequency = findPreference("sync_frequency");
+        town.setOnPreferenceChangeListener((preference, newValue) -> !(((String) newValue).isEmpty()));
         setPersistenceState();
     }
 
@@ -38,16 +40,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void setPersistenceState() {
-        latitude.setPersistent(false);
-        longtitude.setPersistent(false);
+        town.setPersistent(false);
+        temperatureUnit.setPersistent(false);
         autoSync.setPersistent(false);
         syncFrequency.setPersistent(false);
     }
 
     private void savePreferences() {
         SharedPreferences.Editor editor = getPreferenceManager().getSharedPreferences().edit();
-        editor.putString(latitude.getKey(), latitude.getText());
-        editor.putString(longtitude.getKey(), longtitude.getText());
+        editor.putString(town.getKey(), town.getText());
+        editor.putString(temperatureUnit.getKey(), temperatureUnit.getValue());
         editor.putBoolean(autoSync.getKey(), autoSync.isChecked());
         editor.putString(syncFrequency.getKey(), syncFrequency.getValue());
         editor.apply();

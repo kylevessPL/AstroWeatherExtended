@@ -36,14 +36,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:textColor="@color/white"
-                    app:layout_constraintEnd_toStartOf="@+id/date"
+                    app:layout_constraintEnd_toStartOf="@+id/town"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
                 <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/town"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed-light"
@@ -62,7 +62,7 @@
                     android:textStyle="italic"
                     app:layout_constraintEnd_toStartOf="@+id/latitude"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/date"
+                    app:layout_constraintStart_toEndOf="@+id/town"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 

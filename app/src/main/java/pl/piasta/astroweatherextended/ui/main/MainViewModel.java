@@ -13,11 +13,10 @@ import com.astrocalculator.AstroDateTime;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,7 +30,6 @@ public class MainViewModel extends ViewModel {
     private final ExecutorService mSingleExecutor;
     private final ScheduledThreadPoolExecutor mScheduledExecutor;
 
-    private final MutableLiveData<String> mDate;
     private final MutableLiveData<String> mTime;
     private final MutableLiveData<String> mLastUpdateCheck;
     private final MutableLiveData<String> mSunRiseTime;
@@ -56,7 +54,6 @@ public class MainViewModel extends ViewModel {
         this.mSingleExecutor = Executors.newSingleThreadExecutor();
         this.mScheduledExecutor = new ScheduledThreadPoolExecutor(1);
         this.mScheduledExecutor.setRemoveOnCancelPolicy(true);
-        this.mDate = new MutableLiveData<>();
         this.mTime = new MutableLiveData<>();
         this.mLastUpdateCheck = new MutableLiveData<>();
         this.mSunRiseTime = new MutableLiveData<>();
@@ -71,11 +68,7 @@ public class MainViewModel extends ViewModel {
         this.mFullMoonDate = new MutableLiveData<>();
         this.mMoonPhaseValue = new MutableLiveData<>();
         this.mMoonLunarMonthDay = new MutableLiveData<>();
-        setCurrentDateTime();
-    }
-
-    public LiveData<String> getDate() {
-        return mDate;
+        setCurrentTime();
     }
 
     public LiveData<String> getTime() {
@@ -136,9 +129,7 @@ public class MainViewModel extends ViewModel {
 
     public void updateClock() {
         mSingleExecutor.execute(() -> {
-            String date = getCurrentDateString();
             String time = getCurrentTimeString();
-            mDate.postValue(date);
             mTime.postValue(time);
         });
     }
@@ -186,10 +177,8 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    private void setCurrentDateTime() {
-        String dateString = getCurrentDateString();
+    private void setCurrentTime() {
         String timeString = getCurrentTimeString();
-        mDate.setValue(dateString);
         mTime.setValue(timeString);
     }
 
@@ -197,12 +186,6 @@ public class MainViewModel extends ViewModel {
         final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
         LocalTime time = LocalTime.now();
         return time.format(formatter);
-    }
-
-    private String getCurrentDateString() {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL);
-        LocalDate date = LocalDate.now();
-        return date.format(formatter);
     }
 
     private void calculateAstro(Double latitude, Double longtitude) {
@@ -240,18 +223,9 @@ public class MainViewModel extends ViewModel {
     }
 
     private AstroDateTime createAstroDateTime() {
-        TemporalAccessor temporalDate = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).parse(mDate.getValue());
-        TemporalAccessor temporalTime = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).parse(mTime.getValue());
-        LocalDate date = LocalDate.of(
-                temporalDate.get(ChronoField.YEAR),
-                temporalDate.get(ChronoField.MONTH_OF_YEAR),
-                temporalDate.get(ChronoField.DAY_OF_MONTH));
-        LocalTime time = LocalTime.of(
-                temporalTime.get(ChronoField.HOUR_OF_DAY),
-                temporalTime.get(ChronoField.MINUTE_OF_HOUR),
-                temporalTime.get(ChronoField.SECOND_OF_MINUTE));
-        return new AstroDateTime(date.getYear(), date.getMonthValue(), date.getDayOfMonth(),
-                time.getHour(), time.getMinute(), time.getSecond(),
+        LocalDateTime dateTime = LocalDateTime.now();
+        return new AstroDateTime(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth(),
+                dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond(),
                 2, true);
     }
 
