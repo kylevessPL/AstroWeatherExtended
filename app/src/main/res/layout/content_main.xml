@@ -10,7 +10,7 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/yellow_700"
+        app:cardBackgroundColor="@color/orange_900"
         app:cardElevation="0dp">
 
         <LinearLayout
@@ -98,14 +98,28 @@
 
                 </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/refresh"
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_alignParentEnd="true"
-                    android:contentDescription="@string/synchronize"
-                    android:src="@drawable/ic_baseline_refresh_32_selector" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageButton
+                        android:id="@+id/favourite_add"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:contentDescription="@string/favourite_add"
+                        android:src="@drawable/ic_baseline_favorite_32" />
+
+                    <ImageButton
+                        android:id="@+id/refresh"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@string/synchronize"
+                        android:src="@drawable/ic_baseline_refresh_32_selector" />
+                </LinearLayout>
 
             </RelativeLayout>
 

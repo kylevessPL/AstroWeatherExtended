@@ -106,6 +106,19 @@
                     app:layout_constraintBottom_toBottomOf="parent" />
 
                 <ImageButton
+                    android:id="@+id/favourite_add"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/favourite_add"
+                    android:src="@drawable/ic_baseline_favorite_32"
+                    app:layout_constraintEnd_toStartOf="@id/refresh"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/last_update_check"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageButton
                     android:id="@+id/refresh"
                     style="?attr/borderlessButtonStyle"
                     android:layout_width="32dp"
@@ -114,7 +127,7 @@
                     android:src="@drawable/ic_baseline_refresh_32_selector"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/last_update_check"
+                    app:layout_constraintStart_toEndOf="@+id/favourite_add"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 

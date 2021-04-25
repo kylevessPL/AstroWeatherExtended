@@ -47,8 +47,7 @@ public class MainViewModel extends ViewModel {
 
     private ScheduledFuture<?> mUpdateTask;
     private UpdateInterval mUpdateInterval;
-    private double mLatitude;
-    private double mLongtitude;
+    private String mTown;
 
     public MainViewModel() {
         this.mSingleExecutor = Executors.newSingleThreadExecutor();
@@ -138,26 +137,24 @@ public class MainViewModel extends ViewModel {
         mSingleExecutor.execute(() -> calculateAstro(latitude, longtitude));
     }
 
-    public void setupDataUpdate(UpdateInterval updateInterval,
-                                Double latitude, Double longtitude) {
+    public void setupDataUpdate(UpdateInterval updateInterval, int delay, String town) {
         mSingleExecutor.execute(() -> {
             if (updateInterval.equals(mUpdateInterval) &&
-                    mLatitude == latitude && mLongtitude == longtitude) {
+                    mTown.equals(town)) {
                 return;
             }
             tearDownDataUpdate();
-            if ((mLatitude != latitude || mLongtitude != longtitude) &&
+            if (!mTown.equals(town) &&
                     updateInterval.equals(UpdateInterval.DISABLED)
             ) {
-                updateData(latitude, longtitude);
+                updateData(town);
             } else if (!updateInterval.equals(UpdateInterval.DISABLED)) {
                 mUpdateTask = mScheduledExecutor.scheduleWithFixedDelay(() ->
-                        updateData(latitude, longtitude),
-                        0, updateInterval.getInterval(), updateInterval.getUnit());
+                        updateData(town),
+                        delay, updateInterval.getInterval(), updateInterval.getUnit());
             }
             mUpdateInterval = updateInterval;
-            mLatitude = latitude;
-            mLongtitude = longtitude;
+            mTown = town;
         });
     }
 
@@ -165,7 +162,8 @@ public class MainViewModel extends ViewModel {
         mSingleExecutor.execute(this::setLastUpdateCheckTime);
     }
 
-    private void updateData(double longtitude, double latitude) {
+    private void updateData(String town) {
+        //TODO pobranie json wspolrzednych z miasta
         calculateAstro(latitude, longtitude);
         setLastUpdateCheckTime();
     }
@@ -197,9 +195,9 @@ public class MainViewModel extends ViewModel {
     }
 
     private void setLastUpdateCheckTime() {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
-        LocalTime time = LocalTime.now();
-        mLastUpdateCheck.postValue(time.format(formatter));
+        final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+        LocalDateTime dateTime = LocalDateTime.now();
+        mLastUpdateCheck.postValue(dateTime.format(formatter));
     }
 
     private void setSunInfo(AstroCalculator calculator) {

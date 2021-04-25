@@ -26,6 +26,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.Objects;
 
 import pl.piasta.astroweatherextended.R;
@@ -38,10 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
     private MainViewModel model;
     private BroadcastReceiver dateTimeBroadcastReceiver;
+    private SharedPreferences mSharedPreferences;
     private SharedPreferences mPreferences;
 
     private TextView mTime;
     private TextView mTown;
+    private ImageButton mFavourite;
     private TextView mLastUpdateCheck;
     private TextView mLatitude;
     private TextView mLongitude;
@@ -52,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mPreferences = getPreferences(MODE_PRIVATE);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
@@ -62,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }
         mTime = findViewById(R.id.time);
         mTown = findViewById(R.id.town);
+        mFavourite = findViewById(R.id.favourite_add);
         mLatitude = findViewById(R.id.latitude);
         mLongitude = findViewById(R.id.longitude);
         mLastUpdateCheck = findViewById(R.id.last_update_check);
@@ -114,7 +124,18 @@ public class MainActivity extends AppCompatActivity {
         pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                int color = position == 0 ? R.color.yellow_700 : R.color.grey_700;
+                int color;
+                switch(position) {
+                    case 2:
+                        color = R.color.yellow_700;
+                        break;
+                    case 3:
+                        color = R.color.grey_700;
+                        break;
+                    default:
+                        color = R.color.orange_900;
+                        break;
+                }
                 mCard.setBackgroundColor(getColor(color));
                 super.onPageSelected(position);
             }
@@ -150,15 +171,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupAutoUpdate() {
-        double latitude = Double.parseDouble(mLatitude.getText().toString());
-        double longtitude = Double.parseDouble(mLongitude.getText().toString());
+        String town = mTown.getText().toString();
         UpdateInterval updateInterval = UpdateInterval.DISABLED;
-        boolean autoSync = mPreferences.getBoolean("auto_sync", AUTO_SYNC_DEFAULT);
+        int delay = 0;
+        boolean autoSync = mSharedPreferences.getBoolean("auto_sync", AUTO_SYNC_DEFAULT);
         if (autoSync) {
-            String frequency = mPreferences.getString("sync_frequency", SYNC_FREQUENCY_DEFAULT);
+            String frequency = mSharedPreferences.getString("sync_frequency", SYNC_FREQUENCY_DEFAULT);
             updateInterval = UpdateInterval.values()[Integer.parseInt(frequency)];
+            String lastUpdateCheck = mPreferences.getString(
+                    "lastUpdateCheck",
+                    LocalDateTime.now().toString());
+            LocalDateTime dateTime = LocalDateTime.parse(lastUpdateCheck).plusSeconds(updateInterval.getUnit()
+                    .toSeconds(updateInterval.getInterval()));
+            long diff = ChronoUnit.SECONDS.between(
+                    LocalDateTime.now().toInstant(ZoneOffset.UTC),
+                    dateTime.toInstant(ZoneOffset.UTC));
+            if (diff > 0) {
+                delay = (int) diff;
+            }
+
         }
-        model.setupDataUpdate(updateInterval, latitude, longtitude);
+        model.setupDataUpdate(updateInterval, delay, town);
     }
 
     private void setupListeners() {
@@ -188,12 +221,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void observeModel() {
         model.getTime().observe(this, mTime::setText);
-        model.getLastUpdateCheck().observe(this, mLastUpdateCheck::setText);
+        model.getLastUpdateCheck().observe(this, text -> {
+            mLastUpdateCheck.setText(text);
+            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+            mPreferences.edit()
+                    .putString("lastUpdateCheck", LocalDateTime.parse(text, formatter).toString())
+                    .apply();
+        });
     }
 
     private void loadPreferences() {
-        String town = mPreferences.getString("town", TOWN_DEFAULT);
+        String town = mSharedPreferences.getString("town", TOWN_DEFAULT);
+        boolean favourite = mSharedPreferences.getStringSet("favourites", Collections.emptySet())
+                .contains(town);
         this.mTown.setText(town);
+        if (favourite) {
+            mFavourite.setColorFilter(R.color.red);
+            return;
+        }
+        mFavourite.clearColorFilter();
+        //TODO read last weather data from preferences
     }
 
     private void updateData() {
