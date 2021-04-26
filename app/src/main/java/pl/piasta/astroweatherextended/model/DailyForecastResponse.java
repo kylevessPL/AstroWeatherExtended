@@ -1,30 +1,17 @@
 package pl.piasta.astroweatherextended.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+import pl.piasta.astroweatherextended.model.base.DayData;
 
 public class DailyForecastResponse {
 
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("totalResults")
-    @Expose
-    private Integer totalResults;
+    @SerializedName("list")
+    private List<DayData> mDayDataList;
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getTotalResults() {
-        return totalResults;
-    }
-
-    public void setTotalResults(Integer totalResults) {
-        this.totalResults = totalResults;
+    public List<DayData> getDayDataList() {
+        return mDayDataList;
     }
 }

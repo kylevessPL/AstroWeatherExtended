@@ -8,7 +8,7 @@ import pl.piasta.astroweatherextended.model.CurrentWeatherDataResponse;
 import pl.piasta.astroweatherextended.model.DailyForecastResponse;
 import pl.piasta.astroweatherextended.repository.retrofit.RetrofitRequest;
 import pl.piasta.astroweatherextended.service.WeatherService;
-import pl.piasta.astroweatherextended.ui.main.TemperatureUnit;
+import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,7 +21,7 @@ public class WeatherRepository {
         mWeatherService = RetrofitRequest.getRetrofitInstance().create(WeatherService.class);
     }
 
-    public LiveData<CurrentWeatherDataResponse> getCurrentWeatherData(String query, TemperatureUnit unit, String apiKey) {
+    public LiveData<CurrentWeatherDataResponse> getCurrentWeatherData(String query, MeasurementUnit unit, String apiKey) {
         final MutableLiveData<CurrentWeatherDataResponse> data = new MutableLiveData<>();
         mWeatherService.getCurrentWeatherData(query, unit, apiKey)
                 .enqueue(new Callback<CurrentWeatherDataResponse>() {
@@ -47,7 +47,7 @@ public class WeatherRepository {
         return data;
     }
 
-    public LiveData<DailyForecastResponse> getDailyForecast(String query, TemperatureUnit unit, String apiKey) {
+    public LiveData<DailyForecastResponse> getDailyForecast(String query, MeasurementUnit unit, String apiKey) {
         final MutableLiveData<DailyForecastResponse> data = new MutableLiveData<>();
         mWeatherService.getDailyForecast(query, unit, apiKey)
                 .enqueue(new Callback<DailyForecastResponse>() {

@@ -5,27 +5,27 @@ import com.google.gson.annotations.SerializedName;
 public class CoordinatesResponse {
 
     @SerializedName("name")
-    private String town;
+    private String mTown;
     @SerializedName("lat")
-    private String latitude;
+    private Double mLatitude;
     @SerializedName("lon")
-    private String longtitude;
+    private Double mLongtitude;
     @SerializedName("country")
-    private String countryCode;
+    private String mCountryCode;
 
     public String getTown() {
-        return town;
+        return mTown;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public Double getLatitude() {
+        return mLatitude;
     }
 
-    public String getLongtitude() {
-        return longtitude;
+    public Double getLongtitude() {
+        return mLongtitude;
     }
 
     public String getCountryCode() {
-        return countryCode;
+        return mCountryCode;
     }
 }

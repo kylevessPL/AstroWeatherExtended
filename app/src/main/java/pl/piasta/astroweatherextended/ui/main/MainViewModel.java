@@ -23,6 +23,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
+
 public class MainViewModel extends ViewModel {
 
     private static final char DEGREE_SYMBOL = '\u00b0';

@@ -1,4 +1,4 @@
-package pl.piasta.astroweatherextended.ui.main;
+package pl.piasta.astroweatherextended.ui.base;
 
 import java.util.concurrent.TimeUnit;
 

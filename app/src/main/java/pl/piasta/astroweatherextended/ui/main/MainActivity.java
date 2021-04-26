@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.Objects;
 
 import pl.piasta.astroweatherextended.R;
+import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
 
 public class MainActivity extends AppCompatActivity {
 
