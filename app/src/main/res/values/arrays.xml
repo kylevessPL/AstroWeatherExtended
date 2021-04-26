@@ -1,12 +1,12 @@
 <resources>
     <string-array name="sync_frequency_entries">
-        <item>15 minut</item>
-        <item>30 minut</item>
-        <item>1 godzina</item>
-        <item>2 godziny</item>
-        <item>5 godzin</item>
-        <item>12 godzin</item>
-        <item>24 godziny</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>5 hours</item>
+        <item>12 hours</item>
+        <item>24 hours</item>
     </string-array>
 
     <string-array name="sync_frequency_values">
@@ -22,10 +22,12 @@
     <string-array name="temperature_unit_entries">
         <item>°C</item>
         <item>°F</item>
+        <item>K</item>
     </string-array>
 
     <string-array name="temperature_unit_values">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
 </resources>

@@ -1,7 +1,13 @@
 package pl.piasta.astroweatherextended.ui.main;
 
+import com.google.gson.annotations.SerializedName;
+
 public enum TemperatureUnit {
 
+    @SerializedName("metric")
     CELSIUS,
-    FAHRENHEIT
+    @SerializedName("imperial")
+    FAHRENHEIT,
+    @SerializedName("standard")
+    KELVIN
 }

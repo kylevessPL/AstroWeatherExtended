@@ -1,4 +1,4 @@
-package pl.piasta.astroweatherextended.ui.util;
+package pl.piasta.astroweatherextended.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -24,12 +24,12 @@ public final class CheckNetwork {
 
         @Override
         public void onAvailable(Network network) {
-            GlobalVariables.isNetworkConnected = true;
+            GlobalVariables.sIsNetworkConnected = true;
         }
 
         @Override
         public void onLost(Network network) {
-            GlobalVariables.isNetworkConnected = false;
+            GlobalVariables.sIsNetworkConnected = false;
         }
     }
 }
