@@ -40,4 +40,5 @@
     <string name="set">Set</string>
     <string name="measurement_units_header">Measurement units</string>
     <string name="favourite_add">Add to favourites</string>
+    <string name="weather_icon">Weather icon</string>
 </resources>
