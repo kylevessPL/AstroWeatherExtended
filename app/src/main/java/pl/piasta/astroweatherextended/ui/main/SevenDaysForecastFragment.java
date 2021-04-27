@@ -17,7 +17,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_seven_days_forecast, container, false);
+        View root = inflater.inflate(R.layout.fragment_seven_days_forecast_shared, container, false);
         return root;
     }
 

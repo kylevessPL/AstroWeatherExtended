@@ -17,7 +17,7 @@ public class TodayForecastFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_today_forecast, container, false);
+        View root = inflater.inflate(R.layout.fragment_today_forecast_shared, container, false);
         return root;
     }
 
