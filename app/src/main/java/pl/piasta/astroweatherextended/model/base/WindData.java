@@ -8,8 +8,6 @@ public class WindData {
     private Double mSpeed;
     @SerializedName("deg")
     private Double mDirection;
-    @SerializedName("gust")
-    private Double mGust;
 
     public Double getSpeed() {
         return mSpeed;
@@ -19,7 +17,4 @@ public class WindData {
         return mDirection;
     }
 
-    public Double getGust() {
-        return mGust;
-    }
 }

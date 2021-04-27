@@ -18,8 +18,6 @@ public class DayData {
     private Double mSpeed;
     @SerializedName("deg")
     private Double mDirection;
-    @SerializedName("gust")
-    private Double mGust;
 
     public TemperatureData getTemperatureData() {
         return mTemperatureData;
@@ -45,7 +43,4 @@ public class DayData {
         return mDirection;
     }
 
-    public Double getGust() {
-        return mGust;
-    }
 }
