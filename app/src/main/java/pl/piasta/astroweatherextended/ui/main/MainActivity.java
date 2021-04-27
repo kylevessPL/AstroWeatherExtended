@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,11 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mPreferences = getPreferences(MODE_PRIVATE);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT &&
-                !getResources().getBoolean(R.bool.isTablet)
-        ) {
-            setupPager();
-        }
+        setupPager();
         mTime = findViewById(R.id.time);
         mTown = findViewById(R.id.town);
         mFavourite = findViewById(R.id.favourite_add);
