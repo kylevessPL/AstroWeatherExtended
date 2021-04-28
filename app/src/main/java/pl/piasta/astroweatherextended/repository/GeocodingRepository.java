@@ -30,6 +30,8 @@ public class GeocodingRepository {
                             @NonNull Response<CoordinatesResponse> response) {
                         if (response.body() != null) {
                             data.setValue(response.body());
+                        } else {
+                            data.setValue(null);
                         }
                     }
 

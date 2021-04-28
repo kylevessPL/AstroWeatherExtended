@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TOWN_DEFAULT = "Warszawa";
     public static final boolean AUTO_SYNC_DEFAULT = false;
 
-    private MainViewModel model;
+    private MainViewModel mModel;
     private BroadcastReceiver dateTimeBroadcastReceiver;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences mPreferences;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         mLatitude = findViewById(R.id.latitude);
         mLongitude = findViewById(R.id.longitude);
         mLastUpdateCheck = findViewById(R.id.last_update_check);
-        model = new ViewModelProvider(this).get(MainViewModel.class);
+        mModel = new ViewModelProvider(this).get(MainViewModel.class);
         mRefreshButton = findViewById(R.id.refresh);
         mCard = findViewById(R.id.card);
         setupListeners();
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context ctx, Intent intent) {
                 if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {
-                    model.updateClock();
+                    mModel.updateClock();
                 }
             }
         };
@@ -187,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        model.setupDataUpdate(updateInterval, delay, town);
+        mModel.setupDataUpdate(updateInterval, delay, town);
     }
 
     private void setupListeners() {
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                model.updateLastUpdateCheckTime();
+                mModel.updateLastUpdateCheckTime();
             }
 
             @Override
@@ -216,14 +217,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void observeModel() {
-        model.getTime().observe(this, mTime::setText);
-        model.getLastUpdateCheck().observe(this, text -> {
+        mModel.getTime().observe(this, mTime::setText);
+        mModel.getLastUpdateCheck().observe(this, text -> {
             mLastUpdateCheck.setText(text);
             DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
             mPreferences.edit()
                     .putString("lastUpdateCheck", LocalDateTime.parse(text, formatter).toString())
                     .apply();
         });
+        mModel.getToastMessage().observe(this, message ->
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
     }
 
     private void loadPreferences() {
@@ -242,6 +245,6 @@ public class MainActivity extends AppCompatActivity {
     private void updateData() {
         double latitude = Double.parseDouble(mLatitude.getText().toString());
         double longtitude = Double.parseDouble(mLongitude.getText().toString());
-        model.refreshData(latitude, longtitude);
+        mModel.refreshData(latitude, longtitude);
     }
 }

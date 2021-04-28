@@ -24,6 +24,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
+import pl.piasta.astroweatherextended.util.GlobalVariables;
+import pl.piasta.astroweatherextended.util.SingleLiveEvent;
 
 public class MainViewModel extends ViewModel {
 
@@ -47,6 +49,8 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<String> mMoonPhaseValue;
     private final MutableLiveData<String> mMoonLunarMonthDay;
 
+    private final SingleLiveEvent<String> mToastMessage;
+
     private ScheduledFuture<?> mUpdateTask;
     private UpdateInterval mUpdateInterval;
     private String mTown;
@@ -69,6 +73,7 @@ public class MainViewModel extends ViewModel {
         this.mFullMoonDate = new MutableLiveData<>();
         this.mMoonPhaseValue = new MutableLiveData<>();
         this.mMoonLunarMonthDay = new MutableLiveData<>();
+        this.mToastMessage = new SingleLiveEvent<>();
         setCurrentTime();
     }
 
@@ -128,6 +133,10 @@ public class MainViewModel extends ViewModel {
         return mMoonLunarMonthDay;
     }
 
+    public SingleLiveEvent<String> getToastMessage() {
+        return mToastMessage;
+    }
+
     public void updateClock() {
         mSingleExecutor.execute(() -> {
             String time = getCurrentTimeString();
@@ -136,24 +145,27 @@ public class MainViewModel extends ViewModel {
     }
 
     public void refreshData(Double latitude, Double longtitude) {
+        if (!GlobalVariables.sIsNetworkConnected) {
+            mToastMessage.setValue("No Internet connection");
+            return;
+        }
         mSingleExecutor.execute(() -> calculateAstro(latitude, longtitude));
     }
 
     public void setupDataUpdate(UpdateInterval updateInterval, int delay, String town) {
         mSingleExecutor.execute(() -> {
-            if (updateInterval.equals(mUpdateInterval) &&
-                    mTown.equals(town)) {
+            if (mTown.equals(town) && updateInterval.equals(mUpdateInterval)) {
                 return;
             }
             tearDownDataUpdate();
-            if (!mTown.equals(town) &&
-                    updateInterval.equals(UpdateInterval.DISABLED)
-            ) {
+            if (!mTown.equals(town) && updateInterval.equals(UpdateInterval.DISABLED)) {
                 updateData(town);
             } else if (!updateInterval.equals(UpdateInterval.DISABLED)) {
-                mUpdateTask = mScheduledExecutor.scheduleWithFixedDelay(() ->
-                        updateData(town),
-                        delay, updateInterval.getInterval(), updateInterval.getUnit());
+                mUpdateTask = mScheduledExecutor.scheduleWithFixedDelay(() -> {
+                    if (GlobalVariables.sIsNetworkConnected) {
+                        updateData(town);
+                    }
+                }, delay, updateInterval.getInterval(), updateInterval.getUnit());
             }
             mUpdateInterval = updateInterval;
             mTown = town;

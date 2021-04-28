@@ -8,6 +8,20 @@
             app:title="@string/town_title"
             app:useSimpleSummaryProvider="true" />
 
+        <EditTextPreference
+            app:defaultValue="@string/latitude_default"
+            app:key="latitude"
+            app:title="@string/latitude_title"
+            app:useSimpleSummaryProvider="true"
+            app:enabled="false" />
+
+        <EditTextPreference
+            app:defaultValue="@string/longtitude_default"
+            app:key="longtitude"
+            app:title="@string/longtitude_title"
+            app:useSimpleSummaryProvider="true"
+            app:enabled="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/measurement_units_header">
