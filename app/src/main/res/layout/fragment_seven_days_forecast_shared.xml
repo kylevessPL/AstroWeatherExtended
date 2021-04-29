@@ -76,7 +76,7 @@
                     android:src="@drawable/ic_info_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_description_1"
+                    android:id="@+id/day_weather_details_description_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="partially cloudy"
@@ -99,7 +99,7 @@
                     android:src="@drawable/ic_temperature_day_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_day_1"
+                    android:id="@+id/day_weather_details_temperature_day_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 C"
@@ -122,7 +122,7 @@
                     android:src="@drawable/ic_temperature_night_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_night_1"
+                    android:id="@+id/day_weather_details_temperature_night_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 C"
@@ -145,7 +145,7 @@
                     android:src="@drawable/ic_humidity_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_humidity_1"
+                    android:id="@+id/day_weather_details_humidity_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18 %"
@@ -168,7 +168,7 @@
                     android:src="@drawable/ic_wind_speed_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_speed_1"
+                    android:id="@+id/day_weather_details_wind_speed_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30 m/s"
@@ -191,7 +191,7 @@
                     android:src="@drawable/ic_wind_direction_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_direction_1"
+                    android:id="@+id/day_weather_details_wind_direction_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="front"
@@ -261,7 +261,7 @@
                     android:src="@drawable/ic_info_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_description_2"
+                    android:id="@+id/day_weather_details_description_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="partially cloudy"
@@ -284,7 +284,7 @@
                     android:src="@drawable/ic_temperature_day_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_day_2"
+                    android:id="@+id/day_weather_details_temperature_day_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 C"
@@ -307,7 +307,7 @@
                     android:src="@drawable/ic_temperature_night_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_night_2"
+                    android:id="@+id/day_weather_details_temperature_night_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 C"
@@ -330,7 +330,7 @@
                     android:src="@drawable/ic_humidity_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_humidity_2"
+                    android:id="@+id/day_weather_details_humidity_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18 %"
@@ -353,7 +353,7 @@
                     android:src="@drawable/ic_wind_speed_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_speed_2"
+                    android:id="@+id/day_weather_details_wind_speed_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30 m/s"
@@ -376,7 +376,7 @@
                     android:src="@drawable/ic_wind_direction_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_direction_2"
+                    android:id="@+id/day_weather_details_wind_direction_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="front"
@@ -444,7 +444,7 @@
                     android:src="@drawable/ic_info_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_description_3"
+                    android:id="@+id/day_weather_details_description_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="partially cloudy"
@@ -467,7 +467,7 @@
                     android:src="@drawable/ic_temperature_day_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_day_3"
+                    android:id="@+id/day_weather_details_temperature_day_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 C"
@@ -490,7 +490,7 @@
                     android:src="@drawable/ic_temperature_night_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_night_3"
+                    android:id="@+id/day_weather_details_temperature_night_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 C"
@@ -513,7 +513,7 @@
                     android:src="@drawable/ic_humidity_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_humidity_3"
+                    android:id="@+id/day_weather_details_humidity_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18 %"
@@ -536,7 +536,7 @@
                     android:src="@drawable/ic_wind_speed_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_speed_3"
+                    android:id="@+id/day_weather_details_wind_speed_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30 m/s"
@@ -559,7 +559,7 @@
                     android:src="@drawable/ic_wind_direction_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_direction_3"
+                    android:id="@+id/day_weather_details_wind_direction_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="front"
@@ -642,7 +642,7 @@
                     android:src="@drawable/ic_info_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_description_4"
+                    android:id="@+id/day_weather_details_description_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="partially cloudy"
@@ -665,7 +665,7 @@
                     android:src="@drawable/ic_temperature_day_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_day_4"
+                    android:id="@+id/day_weather_details_temperature_day_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 C"
@@ -688,7 +688,7 @@
                     android:src="@drawable/ic_temperature_night_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_night_4"
+                    android:id="@+id/day_weather_details_temperature_night_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 C"
@@ -711,7 +711,7 @@
                     android:src="@drawable/ic_humidity_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_humidity_4"
+                    android:id="@+id/day_weather_details_humidity_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18 %"
@@ -734,7 +734,7 @@
                     android:src="@drawable/ic_wind_speed_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_speed_4"
+                    android:id="@+id/day_weather_details_wind_speed_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30 m/s"
@@ -757,7 +757,7 @@
                     android:src="@drawable/ic_wind_direction_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_direction_4"
+                    android:id="@+id/day_weather_details_wind_direction_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="front"
@@ -827,7 +827,7 @@
                     android:src="@drawable/ic_info_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_description_5"
+                    android:id="@+id/day_weather_details_description_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="partially cloudy"
@@ -850,7 +850,7 @@
                     android:src="@drawable/ic_temperature_day_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_day_5"
+                    android:id="@+id/day_weather_details_temperature_day_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 C"
@@ -873,7 +873,7 @@
                     android:src="@drawable/ic_temperature_night_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_night_5"
+                    android:id="@+id/day_weather_details_temperature_night_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 C"
@@ -896,7 +896,7 @@
                     android:src="@drawable/ic_humidity_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_humidity_5"
+                    android:id="@+id/day_weather_details_humidity_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18 %"
@@ -919,7 +919,7 @@
                     android:src="@drawable/ic_wind_speed_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_speed_5"
+                    android:id="@+id/day_weather_details_wind_speed_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30 m/s"
@@ -942,7 +942,7 @@
                     android:src="@drawable/ic_wind_direction_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_direction_5"
+                    android:id="@+id/day_weather_details_wind_direction_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="front"
@@ -1010,7 +1010,7 @@
                     android:src="@drawable/ic_info_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_description_6"
+                    android:id="@+id/day_weather_details_description_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="partially cloudy"
@@ -1033,7 +1033,7 @@
                     android:src="@drawable/ic_temperature_day_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_day_6"
+                    android:id="@+id/day_weather_details_temperature_day_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 C"
@@ -1056,7 +1056,7 @@
                     android:src="@drawable/ic_temperature_night_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_temperature_night_6"
+                    android:id="@+id/day_weather_details_temperature_night_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 C"
@@ -1079,7 +1079,7 @@
                     android:src="@drawable/ic_humidity_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_humidity_6"
+                    android:id="@+id/day_weather_details_humidity_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="18 %"
@@ -1102,7 +1102,7 @@
                     android:src="@drawable/ic_wind_speed_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_speed_6"
+                    android:id="@+id/day_weather_details_wind_speed_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30 m/s"
@@ -1125,7 +1125,7 @@
                     android:src="@drawable/ic_wind_direction_32" />
 
                 <TextView
-                    android:id="@+id/today_weather_details_wind_direction_6"
+                    android:id="@+id/day_weather_details_wind_direction_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="front"

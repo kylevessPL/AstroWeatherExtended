@@ -1,4 +1,4 @@
-package pl.piasta.astroweatherextended.ui.settings;
+package pl.piasta.astroweatherextended.ui.favourites;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,7 +9,7 @@ import pl.piasta.astroweatherextended.repository.GeocodingRepository;
 import pl.piasta.astroweatherextended.util.GlobalVariables;
 import pl.piasta.astroweatherextended.util.SingleLiveEvent;
 
-public class SettingsViewModel extends ViewModel {
+public class FavouritesViewModel extends ViewModel {
 
     private final GeocodingRepository mGeocodingRepository = new GeocodingRepository();
 
@@ -40,7 +40,7 @@ public class SettingsViewModel extends ViewModel {
 
     public void retrieveCoordinatesData(String town) {
         if (!GlobalVariables.sIsNetworkConnected) {
-            mToastMessage.setValue("No Internet connection");
+            mToastMessage.setValue("Cannot set location without Internet connection");
             return;
         }
         LiveData<CoordinatesResponse> data = mGeocodingRepository.getCoordinates(town, GlobalVariables.API_KEY);

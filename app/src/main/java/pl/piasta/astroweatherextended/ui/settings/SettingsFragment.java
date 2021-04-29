@@ -11,6 +11,8 @@ import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -86,6 +88,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mModel.getCoordinatesResponse().observe(this, this::setCoordinatesData);
         mModel.getToastMessage().observe(this,
                 message -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
+        mModel.getSnackbarMessage().observe(this,
+                message -> Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
+                        .setAction("DISMISS", view -> {})
+                        .show());
     }
 
     private void setCoordinatesData(CoordinatesResponse coordinatesData) {

@@ -1,5 +1,6 @@
 package pl.piasta.astroweatherextended.ui.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,14 @@ import androidx.lifecycle.ViewModelProvider;
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.ui.base.BaseFragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MoonFragment extends BaseFragment {
 
-    private static final String FRAGMENT_NAME = "Księżyc";
+    private static final String FRAGMENT_NAME = "MOON";
 
     private MainViewModel mModel;
+    private SharedPreferences mPreferences;
 
     private TextView mMoonRiseTime;
     private TextView mMoonSetTime;
@@ -38,12 +42,14 @@ public class MoonFragment extends BaseFragment {
         mMoonPhaseValue = root.findViewById(R.id.value_moon_phase);
         mMoonLunarMonthDay = root.findViewById(R.id.day_lunar_month);
         mModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        mPreferences = requireActivity().getPreferences(MODE_PRIVATE);
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadPreferences();
         observeModel();
     }
 
@@ -51,6 +57,15 @@ public class MoonFragment extends BaseFragment {
     @Override
     public String getFragmentName() {
         return FRAGMENT_NAME;
+    }
+
+    private void loadPreferences() {
+        mMoonRiseTime.setText(mPreferences.getString("moonRiseTime", ""));
+        mMoonSetTime.setText(mPreferences.getString("moonSetTime", ""));
+        mNewMoonDate.setText(mPreferences.getString("sunNewMoonDate", ""));
+        mFullMoonDate.setText(mPreferences.getString("sunFullMoonDate", ""));
+        mMoonPhaseValue.setText(mPreferences.getString("sunMoonPhaseValue", ""));
+        mMoonLunarMonthDay.setText(mPreferences.getString("sunMoonLunarMonthDay", ""));
     }
 
     private void observeModel() {

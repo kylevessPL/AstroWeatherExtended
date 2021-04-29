@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -23,6 +24,7 @@ import androidx.preference.PreferenceManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -36,11 +38,14 @@ import java.util.Objects;
 
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
+import pl.piasta.astroweatherextended.util.GlobalVariables;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String SYNC_FREQUENCY_DEFAULT = "3";
     public static final String TOWN_DEFAULT = "Warszawa";
+    public static final String LATITUDE_DEFAULT = "52.229722";
+    public static final String LONGTITUDE_DEFAULT = "21.011667";
     public static final boolean AUTO_SYNC_DEFAULT = false;
 
     private MainViewModel mModel;
@@ -75,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mModel = new ViewModelProvider(this).get(MainViewModel.class);
         mRefreshButton = findViewById(R.id.refresh);
         mCard = findViewById(R.id.card);
+        checkDataState();
         setupListeners();
         observeModel();
     }
@@ -227,24 +233,50 @@ public class MainActivity extends AppCompatActivity {
         });
         mModel.getToastMessage().observe(this, message ->
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+        mModel.getSnackbarMessage().observe(this,
+                message -> Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+                        .setAction("DISMISS", view -> {})
+                        .show());
     }
 
     private void loadPreferences() {
         String town = mSharedPreferences.getString("town", TOWN_DEFAULT);
+        String latitude = mSharedPreferences.getString("latitude", LATITUDE_DEFAULT);
+        String longtitude = mSharedPreferences.getString("longtitude", LONGTITUDE_DEFAULT);
+        this.mTown.setText(town);
+        this.mLatitude.setText(latitude);
+        this.mLongitude.setText(longtitude);
         boolean favourite = mSharedPreferences.getStringSet("favourites", Collections.emptySet())
                 .contains(town);
-        this.mTown.setText(town);
         if (favourite) {
             mFavourite.setColorFilter(R.color.red);
             return;
         }
         mFavourite.clearColorFilter();
-        //TODO read last weather data from preferences
     }
 
     private void updateData() {
         double latitude = Double.parseDouble(mLatitude.getText().toString());
         double longtitude = Double.parseDouble(mLongitude.getText().toString());
         mModel.refreshData(latitude, longtitude);
+    }
+
+    private void checkDataState() {
+        if (mPreferences.getAll().isEmpty()) {
+            if (!GlobalVariables.sIsNetworkConnected) {
+                AlertDialog alert = buildExitAppAlert();
+                alert.show();
+                return;
+            }
+            mModel.setOfflineDataUseSnackbarMessage();
+        }
+    }
+
+    private AlertDialog buildExitAppAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        return builder.setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setNeutralButton("Ok", (dialog, id) -> MainActivity.this.finish())
+                .create();
     }
 }
