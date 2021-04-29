@@ -62,18 +62,42 @@ public class MoonFragment extends BaseFragment {
     private void loadPreferences() {
         mMoonRiseTime.setText(mPreferences.getString("moonRiseTime", ""));
         mMoonSetTime.setText(mPreferences.getString("moonSetTime", ""));
-        mNewMoonDate.setText(mPreferences.getString("sunNewMoonDate", ""));
-        mFullMoonDate.setText(mPreferences.getString("sunFullMoonDate", ""));
-        mMoonPhaseValue.setText(mPreferences.getString("sunMoonPhaseValue", ""));
-        mMoonLunarMonthDay.setText(mPreferences.getString("sunMoonLunarMonthDay", ""));
+        mNewMoonDate.setText(mPreferences.getString("newMoonDate", ""));
+        mFullMoonDate.setText(mPreferences.getString("fullMoonDate", ""));
+        mMoonPhaseValue.setText(mPreferences.getString("moonPhaseValue", ""));
+        mMoonLunarMonthDay.setText(mPreferences.getString("moonLunarMonthDay", ""));
     }
 
     private void observeModel() {
-        mModel.getMoonRiseTime().observe(getViewLifecycleOwner(), mMoonRiseTime::setText);
-        mModel.getMoonSetTime().observe(getViewLifecycleOwner(), mMoonSetTime::setText);
-        mModel.getNewMoonDate().observe(getViewLifecycleOwner(), mNewMoonDate::setText);
-        mModel.getFullMoonDate().observe(getViewLifecycleOwner(), mFullMoonDate::setText);
-        mModel.getMoonPhaseValue().observe(getViewLifecycleOwner(), mMoonPhaseValue::setText);
-        mModel.getMoonLunarMonthDay().observe(getViewLifecycleOwner(), mMoonLunarMonthDay::setText);
+        mModel.getMoonRiseTime().observe(getViewLifecycleOwner(), value -> {
+            mMoonRiseTime.setText(value);
+            setPreference("moonRiseTime", value);
+        });
+        mModel.getMoonSetTime().observe(getViewLifecycleOwner(), value -> {
+            mMoonSetTime.setText(value);
+            setPreference("moonSetTime", value);
+        });
+        mModel.getNewMoonDate().observe(getViewLifecycleOwner(), value -> {
+            mNewMoonDate.setText(value);
+            setPreference("newMoonDate", value);
+        });
+        mModel.getFullMoonDate().observe(getViewLifecycleOwner(), value -> {
+            mFullMoonDate.setText(value);
+            setPreference("fullMoonDate", value);
+        });
+        mModel.getMoonPhaseValue().observe(getViewLifecycleOwner(), value -> {
+            mMoonPhaseValue.setText(value);
+            setPreference("moonPhaseValue", value);
+        });
+        mModel.getMoonLunarMonthDay().observe(getViewLifecycleOwner(), value -> {
+            mMoonLunarMonthDay.setText(value);
+            setPreference("moonLunarMonthDay", value);
+        });
+    }
+
+    private void setPreference(String key, String value) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(key, value);
+        editor.apply();
     }
 }

@@ -69,11 +69,35 @@ public class SunFragment extends BaseFragment {
     }
 
     private void observeModel() {
-        mModel.getSunRiseTime().observe(getViewLifecycleOwner(), mSunRiseTime::setText);
-        mModel.getSunRiseAzimuth().observe(getViewLifecycleOwner(), mSunRiseAzimuth::setText);
-        mModel.getSunSetTime().observe(getViewLifecycleOwner(), mSunSetTime::setText);
-        mModel.getSunSetAzimuth().observe(getViewLifecycleOwner(), mSunSetAzimuth::setText);
-        mModel.getSunDuskTime().observe(getViewLifecycleOwner(), mSunDuskTime::setText);
-        mModel.getSunDawnTime().observe(getViewLifecycleOwner(), mSunDawnTime::setText);
+        mModel.getSunRiseTime().observe(getViewLifecycleOwner(), value -> {
+            mSunRiseTime.setText(value);
+            setPreference("sunRiseTime", value);
+        });
+        mModel.getSunRiseAzimuth().observe(getViewLifecycleOwner(), value -> {
+            mSunRiseAzimuth.setText(value);
+            setPreference("sunRiseAzimuth", value);
+        });
+        mModel.getSunSetTime().observe(getViewLifecycleOwner(), value -> {
+            mSunSetTime.setText(value);
+            setPreference("sunSetTime", value);
+        });
+        mModel.getSunSetAzimuth().observe(getViewLifecycleOwner(), value -> {
+            mSunSetAzimuth.setText(value);
+            setPreference("sunSetAzimuth", value);
+        });
+        mModel.getSunDuskTime().observe(getViewLifecycleOwner(), value -> {
+            mSunDuskTime.setText(value);
+            setPreference("sunDuskTime", value);
+        });
+        mModel.getSunDawnTime().observe(getViewLifecycleOwner(), value -> {
+            mSunDawnTime.setText(value);
+            setPreference("sunDawnTime", value);
+        });
+    }
+
+    private void setPreference(String key, String value) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(key, value);
+        editor.apply();
     }
 }

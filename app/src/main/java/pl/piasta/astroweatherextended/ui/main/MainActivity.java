@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         mModel = new ViewModelProvider(this).get(MainViewModel.class);
         mRefreshButton = findViewById(R.id.refresh);
         mCard = findViewById(R.id.card);
-        checkDataState();
         setupListeners();
         observeModel();
     }
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         registerDateTimeBroadcastReceiver();
+        checkDataState();
         loadPreferences();
         setupAutoUpdate();
     }
@@ -212,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mModel.updateLastUpdateCheckTime();
             }
 
             @Override
@@ -262,14 +261,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkDataState() {
-        if (mPreferences.getAll().isEmpty()) {
-            if (!GlobalVariables.sIsNetworkConnected) {
-                AlertDialog alert = buildExitAppAlert();
-                alert.show();
-                return;
-            }
-            mModel.setOfflineDataUseSnackbarMessage();
+        if (GlobalVariables.sIsNetworkConnected) {
+            return;
         }
+        if (mPreferences.getAll().isEmpty()) {
+            AlertDialog alert = buildExitAppAlert();
+            alert.show();
+            return;
+        }
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString("town", mPreferences.getString("town", TOWN_DEFAULT));
+        editor.putString("latitude", mPreferences.getString("latitude", LATITUDE_DEFAULT));
+        editor.putString("longtitude", mPreferences.getString("longtitude", LONGTITUDE_DEFAULT));
+        editor.apply();
+        mModel.setOfflineDataUseSnackbarMessage();
     }
 
     private AlertDialog buildExitAppAlert() {

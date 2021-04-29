@@ -13,6 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import pl.piasta.astroweatherextended.R;
+import pl.piasta.astroweatherextended.model.CurrentWeatherDataResponse;
+import pl.piasta.astroweatherextended.model.base.MainData;
+import pl.piasta.astroweatherextended.model.base.WeatherData;
+import pl.piasta.astroweatherextended.model.base.WindData;
 import pl.piasta.astroweatherextended.ui.base.BaseFragment;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -30,6 +34,7 @@ public class TodayForecastFragment extends BaseFragment {
     private TextView mTodayWeatherDetailsDescription;
     private TextView mTodayWeatherDetailsTemperature;
     private TextView mTodayWeatherDetailsHumidity;
+    private TextView mTodayWeatherDetailsPressure;
     private TextView mTodayWeatherDetailsWindSpeed;
     private TextView mTodayWeatherDetailsWindDirection;
 
@@ -43,6 +48,7 @@ public class TodayForecastFragment extends BaseFragment {
         mTodayWeatherDetailsDescription = root.findViewById(R.id.today_weather_details_description);
         mTodayWeatherDetailsTemperature = root.findViewById(R.id.today_weather_details_temperature);
         mTodayWeatherDetailsHumidity = root.findViewById(R.id.today_weather_details_humidity);
+        mTodayWeatherDetailsPressure = root.findViewById(R.id.today_weather_details_pressure);
         mTodayWeatherDetailsWindSpeed = root.findViewById(R.id.today_weather_details_wind_speed);
         mTodayWeatherDetailsWindDirection = root.findViewById(R.id.today_weather_details_wind_direction);
         mModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
@@ -85,22 +91,22 @@ public class TodayForecastFragment extends BaseFragment {
     }
 
     private void observeModel() {
-        mModel.getTodayWeatherHeaderTemperature().observe(getViewLifecycleOwner(), value ->
-                mTodayWeatherHeaderTemperature.setText(value));
-        mModel.getTodayWeatherHeaderMain().observe(getViewLifecycleOwner(), value ->
-                mTodayWeatherHeaderMain.setText(value));
-        mModel.getTodayWeatherIcon().observe(getViewLifecycleOwner(), value ->
-                mTodayWeatherIcon.setImageResource(getDrawableByName(value)));
-        mModel.getTodayWeatherDetailsDescription().observe(getViewLifecycleOwner(), value ->
-                mTodayWeatherDetailsDescription.setText(value));
-        mModel.getTodayWeatherDetailsTemperature().observe(getViewLifecycleOwner(), value ->
-                mTodayWeatherDetailsTemperature.setText(value));
-        mModel.getTodayWeatherDetailsHumidity().observe(getViewLifecycleOwner(), value ->
-                mTodayWeatherDetailsHumidity.setText(value));
-        mModel.getTodayWeatherDetailsWindSpeed().observe(getViewLifecycleOwner(), value ->
-                mTodayWeatherDetailsWindSpeed.setText(value));
-        mModel.getTodayWeatherDetailsWindDirection().observe(getViewLifecycleOwner(), value ->
-                mTodayWeatherDetailsWindDirection.setText(value));
+        mModel.getCurrentWeatherData().observe(getViewLifecycleOwner(), this::setCurrentWeather);
+    }
+
+    private void setCurrentWeather(CurrentWeatherDataResponse data) {
+        MainData mainData = data.getMainData();
+        WindData windData = data.getWindData();
+        WeatherData weatherData = data.getWeatherDataList().get(0);
+        mTodayWeatherHeaderMain.setText(weatherData.getMain());
+        mTodayWeatherHeaderTemperature.setText((int) Math.round(mainData.getTemperature()));
+        mTodayWeatherIcon.setImageResource(getDrawableByName(weatherData.getIcon()));
+        mTodayWeatherDetailsDescription.setText(weatherData.getDescription());
+        mTodayWeatherDetailsHumidity.setText((int) Math.round(mainData.getHumidity()));
+        mTodayWeatherDetailsTemperature.setText((int) Math.round(mainData.getTemperature()));
+        mTodayWeatherDetailsPressure.setText((int) Math.round(mainData.getPressure()));
+        mTodayWeatherDetailsWindSpeed.setText((int) Math.round(windData.getSpeed()));
+        mTodayWeatherDetailsWindDirection.setText((int) Math.round(windData.getDirection()));
     }
 
     private int getDrawableByName(final String value) {

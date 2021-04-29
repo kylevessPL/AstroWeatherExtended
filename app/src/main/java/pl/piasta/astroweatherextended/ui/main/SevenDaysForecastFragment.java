@@ -12,7 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.List;
+import java.util.Locale;
+
 import pl.piasta.astroweatherextended.R;
+import pl.piasta.astroweatherextended.model.DailyForecastResponse;
+import pl.piasta.astroweatherextended.model.base.DayData;
+import pl.piasta.astroweatherextended.model.base.TemperatureData;
+import pl.piasta.astroweatherextended.model.base.WeatherData;
 import pl.piasta.astroweatherextended.ui.base.BaseFragment;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -60,6 +69,12 @@ public class SevenDaysForecastFragment extends BaseFragment {
     private TextView mDayWeatherDetailsHumidity4;
     private TextView mDayWeatherDetailsHumidity5;
     private TextView mDayWeatherDetailsHumidity6;
+    private TextView mDayWeatherDetailsPressure1;
+    private TextView mDayWeatherDetailsPressure2;
+    private TextView mDayWeatherDetailsPressure3;
+    private TextView mDayWeatherDetailsPressure4;
+    private TextView mDayWeatherDetailsPressure5;
+    private TextView mDayWeatherDetailsPressure6;
     private TextView mDayWeatherDetailsWindSpeed1;
     private TextView mDayWeatherDetailsWindSpeed2;
     private TextView mDayWeatherDetailsWindSpeed3;
@@ -83,6 +98,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         loadWeatherDetailsTemperatureDay(root);
         loadWeatherDetailsTemperatureNight(root);
         loadWeatherDetaisHumidity(root);
+        loadWeatherDetailsPressure(root);
         loadWeatherDetailsWindSpeed(root);
         loadWeatherDetailsWindDirection(root);
         mModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
@@ -132,6 +148,15 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayWeatherDetailsHumidity6 = view.findViewById(R.id.day_weather_details_humidity_6);
     }
 
+    private void loadWeatherDetailsPressure(final View view) {
+        mDayWeatherDetailsPressure1 = view.findViewById(R.id.day_weather_details_pressure_1);
+        mDayWeatherDetailsPressure2 = view.findViewById(R.id.day_weather_details_pressure_2);
+        mDayWeatherDetailsPressure3 = view.findViewById(R.id.day_weather_details_pressure_3);
+        mDayWeatherDetailsPressure4 = view.findViewById(R.id.day_weather_details_pressure_4);
+        mDayWeatherDetailsPressure5 = view.findViewById(R.id.day_weather_details_pressure_5);
+        mDayWeatherDetailsPressure6 = view.findViewById(R.id.day_weather_details_pressure_6);
+    }
+
     private void loadWeatherDetailsTemperatureNight(final View view) {
         mDayWeatherDetailsTemperatureNight1 = view.findViewById(R.id.day_weather_details_temperature_night_1);
         mDayWeatherDetailsTemperatureNight2 = view.findViewById(R.id.day_weather_details_temperature_night_2);
@@ -178,14 +203,107 @@ public class SevenDaysForecastFragment extends BaseFragment {
     }
 
     private void observeModel() {
-        observeForecastTitles();
-        observeForecastIcons();
-        observeDayWeatherDetailsDescriptions();
-        observeDayWeatherDetailsTemperatureDays();
-        observeDayWeatherDetailsTemperatureNights();
-        observeDayWeatherDetailsHumidities();
-        observeDayWeatherDetailsWindSpeeds();
-        observeDayWeatherDetailsWindDirections();
+        mModel.getDailyForecastData().observe(getViewLifecycleOwner(), this::setDailyForecast);
+    }
+
+    private void setDailyForecast(DailyForecastResponse data) {
+        List<DayData> list = data.getDayDataList().subList(1, data.getDayDataList().size());
+        setDay1Data(list.get(0));
+        setDay2Data(list.get(1));
+        setDay3Data(list.get(2));
+        setDay4Data(list.get(3));
+        setDay5Data(list.get(4));
+        setDay6Data(list.get(5));
+    }
+
+    private void setDay1Data(final DayData dayData) {
+        WeatherData weatherData = dayData.getWeatherDataList().get(0);
+        TemperatureData temperatureData = dayData.getTemperatureData();
+        mDayForecastTitle1.setText(LocalDate.now().plusDays(1).getDayOfWeek()
+                .getDisplayName(TextStyle.FULL, Locale.US));
+        mDayForecastIcon1.setImageResource(getDrawableByName(weatherData.getIcon()));
+        mDayWeatherDetailsDescription1.setText(weatherData.getDescription());
+        mDayWeatherDetailsHumidity1.setText((int) Math.round(dayData.getHumidity()));
+        mDayWeatherDetailsTemperatureDay1.setText((int) Math.round(temperatureData.getDayTemperature()));
+        mDayWeatherDetailsTemperatureNight1.setText((int) Math.round(temperatureData.getNightTemperature()));
+        mDayWeatherDetailsPressure1.setText((int) Math.round(dayData.getPressure()));
+        mDayWeatherDetailsWindSpeed1.setText((int) Math.round(dayData.getSpeed()));
+        mDayWeatherDetailsWindDirection1.setText((int) Math.round(dayData.getDirection()));
+    }
+
+    private void setDay2Data(final DayData dayData) {
+        WeatherData weatherData = dayData.getWeatherDataList().get(0);
+        TemperatureData temperatureData = dayData.getTemperatureData();
+        mDayForecastTitle2.setText(LocalDate.now().plusDays(2).getDayOfWeek()
+                .getDisplayName(TextStyle.FULL, Locale.US));
+        mDayForecastIcon2.setImageResource(getDrawableByName(weatherData.getIcon()));
+        mDayWeatherDetailsDescription2.setText(weatherData.getDescription());
+        mDayWeatherDetailsHumidity2.setText((int) Math.round(dayData.getHumidity()));
+        mDayWeatherDetailsTemperatureDay2.setText((int) Math.round(temperatureData.getDayTemperature()));
+        mDayWeatherDetailsTemperatureNight2.setText((int) Math.round(temperatureData.getNightTemperature()));
+        mDayWeatherDetailsPressure2.setText((int) Math.round(dayData.getPressure()));
+        mDayWeatherDetailsWindSpeed2.setText((int) Math.round(dayData.getSpeed()));
+        mDayWeatherDetailsWindDirection2.setText((int) Math.round(dayData.getDirection()));
+    }
+
+    private void setDay3Data(final DayData dayData) {
+        WeatherData weatherData = dayData.getWeatherDataList().get(0);
+        TemperatureData temperatureData = dayData.getTemperatureData();
+        mDayForecastTitle3.setText(LocalDate.now().plusDays(3).getDayOfWeek()
+                .getDisplayName(TextStyle.FULL, Locale.US));
+        mDayForecastIcon3.setImageResource(getDrawableByName(weatherData.getIcon()));
+        mDayWeatherDetailsDescription3.setText(weatherData.getDescription());
+        mDayWeatherDetailsHumidity3.setText((int) Math.round(dayData.getHumidity()));
+        mDayWeatherDetailsTemperatureDay3.setText((int) Math.round(temperatureData.getDayTemperature()));
+        mDayWeatherDetailsTemperatureNight3.setText((int) Math.round(temperatureData.getNightTemperature()));
+        mDayWeatherDetailsPressure3.setText((int) Math.round(dayData.getPressure()));
+        mDayWeatherDetailsWindSpeed3.setText((int) Math.round(dayData.getSpeed()));
+        mDayWeatherDetailsWindDirection3.setText((int) Math.round(dayData.getDirection()));
+    }
+
+    private void setDay4Data(final DayData dayData) {
+        WeatherData weatherData = dayData.getWeatherDataList().get(0);
+        TemperatureData temperatureData = dayData.getTemperatureData();
+        mDayForecastTitle4.setText(LocalDate.now().plusDays(4).getDayOfWeek()
+                .getDisplayName(TextStyle.FULL, Locale.US));
+        mDayForecastIcon4.setImageResource(getDrawableByName(weatherData.getIcon()));
+        mDayWeatherDetailsDescription4.setText(weatherData.getDescription());
+        mDayWeatherDetailsHumidity4.setText((int) Math.round(dayData.getHumidity()));
+        mDayWeatherDetailsTemperatureDay4.setText((int) Math.round(temperatureData.getDayTemperature()));
+        mDayWeatherDetailsTemperatureNight4.setText((int) Math.round(temperatureData.getNightTemperature()));
+        mDayWeatherDetailsPressure4.setText((int) Math.round(dayData.getPressure()));
+        mDayWeatherDetailsWindSpeed4.setText((int) Math.round(dayData.getSpeed()));
+        mDayWeatherDetailsWindDirection4.setText((int) Math.round(dayData.getDirection()));
+    }
+
+    private void setDay5Data(final DayData dayData) {
+        WeatherData weatherData = dayData.getWeatherDataList().get(0);
+        TemperatureData temperatureData = dayData.getTemperatureData();
+        mDayForecastTitle5.setText(LocalDate.now().plusDays(5).getDayOfWeek()
+                .getDisplayName(TextStyle.FULL, Locale.US));
+        mDayForecastIcon5.setImageResource(getDrawableByName(weatherData.getIcon()));
+        mDayWeatherDetailsDescription5.setText(weatherData.getDescription());
+        mDayWeatherDetailsHumidity5.setText((int) Math.round(dayData.getHumidity()));
+        mDayWeatherDetailsTemperatureDay5.setText((int) Math.round(temperatureData.getDayTemperature()));
+        mDayWeatherDetailsTemperatureNight5.setText((int) Math.round(temperatureData.getNightTemperature()));
+        mDayWeatherDetailsPressure5.setText((int) Math.round(dayData.getPressure()));
+        mDayWeatherDetailsWindSpeed5.setText((int) Math.round(dayData.getSpeed()));
+        mDayWeatherDetailsWindDirection5.setText((int) Math.round(dayData.getDirection()));
+    }
+
+    private void setDay6Data(final DayData dayData) {
+        WeatherData weatherData = dayData.getWeatherDataList().get(0);
+        TemperatureData temperatureData = dayData.getTemperatureData();
+        mDayForecastTitle6.setText(LocalDate.now().plusDays(6).getDayOfWeek()
+                .getDisplayName(TextStyle.FULL, Locale.US));
+        mDayForecastIcon6.setImageResource(getDrawableByName(weatherData.getIcon()));
+        mDayWeatherDetailsDescription6.setText(weatherData.getDescription());
+        mDayWeatherDetailsHumidity6.setText((int) Math.round(dayData.getHumidity()));
+        mDayWeatherDetailsTemperatureDay6.setText((int) Math.round(temperatureData.getDayTemperature()));
+        mDayWeatherDetailsTemperatureNight6.setText((int) Math.round(temperatureData.getNightTemperature()));
+        mDayWeatherDetailsPressure6.setText((int) Math.round(dayData.getPressure()));
+        mDayWeatherDetailsWindSpeed6.setText((int) Math.round(dayData.getSpeed()));
+        mDayWeatherDetailsWindDirection6.setText((int) Math.round(dayData.getDirection()));
     }
 
     private void loadPreferences() {
@@ -197,126 +315,6 @@ public class SevenDaysForecastFragment extends BaseFragment {
         loadDayWeatherDetailsHumidityPreferences();
         loadDayWeatherDetailsWindSpeedPreferences();
         loadDayWeatherDetailsWindDirectionPreferences();
-    }
-
-    private void observeDayWeatherDetailsWindDirections() {
-        mModel.getDayWeatherDetailsWindDirection1().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindDirection1.setText(value));
-        mModel.getDayWeatherDetailsWindDirection2().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindDirection2.setText(value));
-        mModel.getDayWeatherDetailsWindDirection3().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindDirection3.setText(value));
-        mModel.getDayWeatherDetailsWindDirection4().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindDirection4.setText(value));
-        mModel.getDayWeatherDetailsWindDirection5().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindDirection5.setText(value));
-        mModel.getDayWeatherDetailsWindDirection6().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindDirection6.setText(value));
-    }
-
-    private void observeDayWeatherDetailsWindSpeeds() {
-        mModel.getDayWeatherDetailsWindSpeed1().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindSpeed1.setText(value));
-        mModel.getDayWeatherDetailsWindSpeed2().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindSpeed2.setText(value));
-        mModel.getDayWeatherDetailsWindSpeed3().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindSpeed3.setText(value));
-        mModel.getDayWeatherDetailsWindSpeed4().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindSpeed4.setText(value));
-        mModel.getDayWeatherDetailsWindSpeed5().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindSpeed5.setText(value));
-        mModel.getDayWeatherDetailsWindSpeed6().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsWindSpeed6.setText(value));
-    }
-
-    private void observeDayWeatherDetailsHumidities() {
-        mModel.getDayWeatherDetailsHumidity1().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsHumidity1.setText(value));
-        mModel.getDayWeatherDetailsHumidity2().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsHumidity2.setText(value));
-        mModel.getDayWeatherDetailsHumidity3().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsHumidity3.setText(value));
-        mModel.getDayWeatherDetailsHumidity4().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsHumidity4.setText(value));
-        mModel.getDayWeatherDetailsHumidity5().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsHumidity5.setText(value));
-        mModel.getDayWeatherDetailsHumidity6().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsHumidity6.setText(value));
-    }
-
-    private void observeDayWeatherDetailsTemperatureNights() {
-        mModel.getDayWeatherDetailsTemperatureNight1().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureNight1.setText(value));
-        mModel.getDayWeatherDetailsTemperatureNight2().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureNight2.setText(value));
-        mModel.getDayWeatherDetailsTemperatureNight3().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureNight3.setText(value));
-        mModel.getDayWeatherDetailsTemperatureNight4().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureNight4.setText(value));
-        mModel.getDayWeatherDetailsTemperatureNight5().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureNight5.setText(value));
-        mModel.getDayWeatherDetailsTemperatureNight6().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureNight6.setText(value));
-    }
-
-    private void observeDayWeatherDetailsTemperatureDays() {
-        mModel.getDayWeatherDetailsTemperatureDay1().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureDay1.setText(value));
-        mModel.getDayWeatherDetailsTemperatureDay2().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureDay2.setText(value));
-        mModel.getDayWeatherDetailsTemperatureDay3().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureDay3.setText(value));
-        mModel.getDayWeatherDetailsTemperatureDay4().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureDay4.setText(value));
-        mModel.getDayWeatherDetailsTemperatureDay5().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureDay5.setText(value));
-        mModel.getDayWeatherDetailsTemperatureDay6().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsTemperatureDay6.setText(value));
-    }
-
-    private void observeDayWeatherDetailsDescriptions() {
-        mModel.getDayWeatherDetailsDescription1().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsDescription1.setText(value));
-        mModel.getDayWeatherDetailsDescription2().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsDescription2.setText(value));
-        mModel.getDayWeatherDetailsDescription3().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsDescription3.setText(value));
-        mModel.getDayWeatherDetailsDescription4().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsDescription4.setText(value));
-        mModel.getDayWeatherDetailsDescription5().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsDescription5.setText(value));
-        mModel.getDayWeatherDetailsDescription6().observe(getViewLifecycleOwner(), value ->
-                mDayWeatherDetailsDescription6.setText(value));
-    }
-
-    private void observeForecastTitles() {
-        mModel.getDayForecastTile1().observe(getViewLifecycleOwner(), value ->
-                mDayForecastTitle1.setText(value));
-        mModel.getDayForecastTile2().observe(getViewLifecycleOwner(), value ->
-                mDayForecastTitle2.setText(value));
-        mModel.getDayForecastTile3().observe(getViewLifecycleOwner(), value ->
-                mDayForecastTitle3.setText(value));
-        mModel.getDayForecastTile4().observe(getViewLifecycleOwner(), value ->
-                mDayForecastTitle4.setText(value));
-        mModel.getDayForecastTile5().observe(getViewLifecycleOwner(), value ->
-                mDayForecastTitle5.setText(value));
-        mModel.getDayForecastTile6().observe(getViewLifecycleOwner(), value ->
-                mDayForecastTitle6.setText(value));
-    }
-
-    private void observeForecastIcons() {
-        mModel.getDayForecastIcon1().observe(getViewLifecycleOwner(), value ->
-                mDayForecastIcon1.setImageResource(getDrawableByName(value)));
-        mModel.getDayForecastIcon2().observe(getViewLifecycleOwner(), value ->
-                mDayForecastIcon2.setImageResource(getDrawableByName(value)));
-        mModel.getDayForecastIcon3().observe(getViewLifecycleOwner(), value ->
-                mDayForecastIcon3.setImageResource(getDrawableByName(value)));
-        mModel.getDayForecastIcon4().observe(getViewLifecycleOwner(), value ->
-                mDayForecastIcon4.setImageResource(getDrawableByName(value)));
-        mModel.getDayForecastIcon5().observe(getViewLifecycleOwner(), value ->
-                mDayForecastIcon5.setImageResource(getDrawableByName(value)));
-        mModel.getDayForecastIcon6().observe(getViewLifecycleOwner(), value ->
-                mDayForecastIcon6.setImageResource(getDrawableByName(value)));
     }
 
     private void loadDayWeatherDetailsWindDirectionPreferences() {
