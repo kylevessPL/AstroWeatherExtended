@@ -34,6 +34,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -250,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         mModel.getToastMessage().observe(this, message ->
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
         mModel.getSnackbarMessage().observe(this, message -> {
-            mSnackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+            mSnackbar = Snackbar.make(findViewById(R.id.mainActivity), message, Snackbar.LENGTH_INDEFINITE)
                     .setAction("DISMISS", view -> {});
             mSnackbar.show();
         });
@@ -311,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
     private void setFavourite() {
         String town = mTown.getText().toString();
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        Set<String> set = mSharedPreferences.getStringSet("favourites", Collections.emptySet());
+        Set<String> set = new HashSet<>(mSharedPreferences.getStringSet("favourites", Collections.emptySet()));
         if (!set.contains(town)) {
             set.add(town);
             mFavourite.setColorFilter(R.color.red);
@@ -319,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
             set.remove(town);
             mFavourite.clearColorFilter();
         }
+        editor.putStringSet("favourites", set);
         editor.apply();
     }
 

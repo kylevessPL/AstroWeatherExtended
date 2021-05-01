@@ -165,7 +165,7 @@ public class MainViewModel extends ViewModel {
                 return;
             }
             tearDownDataUpdate();
-            if ((mLatitude != latitude || mLongtitude != longtitude || mMeasurementUnit != measurementUnit) &&
+            if ((mLatitude != latitude || mLongtitude != longtitude || !mMeasurementUnit.equals(measurementUnit)) &&
                     updateInterval.equals(UpdateInterval.DISABLED)
             ) {
                 updateData(town, latitude, longtitude, measurementUnit);

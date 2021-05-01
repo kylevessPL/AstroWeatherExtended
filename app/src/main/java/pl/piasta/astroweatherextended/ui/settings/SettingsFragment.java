@@ -97,7 +97,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mModel.getToastMessage().observe(this,
                 message -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
         mModel.getSnackbarMessage().observe(this, message -> {
-            mSnackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
+            mSnackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE)
                     .setAction("DISMISS", view -> {});
             mSnackbar.show();
         });

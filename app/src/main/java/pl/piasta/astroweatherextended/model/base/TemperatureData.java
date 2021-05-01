@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class TemperatureData {
 
-    @SerializedName("day")
-    private Double mDayTemperature;
-    @SerializedName("night")
-    private Double mNightTemperature;
+    @SerializedName("min")
+    private Double mMinTemperature;
+    @SerializedName("max")
+    private Double mMaxTemperature;
 
-    public Double getDayTemperature() {
-        return mDayTemperature;
+    public Double getMinTemperature() {
+        return mMinTemperature;
     }
 
-    public Double getNightTemperature() {
-        return mNightTemperature;
+    public Double getMaxTemperature() {
+        return mMaxTemperature;
     }
 }

@@ -113,7 +113,7 @@ public class TodayForecastFragment extends BaseFragment {
         mTodayWeatherIcon.setImageResource(getDrawableByName(weatherData.getIcon()));
         mTodayWeatherDetailsDescription.setText(weatherData.getDescription());
         mTodayWeatherDetailsHumidity.setText(String.format(Locale.US,
-                "%d %s",
+                "%d%s",
                 (int) Math.round(mainData.getHumidity()), measurementUnit.getHumidityUnit()));
         mTodayWeatherDetailsTemperature.setText(String.format(Locale.US,
                 "%d %s",
@@ -125,12 +125,12 @@ public class TodayForecastFragment extends BaseFragment {
                 "%d %s",
                 (int) Math.round(windData.getSpeed()), measurementUnit.getWindSpeedUnit()));
         mTodayWeatherDetailsWindDirection.setText(String.format(Locale.US,
-                "%d %s",
+                "%d%s",
                 (int) Math.round(windData.getDirection()), measurementUnit.getWindDirectionUnit()));
     }
 
     private int getDrawableByName(final String value) {
-        return getResources().getIdentifier(value, "drawable", requireContext().getPackageName());
+        return getResources().getIdentifier("ic_" + value, "drawable", requireActivity().getPackageName());
     }
 
     private void setPreference(CurrentWeatherDataResponse data) {

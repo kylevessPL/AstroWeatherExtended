@@ -55,18 +55,12 @@ public class SevenDaysForecastFragment extends BaseFragment {
     private TextView mDayWeatherDetailsDescription4;
     private TextView mDayWeatherDetailsDescription5;
     private TextView mDayWeatherDetailsDescription6;
-    private TextView mDayWeatherDetailsTemperatureDay1;
-    private TextView mDayWeatherDetailsTemperatureDay2;
-    private TextView mDayWeatherDetailsTemperatureDay3;
-    private TextView mDayWeatherDetailsTemperatureDay4;
-    private TextView mDayWeatherDetailsTemperatureDay5;
-    private TextView mDayWeatherDetailsTemperatureDay6;
-    private TextView mDayWeatherDetailsTemperatureNight1;
-    private TextView mDayWeatherDetailsTemperatureNight2;
-    private TextView mDayWeatherDetailsTemperatureNight3;
-    private TextView mDayWeatherDetailsTemperatureNight4;
-    private TextView mDayWeatherDetailsTemperatureNight5;
-    private TextView mDayWeatherDetailsTemperatureNight6;
+    private TextView mDayWeatherDetailsTemperature1;
+    private TextView mDayWeatherDetailsTemperature2;
+    private TextView mDayWeatherDetailsTemperature3;
+    private TextView mDayWeatherDetailsTemperature4;
+    private TextView mDayWeatherDetailsTemperature5;
+    private TextView mDayWeatherDetailsTemperature6;
     private TextView mDayWeatherDetailsHumidity1;
     private TextView mDayWeatherDetailsHumidity2;
     private TextView mDayWeatherDetailsHumidity3;
@@ -99,8 +93,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         loadWeatherDetailsTitles(root);
         loadWeatherDetailsIcons(root);
         loadWeatherDetailsDescription(root);
-        loadWeatherDetailsTemperatureDay(root);
-        loadWeatherDetailsTemperatureNight(root);
+        loadWeatherDetailsTemperature(root);
         loadWeatherDetaisHumidity(root);
         loadWeatherDetailsPressure(root);
         loadWeatherDetailsWindSpeed(root);
@@ -113,7 +106,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        observeModel();
     }
 
     @Override
@@ -164,22 +157,13 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayWeatherDetailsPressure6 = view.findViewById(R.id.day_weather_details_pressure_6);
     }
 
-    private void loadWeatherDetailsTemperatureNight(final View view) {
-        mDayWeatherDetailsTemperatureNight1 = view.findViewById(R.id.day_weather_details_temperature_night_1);
-        mDayWeatherDetailsTemperatureNight2 = view.findViewById(R.id.day_weather_details_temperature_night_2);
-        mDayWeatherDetailsTemperatureNight3 = view.findViewById(R.id.day_weather_details_temperature_night_3);
-        mDayWeatherDetailsTemperatureNight4 = view.findViewById(R.id.day_weather_details_temperature_night_4);
-        mDayWeatherDetailsTemperatureNight5 = view.findViewById(R.id.day_weather_details_temperature_night_5);
-        mDayWeatherDetailsTemperatureNight6 = view.findViewById(R.id.day_weather_details_temperature_night_6);
-    }
-
-    private void loadWeatherDetailsTemperatureDay(final View view) {
-        mDayWeatherDetailsTemperatureDay1 = view.findViewById(R.id.day_weather_details_temperature_day_1);
-        mDayWeatherDetailsTemperatureDay2 = view.findViewById(R.id.day_weather_details_temperature_day_2);
-        mDayWeatherDetailsTemperatureDay3 = view.findViewById(R.id.day_weather_details_temperature_day_3);
-        mDayWeatherDetailsTemperatureDay4 = view.findViewById(R.id.day_weather_details_temperature_day_4);
-        mDayWeatherDetailsTemperatureDay5 = view.findViewById(R.id.day_weather_details_temperature_day_5);
-        mDayWeatherDetailsTemperatureDay6 = view.findViewById(R.id.day_weather_details_temperature_day_6);
+    private void loadWeatherDetailsTemperature(final View view) {
+        mDayWeatherDetailsTemperature1 = view.findViewById(R.id.day_weather_details_temperature_1);
+        mDayWeatherDetailsTemperature2 = view.findViewById(R.id.day_weather_details_temperature_2);
+        mDayWeatherDetailsTemperature3 = view.findViewById(R.id.day_weather_details_temperature_3);
+        mDayWeatherDetailsTemperature4 = view.findViewById(R.id.day_weather_details_temperature_4);
+        mDayWeatherDetailsTemperature5 = view.findViewById(R.id.day_weather_details_temperature_5);
+        mDayWeatherDetailsTemperature6 = view.findViewById(R.id.day_weather_details_temperature_6);
     }
 
     private void loadWeatherDetailsDescription(final View view) {
@@ -236,10 +220,8 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayForecastIcon1.setImageResource(getDrawableByName(weatherData.getIcon()));
         mDayWeatherDetailsDescription1.setText(weatherData.getDescription());
         mDayWeatherDetailsHumidity1.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
-        mDayWeatherDetailsTemperatureDay1.setText(
-                getTemperatureText(temperatureData.getDayTemperature(), measurementUnit));
-        mDayWeatherDetailsTemperatureNight1.setText(
-                getTemperatureText(temperatureData.getNightTemperature(), measurementUnit));
+        mDayWeatherDetailsTemperature1.setText(
+                getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
         mDayWeatherDetailsPressure1.setText(getPressureText((dayData.getPressure()), measurementUnit));
         mDayWeatherDetailsWindSpeed1.setText(getWindSpeedText((dayData.getWindSpeed()), measurementUnit));
         mDayWeatherDetailsWindDirection1.setText(getWindDirectionText((dayData.getWindDirection()), measurementUnit));
@@ -252,10 +234,8 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayForecastIcon2.setImageResource(getDrawableByName(weatherData.getIcon()));
         mDayWeatherDetailsDescription2.setText(weatherData.getDescription());
         mDayWeatherDetailsHumidity2.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
-        mDayWeatherDetailsTemperatureDay2.setText(
-                getTemperatureText(temperatureData.getDayTemperature(), measurementUnit));
-        mDayWeatherDetailsTemperatureNight2.setText(
-                getTemperatureText(temperatureData.getNightTemperature(), measurementUnit));
+        mDayWeatherDetailsTemperature2.setText(
+                getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
         mDayWeatherDetailsPressure2.setText(getPressureText((dayData.getPressure()), measurementUnit));
         mDayWeatherDetailsWindSpeed2.setText(getWindSpeedText((dayData.getWindSpeed()), measurementUnit));
         mDayWeatherDetailsWindDirection2.setText(getWindDirectionText((dayData.getWindDirection()), measurementUnit));
@@ -268,10 +248,8 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayForecastIcon3.setImageResource(getDrawableByName(weatherData.getIcon()));
         mDayWeatherDetailsDescription3.setText(weatherData.getDescription());
         mDayWeatherDetailsHumidity3.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
-        mDayWeatherDetailsTemperatureDay3.setText(
-                getTemperatureText(temperatureData.getDayTemperature(), measurementUnit));
-        mDayWeatherDetailsTemperatureNight3.setText(
-                getTemperatureText(temperatureData.getNightTemperature(), measurementUnit));
+        mDayWeatherDetailsTemperature3.setText(
+                getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
         mDayWeatherDetailsPressure3.setText(getPressureText((dayData.getPressure()), measurementUnit));
         mDayWeatherDetailsWindSpeed3.setText(getWindSpeedText((dayData.getWindSpeed()), measurementUnit));
         mDayWeatherDetailsWindDirection3.setText(getWindDirectionText((dayData.getWindDirection()), measurementUnit));
@@ -284,10 +262,8 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayForecastIcon4.setImageResource(getDrawableByName(weatherData.getIcon()));
         mDayWeatherDetailsDescription4.setText(weatherData.getDescription());
         mDayWeatherDetailsHumidity4.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
-        mDayWeatherDetailsTemperatureDay4.setText(
-                getTemperatureText(temperatureData.getDayTemperature(), measurementUnit));
-        mDayWeatherDetailsTemperatureNight4.setText(
-                getTemperatureText(temperatureData.getNightTemperature(), measurementUnit));
+        mDayWeatherDetailsTemperature4.setText(
+                getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
         mDayWeatherDetailsPressure4.setText(getPressureText((dayData.getPressure()), measurementUnit));
         mDayWeatherDetailsWindSpeed4.setText(getWindSpeedText((dayData.getWindSpeed()), measurementUnit));
         mDayWeatherDetailsWindDirection4.setText(getWindDirectionText((dayData.getWindDirection()), measurementUnit));
@@ -300,10 +276,8 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayForecastIcon5.setImageResource(getDrawableByName(weatherData.getIcon()));
         mDayWeatherDetailsDescription5.setText(weatherData.getDescription());
         mDayWeatherDetailsHumidity5.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
-        mDayWeatherDetailsTemperatureDay5.setText(
-                getTemperatureText(temperatureData.getDayTemperature(), measurementUnit));
-        mDayWeatherDetailsTemperatureNight5.setText(
-                getTemperatureText(temperatureData.getNightTemperature(), measurementUnit));
+        mDayWeatherDetailsTemperature5.setText(
+                getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
         mDayWeatherDetailsPressure5.setText(getPressureText((dayData.getPressure()), measurementUnit));
         mDayWeatherDetailsWindSpeed5.setText(getWindSpeedText((dayData.getWindSpeed()), measurementUnit));
         mDayWeatherDetailsWindDirection5.setText(getWindDirectionText((dayData.getWindDirection()), measurementUnit));
@@ -316,10 +290,8 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayForecastIcon6.setImageResource(getDrawableByName(weatherData.getIcon()));
         mDayWeatherDetailsDescription6.setText(weatherData.getDescription());
         mDayWeatherDetailsHumidity6.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
-        mDayWeatherDetailsTemperatureDay6.setText(
-                getTemperatureText(temperatureData.getDayTemperature(), measurementUnit));
-        mDayWeatherDetailsTemperatureNight6.setText(
-                getTemperatureText(temperatureData.getNightTemperature(), measurementUnit));
+        mDayWeatherDetailsTemperature6.setText(
+                getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
         mDayWeatherDetailsPressure6.setText(getPressureText((dayData.getPressure()), measurementUnit));
         mDayWeatherDetailsWindSpeed6.setText(getWindSpeedText((dayData.getWindSpeed()), measurementUnit));
         mDayWeatherDetailsWindDirection6.setText(getWindDirectionText((dayData.getWindDirection()), measurementUnit));
@@ -334,16 +306,16 @@ public class SevenDaysForecastFragment extends BaseFragment {
         return (int) Math.round(humidity) + measurementUnit.getHumidityUnit();
     }
 
-    private String getTemperatureText(double temperature, MeasurementUnit measurementUnit) {
-        return (int) Math.round(temperature) + measurementUnit.getTemperatureUnit();
+    private String getTemperatureText(double minTemperature, double maxTemperature, MeasurementUnit measurementUnit) {
+        return (int) Math.round((minTemperature + maxTemperature) / 2) + " " + measurementUnit.getTemperatureUnit();
     }
 
     private String getPressureText(double pressure, MeasurementUnit measurementUnit) {
-        return (int) Math.round(pressure) + measurementUnit.getPressureUnit();
+        return (int) Math.round(pressure) + " " + measurementUnit.getPressureUnit();
     }
 
     private String getWindSpeedText(double windSpeed, MeasurementUnit measurementUnit) {
-        return (int) Math.round(windSpeed) + measurementUnit.getWindSpeedUnit();
+        return (int) Math.round(windSpeed) + " " + measurementUnit.getWindSpeedUnit();
     }
 
     private String getWindDirectionText(double windDirection, MeasurementUnit measurementUnit) {
@@ -363,7 +335,10 @@ public class SevenDaysForecastFragment extends BaseFragment {
     }
 
     private int getDrawableByName(final String value) {
-        return getResources().getIdentifier(value, "drawable", requireContext().getPackageName());
+        return getResources().getIdentifier(
+                "ic_" + value.replaceAll(".$", "n"),
+                "drawable",
+                requireActivity().getPackageName());
     }
 
     private void setPreference(DailyForecastResponse data) {

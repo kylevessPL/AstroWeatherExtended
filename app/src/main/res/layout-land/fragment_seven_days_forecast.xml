@@ -50,7 +50,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_04d" />
+                android:src="@drawable/ic_04n" />
 
         </TableRow>
 
@@ -90,36 +90,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_day_32" />
+                android:src="@drawable/ic_temperature_32" />
 
             <TextView
-                android:id="@+id/day_weather_details_temperature_day_5"
+                android:id="@+id/day_weather_details_temperature_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 C"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_night_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_temperature_night_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10 C"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -261,7 +238,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_04d" />
+                android:src="@drawable/ic_04n" />
 
         </TableRow>
 
@@ -301,36 +278,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_day_32" />
+                android:src="@drawable/ic_temperature_32" />
 
             <TextView
-                android:id="@+id/day_weather_details_temperature_day_4"
+                android:id="@+id/day_weather_details_temperature_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 C"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_night_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_temperature_night_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10 C"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -373,7 +327,7 @@
                 android:src="@drawable/ic_pressure_32" />
 
             <TextView
-                android:id="@+id/day_weather_details_pressure_3"
+                android:id="@+id/day_weather_details_pressure_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="18 %"
@@ -472,7 +426,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_04d" />
+                android:src="@drawable/ic_04n" />
 
         </TableRow>
 
@@ -512,36 +466,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_day_32" />
+                android:src="@drawable/ic_temperature_32" />
 
             <TextView
-                android:id="@+id/day_weather_details_temperature_day_6"
+                android:id="@+id/day_weather_details_temperature_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 C"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_night_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_temperature_night_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10 C"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -683,7 +614,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_04d" />
+                android:src="@drawable/ic_04n" />
 
         </TableRow>
 
@@ -723,36 +654,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_day_32" />
+                android:src="@drawable/ic_temperature_32" />
 
             <TextView
-                android:id="@+id/day_weather_details_temperature_day_1"
+                android:id="@+id/day_weather_details_temperature_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 C"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_night_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_temperature_night_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10 C"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -894,7 +802,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_04d" />
+                android:src="@drawable/ic_04n" />
 
         </TableRow>
 
@@ -934,36 +842,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_day_32" />
+                android:src="@drawable/ic_temperature_32" />
 
             <TextView
-                android:id="@+id/day_weather_details_temperature_day_2"
+                android:id="@+id/day_weather_details_temperature_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 C"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_night_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_temperature_night_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10 C"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -1105,7 +990,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_04d" />
+                android:src="@drawable/ic_04n" />
 
         </TableRow>
 
@@ -1145,36 +1030,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_day_32" />
+                android:src="@drawable/ic_temperature_32" />
 
             <TextView
-                android:id="@+id/day_weather_details_temperature_day_3"
+                android:id="@+id/day_weather_details_temperature_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20 C"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_night_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_temperature_night_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10 C"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 

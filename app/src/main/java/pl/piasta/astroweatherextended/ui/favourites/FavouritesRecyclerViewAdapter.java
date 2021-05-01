@@ -55,6 +55,8 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
 
         public ViewHolder(View view) {
             super(view);
+            view.setClickable(true);
+            view.setOnClickListener(this);
             mView = view;
             mContent = view.findViewById(R.id.content);
             mFavouriteSet = view.findViewById(R.id.favourite_set);
