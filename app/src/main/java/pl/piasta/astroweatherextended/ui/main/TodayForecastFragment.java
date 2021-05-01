@@ -87,7 +87,9 @@ public class TodayForecastFragment extends BaseFragment {
                         mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
         String json = mPreferences.getString("currentWeatherData", "");
         CurrentWeatherDataResponse data = gson.fromJson(json, CurrentWeatherDataResponse.class);
-        setCurrentWeather(data, measurementUnit);
+        if (data != null) {
+            setCurrentWeather(data, measurementUnit);
+        }
     }
 
     private void observeModel() {

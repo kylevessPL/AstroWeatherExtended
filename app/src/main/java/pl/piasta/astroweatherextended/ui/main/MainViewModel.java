@@ -66,7 +66,6 @@ public class MainViewModel extends ViewModel {
 
     public MainViewModel() {
         mScheduledExecutor.setRemoveOnCancelPolicy(true);
-        setCurrentTime();
     }
 
     public MutableLiveData<String> getTime() {
@@ -253,7 +252,7 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    private void setCurrentTime() {
+    public void setCurrentTime() {
         String timeString = getCurrentTimeString();
         mTime.setValue(timeString);
     }

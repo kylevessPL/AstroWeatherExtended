@@ -357,7 +357,9 @@ public class SevenDaysForecastFragment extends BaseFragment {
                         mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
         String json = mPreferences.getString("dailyForecastData", "");
         DailyForecastResponse data = gson.fromJson(json, DailyForecastResponse.class);
-        setDailyForecast(data, measurementUnit);
+        if (data != null) {
+            setDailyForecast(data, measurementUnit);
+        }
     }
 
     private int getDrawableByName(final String value) {

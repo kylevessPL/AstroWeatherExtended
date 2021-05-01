@@ -39,6 +39,7 @@ import java.util.Objects;
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
+import pl.piasta.astroweatherextended.util.CheckNetwork;
 import pl.piasta.astroweatherextended.util.GlobalVariables;
 
 public class MainActivity extends AppCompatActivity {
@@ -86,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
         mCard = findViewById(R.id.card);
         setupListeners();
         observeModel();
+        CheckNetwork network = new CheckNetwork(getApplicationContext());
+        network.registerNetworkCallback();
+        mModel.setCurrentTime();
     }
 
     @Override
@@ -304,9 +308,11 @@ public class MainActivity extends AppCompatActivity {
 
     private AlertDialog buildExitAppAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        return builder.setMessage("Are you sure you want to exit?")
+        return builder
+                .setTitle("AstroWeather Extended requires an Internet connection")
+                .setMessage("Application will exit")
                 .setCancelable(false)
-                .setNeutralButton("Ok", (dialog, id) -> finish())
+                .setPositiveButton("OK", (dialog, id) -> finish())
                 .create();
     }
 }
