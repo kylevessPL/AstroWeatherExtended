@@ -14,36 +14,24 @@ public class SettingsViewModel extends ViewModel {
 
     private final GeocodingRepository mGeocodingRepository = new GeocodingRepository();
 
-    private LiveData<GeocodingResponse> mGeocodingResponse;
-    private LiveData<ReverseGeocodingResponse> mReverseGeocodingResponse;
-    private SingleLiveEvent<String> mToastMessage;
-    private SingleLiveEvent<String> mSnackbarMessage;
+    private LiveData<GeocodingResponse> mGeocodingResponse = new MutableLiveData<>();
+    private LiveData<ReverseGeocodingResponse> mReverseGeocodingResponse = new MutableLiveData<>();
+    private final SingleLiveEvent<String> mToastMessage = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mSnackbarMessage = new SingleLiveEvent<>();
 
-    public LiveData<GeocodingResponse> getCoordinatesResponse() {
-        if (mGeocodingResponse == null) {
-            mGeocodingResponse = new MutableLiveData<>();
-        }
+    public LiveData<GeocodingResponse> getGeocodingResponse() {
         return mGeocodingResponse;
     }
 
-    public LiveData<ReverseGeocodingResponse> getReverseCoordinatesResponse() {
-        if (mReverseGeocodingResponse == null) {
-            mReverseGeocodingResponse = new MutableLiveData<>();
-        }
+    public LiveData<ReverseGeocodingResponse> getReverseGeocodingResponse() {
         return mReverseGeocodingResponse;
     }
 
-    public LiveData<String> getToastMessage() {
-        if (mToastMessage == null) {
-            mToastMessage = new SingleLiveEvent<>();
-        }
+    public SingleLiveEvent<String> getToastMessage() {
         return mToastMessage;
     }
 
-    public LiveData<String> getSnackbarMessage() {
-        if (mSnackbarMessage == null) {
-            mSnackbarMessage = new SingleLiveEvent<>();
-        }
+    public SingleLiveEvent<String> getSnackbarMessage() {
         return mSnackbarMessage;
     }
 

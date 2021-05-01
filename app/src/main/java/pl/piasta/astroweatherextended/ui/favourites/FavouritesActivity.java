@@ -67,7 +67,7 @@ public class FavouritesActivity extends AppCompatActivity {
     }
 
     private void observeModel() {
-        mModel.getCoordinatesResponse().observe(this, this::setCoordinatesData);
+        mModel.getGeocodingResponse().observe(this, this::setCoordinatesData);
         mModel.getToastMessage().observe(this,
                 message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
         mModel.getSnackbarMessage().observe(this,

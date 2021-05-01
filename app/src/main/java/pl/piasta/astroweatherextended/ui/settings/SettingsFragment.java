@@ -92,8 +92,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void observeModel() {
-        mModel.getCoordinatesResponse().observe(this, this::setCoordinatesData);
-        mModel.getReverseCoordinatesResponse().observe(this, this::setTownData);
+        mModel.getGeocodingResponse().observe(this, this::setCoordinatesData);
+        mModel.getReverseGeocodingResponse().observe(this, this::setTownData);
         mModel.getToastMessage().observe(this,
                 message -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
         mModel.getSnackbarMessage().observe(this, message -> {

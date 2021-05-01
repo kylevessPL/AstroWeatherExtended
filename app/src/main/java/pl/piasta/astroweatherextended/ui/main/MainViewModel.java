@@ -39,24 +39,24 @@ public class MainViewModel extends ViewModel {
     private final ScheduledThreadPoolExecutor mScheduledExecutor = new ScheduledThreadPoolExecutor(1);
     private final WeatherRepository mWeatherRepository = new WeatherRepository();
 
-    private MutableLiveData<String> mTime;
-    private MutableLiveData<String> mLastUpdateCheck;
-    private MutableLiveData<String> mSunRiseTime;
-    private MutableLiveData<String> mSunRiseAzimuth;
-    private MutableLiveData<String> mSunSetTime;
-    private MutableLiveData<String> mSunSetAzimuth;
-    private MutableLiveData<String> mSunDuskTime;
-    private MutableLiveData<String> mSunDawnTime;
-    private MutableLiveData<String> mMoonRiseTime;
-    private MutableLiveData<String> mMoonSetTime;
-    private MutableLiveData<String> mNewMoonDate;
-    private MutableLiveData<String> mFullMoonDate;
-    private MutableLiveData<String> mMoonPhaseValue;
-    private MutableLiveData<String> mMoonLunarMonthDay;
-    private LiveData<CurrentWeatherDataResponse> mCurrentWeatherData;
-    private LiveData<DailyForecastResponse> mDailyForecastData;
-    private SingleLiveEvent<String> mToastMessage;
-    private SingleLiveEvent<String> mSnackbarMessage;
+    private final MutableLiveData<String> mTime = new MutableLiveData<>();
+    private final MutableLiveData<String> mLastUpdateCheck = new MutableLiveData<>();
+    private final MutableLiveData<String> mSunRiseTime = new MutableLiveData<>();
+    private final MutableLiveData<String> mSunRiseAzimuth = new MutableLiveData<>();
+    private final MutableLiveData<String> mSunSetTime = new MutableLiveData<>();
+    private final MutableLiveData<String> mSunSetAzimuth = new MutableLiveData<>();
+    private final MutableLiveData<String> mSunDuskTime = new MutableLiveData<>();
+    private final MutableLiveData<String> mSunDawnTime = new MutableLiveData<>();
+    private final MutableLiveData<String> mMoonRiseTime = new MutableLiveData<>();
+    private final MutableLiveData<String> mMoonSetTime = new MutableLiveData<>();
+    private final MutableLiveData<String> mNewMoonDate = new MutableLiveData<>();
+    private final MutableLiveData<String> mFullMoonDate = new MutableLiveData<>();
+    private final MutableLiveData<String> mMoonPhaseValue = new MutableLiveData<>();
+    private final MutableLiveData<String> mMoonLunarMonthDay = new MutableLiveData<>();
+    private LiveData<CurrentWeatherDataResponse> mCurrentWeatherData = new MutableLiveData<>();
+    private LiveData<DailyForecastResponse> mDailyForecastData = new MutableLiveData<>();
+    private final SingleLiveEvent<String> mToastMessage = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mSnackbarMessage = new SingleLiveEvent<>();
 
     private ScheduledFuture<?> mUpdateTask;
     private UpdateInterval mUpdateInterval;
@@ -69,128 +69,74 @@ public class MainViewModel extends ViewModel {
     }
 
     public MutableLiveData<String> getTime() {
-        if (mTime == null) {
-            mTime = new MutableLiveData<>();
-        }
         return mTime;
     }
 
     public MutableLiveData<String> getLastUpdateCheck() {
-        if (mLastUpdateCheck == null) {
-            mLastUpdateCheck = new MutableLiveData<>();
-        }
         return mLastUpdateCheck;
     }
 
     public MutableLiveData<String> getSunRiseTime() {
-        if (mSunRiseTime == null) {
-            mSunRiseTime = new MutableLiveData<>();
-        }
         return mSunRiseTime;
     }
 
     public MutableLiveData<String> getSunRiseAzimuth() {
-        if (mSunRiseAzimuth == null) {
-            mSunRiseAzimuth = new MutableLiveData<>();
-        }
         return mSunRiseAzimuth;
     }
 
     public MutableLiveData<String> getSunSetTime() {
-        if (mSunSetTime == null) {
-            mSunSetTime = new MutableLiveData<>();
-        }
         return mSunSetTime;
     }
 
     public MutableLiveData<String> getSunSetAzimuth() {
-        if (mSunSetAzimuth == null) {
-            mSunSetAzimuth = new MutableLiveData<>();
-        }
         return mSunSetAzimuth;
     }
 
     public MutableLiveData<String> getSunDuskTime() {
-        if (mSunDuskTime == null) {
-            mSunDuskTime = new MutableLiveData<>();
-        }
         return mSunDuskTime;
     }
 
     public MutableLiveData<String> getSunDawnTime() {
-        if (mSunDawnTime == null) {
-            mSunDawnTime = new MutableLiveData<>();
-        }
         return mSunDawnTime;
     }
 
     public MutableLiveData<String> getMoonRiseTime() {
-        if (mMoonRiseTime == null) {
-            mMoonRiseTime = new MutableLiveData<>();
-        }
         return mMoonRiseTime;
     }
 
     public MutableLiveData<String> getMoonSetTime() {
-        if (mMoonSetTime == null) {
-            mMoonSetTime = new MutableLiveData<>();
-        }
         return mMoonSetTime;
     }
 
     public MutableLiveData<String> getNewMoonDate() {
-        if (mNewMoonDate == null) {
-            mNewMoonDate = new MutableLiveData<>();
-        }
         return mNewMoonDate;
     }
 
     public MutableLiveData<String> getFullMoonDate() {
-        if (mFullMoonDate == null) {
-            mFullMoonDate = new MutableLiveData<>();
-        }
         return mFullMoonDate;
     }
 
     public MutableLiveData<String> getMoonPhaseValue() {
-        if (mMoonPhaseValue == null) {
-            mMoonPhaseValue = new MutableLiveData<>();
-        }
         return mMoonPhaseValue;
     }
 
     public MutableLiveData<String> getMoonLunarMonthDay() {
-        if (mMoonLunarMonthDay == null) {
-            mMoonLunarMonthDay = new MutableLiveData<>();
-        }
         return mMoonLunarMonthDay;
     }
 
     public LiveData<CurrentWeatherDataResponse> getCurrentWeatherData() {
-        if (mCurrentWeatherData == null) {
-            mCurrentWeatherData = new MutableLiveData<>();
-        }
         return mCurrentWeatherData;
     }
 
     public LiveData<DailyForecastResponse> getDailyForecastData() {
-        if (mDailyForecastData == null) {
-            mDailyForecastData = new MutableLiveData<>();
-        }
         return mDailyForecastData;
     }
 
     public SingleLiveEvent<String> getToastMessage() {
-        if (mToastMessage == null) {
-            mToastMessage = new SingleLiveEvent<>();
-        }
         return mToastMessage;
     }
 
     public SingleLiveEvent<String> getSnackbarMessage() {
-        if (mSnackbarMessage == null) {
-            mSnackbarMessage = new SingleLiveEvent<>();
-        }
         return mSnackbarMessage;
     }
 

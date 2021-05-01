@@ -35,6 +35,7 @@ import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
 
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
@@ -212,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupListeners() {
         Animation rotation = createRefreshAnimation();
         mRefreshButton.setOnClickListener(button -> button.startAnimation(rotation));
+        mFavourite.setOnClickListener(view -> setFavourite());
     }
 
     private Animation createRefreshAnimation() {
@@ -264,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         this.mLongitude.setText(longtitude);
         this.mLastUpdateCheck.setText(lastUpdateCheck);
         boolean favourite = mSharedPreferences.getStringSet("favourites", Collections.emptySet())
-                .contains(town);
+                .contains(mTown.getText().toString());
         if (favourite) {
             mFavourite.setColorFilter(R.color.red);
             return;
@@ -304,6 +306,20 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("temperatureUnit", mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT));
         editor.apply();
         mModel.setOfflineDataUseSnackbarMessage();
+    }
+
+    private void setFavourite() {
+        String town = mTown.getText().toString();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        Set<String> set = mSharedPreferences.getStringSet("favourites", Collections.emptySet());
+        if (!set.contains(town)) {
+            set.add(town);
+            mFavourite.setColorFilter(R.color.red);
+        } else {
+            set.remove(town);
+            mFavourite.clearColorFilter();
+        }
+        editor.apply();
     }
 
     private AlertDialog buildExitAppAlert() {
