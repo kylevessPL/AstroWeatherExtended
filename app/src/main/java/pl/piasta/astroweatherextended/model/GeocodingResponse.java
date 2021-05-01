@@ -2,7 +2,7 @@ package pl.piasta.astroweatherextended.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CoordinatesResponse {
+public class GeocodingResponse {
 
     @SerializedName("name")
     private String mTown;

@@ -37,16 +37,18 @@ import java.util.Collections;
 import java.util.Objects;
 
 import pl.piasta.astroweatherextended.R;
+import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
 import pl.piasta.astroweatherextended.util.GlobalVariables;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String SYNC_FREQUENCY_DEFAULT = "3";
-    public static final String TOWN_DEFAULT = "Warszawa";
-    public static final String LATITUDE_DEFAULT = "52.229722";
-    public static final String LONGTITUDE_DEFAULT = "21.011667";
-    public static final boolean AUTO_SYNC_DEFAULT = false;
+    private static final String SYNC_FREQUENCY_DEFAULT = "3";
+    private static final String TOWN_DEFAULT = "Warszawa, PL";
+    private static final String LATITUDE_DEFAULT = "52.229722";
+    private static final String LONGTITUDE_DEFAULT = "21.011667";
+    private static final String TEMPERATURE_UNIT_DEFAULT = "0";
+    private static final boolean AUTO_SYNC_DEFAULT = false;
 
     private MainViewModel mModel;
     private BroadcastReceiver dateTimeBroadcastReceiver;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView mLongitude;
     private ImageButton mRefreshButton;
     private CardView mCard;
+
+    private Snackbar mSnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +179,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupAutoUpdate() {
         String town = mTown.getText().toString();
+        double latitude = Double.parseDouble(mLatitude.getText().toString());
+        double longtitude = Double.parseDouble(mLongitude.getText().toString());
+        MeasurementUnit measurementUnit =
+                MeasurementUnit.values()[Integer.parseInt(
+                        mSharedPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
         UpdateInterval updateInterval = UpdateInterval.DISABLED;
         int delay = 0;
         boolean autoSync = mSharedPreferences.getBoolean("auto_sync", AUTO_SYNC_DEFAULT);
@@ -192,9 +201,8 @@ public class MainActivity extends AppCompatActivity {
             if (diff > 0) {
                 delay = (int) diff;
             }
-
         }
-        mModel.setupDataUpdate(updateInterval, delay, town);
+        mModel.setupDataUpdate(updateInterval, delay, town, latitude, longtitude, measurementUnit);
     }
 
     private void setupListeners() {
@@ -224,27 +232,33 @@ public class MainActivity extends AppCompatActivity {
     private void observeModel() {
         mModel.getTime().observe(this, mTime::setText);
         mModel.getLastUpdateCheck().observe(this, text -> {
+            if (mSnackbar != null) {
+                mSnackbar.dismiss();
+            }
             mLastUpdateCheck.setText(text);
             DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-            mPreferences.edit()
-                    .putString("lastUpdateCheck", LocalDateTime.parse(text, formatter).toString())
-                    .apply();
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putString("lastUpdateCheck", LocalDateTime.parse(text, formatter).toString());
+            editor.apply();
         });
         mModel.getToastMessage().observe(this, message ->
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
-        mModel.getSnackbarMessage().observe(this,
-                message -> Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-                        .setAction("DISMISS", view -> {})
-                        .show());
+        mModel.getSnackbarMessage().observe(this, message -> {
+            mSnackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+                    .setAction("DISMISS", view -> {});
+            mSnackbar.show();
+        });
     }
 
     private void loadPreferences() {
         String town = mSharedPreferences.getString("town", TOWN_DEFAULT);
         String latitude = mSharedPreferences.getString("latitude", LATITUDE_DEFAULT);
         String longtitude = mSharedPreferences.getString("longtitude", LONGTITUDE_DEFAULT);
+        String lastUpdateCheck = mSharedPreferences.getString("lastUpdateCheck", LocalDateTime.now().toString());
         this.mTown.setText(town);
         this.mLatitude.setText(latitude);
         this.mLongitude.setText(longtitude);
+        this.mLastUpdateCheck.setText(lastUpdateCheck);
         boolean favourite = mSharedPreferences.getStringSet("favourites", Collections.emptySet())
                 .contains(town);
         if (favourite) {
@@ -255,13 +269,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateData() {
+        String town = mTown.getText().toString();
         double latitude = Double.parseDouble(mLatitude.getText().toString());
         double longtitude = Double.parseDouble(mLongitude.getText().toString());
-        mModel.refreshData(latitude, longtitude);
+        MeasurementUnit measurementUnit =
+                MeasurementUnit.values()[Integer.parseInt(
+                        mSharedPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+        mModel.refreshData(town, latitude, longtitude, measurementUnit);
     }
 
     private void checkDataState() {
         if (GlobalVariables.sIsNetworkConnected) {
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putString("town", mSharedPreferences.getString("town", TOWN_DEFAULT));
+            editor.putString("latitude", mSharedPreferences.getString("latitude", LATITUDE_DEFAULT));
+            editor.putString("longtitude", mSharedPreferences.getString("longtitude", LONGTITUDE_DEFAULT));
+            editor.putString("temperatureUnit", mSharedPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT));
+            editor.apply();
             return;
         }
         if (mPreferences.getAll().isEmpty()) {
@@ -273,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("town", mPreferences.getString("town", TOWN_DEFAULT));
         editor.putString("latitude", mPreferences.getString("latitude", LATITUDE_DEFAULT));
         editor.putString("longtitude", mPreferences.getString("longtitude", LONGTITUDE_DEFAULT));
+        editor.putString("temperatureUnit", mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT));
         editor.apply();
         mModel.setOfflineDataUseSnackbarMessage();
     }
@@ -281,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         return builder.setMessage("Are you sure you want to exit?")
                 .setCancelable(false)
-                .setNeutralButton("Ok", (dialog, id) -> MainActivity.this.finish())
+                .setNeutralButton("Ok", (dialog, id) -> finish())
                 .create();
     }
 }

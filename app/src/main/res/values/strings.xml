@@ -44,4 +44,5 @@
     <string name="longtitude_default">21.011667</string>
     <string name="latitude_title">Latitude</string>
     <string name="longtitude_title">Longtitude</string>
+    <string name="coordinates_set_title">Set coordinates</string>
 </resources>

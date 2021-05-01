@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import pl.piasta.astroweatherextended.R;
-import pl.piasta.astroweatherextended.model.CoordinatesResponse;
+import pl.piasta.astroweatherextended.model.GeocodingResponse;
 
 public class FavouritesActivity extends AppCompatActivity {
 
@@ -76,7 +76,7 @@ public class FavouritesActivity extends AppCompatActivity {
                         .show());
     }
 
-    private void setCoordinatesData(CoordinatesResponse coordinatesData) {
+    private void setCoordinatesData(GeocodingResponse coordinatesData) {
         SharedPreferences.Editor editor = mPreferences.edit();
         NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
         numberFormat.setMinimumFractionDigits(6);

@@ -11,19 +11,34 @@ public enum MeasurementUnit {
     @SerializedName("standard")
     STANDARD("K", "m/s");
 
+    private static final String sHumidityUnit = "%";
+    private static final String sPressureUnit = "hPa";
+    private static final String sWindDirectionUnit = "°";
     private final String mTemperatureUnit;
-    private final String mWindUnit;
+    private final String mWindSpeedUnit;
 
-    MeasurementUnit(String temperatureUnit, String windUnit) {
+    MeasurementUnit(String temperatureUnit, String windSpeedUnit) {
         this.mTemperatureUnit = temperatureUnit;
-        this.mWindUnit = windUnit;
+        this.mWindSpeedUnit = windSpeedUnit;
+    }
+
+    public String getHumidityUnit() {
+        return sHumidityUnit;
+    }
+
+    public String getPressureUnit() {
+        return sPressureUnit;
+    }
+
+    public String getWindDirectionUnit() {
+        return sWindDirectionUnit;
     }
 
     public String getTemperatureUnit() {
         return mTemperatureUnit;
     }
 
-    public String getWindUnit() {
-        return mWindUnit;
+    public String getWindSpeedUnit() {
+        return mWindSpeedUnit;
     }
 }

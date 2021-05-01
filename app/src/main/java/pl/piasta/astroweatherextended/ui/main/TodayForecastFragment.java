@@ -12,18 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
+
+import java.util.Locale;
+
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.model.CurrentWeatherDataResponse;
 import pl.piasta.astroweatherextended.model.base.MainData;
 import pl.piasta.astroweatherextended.model.base.WeatherData;
 import pl.piasta.astroweatherextended.model.base.WindData;
 import pl.piasta.astroweatherextended.ui.base.BaseFragment;
+import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class TodayForecastFragment extends BaseFragment {
 
     private static final String FRAGMENT_NAME = "TODAY";
+    private static final String TEMPERATURE_UNIT_DEFAULT = "0";
 
     private MainViewModel mModel;
     private SharedPreferences mPreferences;
@@ -59,10 +65,13 @@ public class TodayForecastFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!mPreferences.getAll().isEmpty()) {
-            loadPreferences();
-        }
         observeModel();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPreferences();
     }
 
     @NonNull
@@ -72,44 +81,61 @@ public class TodayForecastFragment extends BaseFragment {
     }
 
     private void loadPreferences() {
-        mTodayWeatherIcon.setImageResource(getDrawableByName(
-                mPreferences.getString("todayWeatherIcon", "")));
-        mTodayWeatherHeaderTemperature.setText(
-                mPreferences.getString("todayWeatherHeaderTemperature", ""));
-        mTodayWeatherHeaderMain.setText(
-                mPreferences.getString("todayWeatherHeaderMain", ""));
-        mTodayWeatherDetailsDescription.setText(
-                mPreferences.getString("todayWeatherDetailsDescription", ""));
-        mTodayWeatherDetailsTemperature.setText(
-                mPreferences.getString("todayWeatherDetailsTemperature", ""));
-        mTodayWeatherDetailsHumidity.setText(
-                mPreferences.getString("todayWeatherDetailsHumidity", ""));
-        mTodayWeatherDetailsWindSpeed.setText(
-                mPreferences.getString("todayWeatherDetailsWindSpeed", ""));
-        mTodayWeatherDetailsWindDirection.setText(
-                mPreferences.getString("todayWeatherDetailsWindDirection", ""));
+        Gson gson = new Gson();
+        MeasurementUnit measurementUnit =
+                MeasurementUnit.values()[Integer.parseInt(
+                        mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+        String json = mPreferences.getString("currentWeatherData", "");
+        CurrentWeatherDataResponse data = gson.fromJson(json, CurrentWeatherDataResponse.class);
+        setCurrentWeather(data, measurementUnit);
     }
 
     private void observeModel() {
-        mModel.getCurrentWeatherData().observe(getViewLifecycleOwner(), this::setCurrentWeather);
+        mModel.getCurrentWeatherData().observe(getViewLifecycleOwner(), data -> {
+            MeasurementUnit measurementUnit =
+                    MeasurementUnit.values()[Integer.parseInt(
+                            mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+            setCurrentWeather(data, measurementUnit);
+            setPreference(data);
+        });
     }
 
-    private void setCurrentWeather(CurrentWeatherDataResponse data) {
+    private void setCurrentWeather(CurrentWeatherDataResponse data, MeasurementUnit measurementUnit) {
         MainData mainData = data.getMainData();
         WindData windData = data.getWindData();
         WeatherData weatherData = data.getWeatherDataList().get(0);
         mTodayWeatherHeaderMain.setText(weatherData.getMain());
-        mTodayWeatherHeaderTemperature.setText((int) Math.round(mainData.getTemperature()));
+        mTodayWeatherHeaderTemperature.setText(String.format(Locale.US,
+                "%d %s",
+                (int) Math.round(mainData.getTemperature()), measurementUnit.getTemperatureUnit()));
         mTodayWeatherIcon.setImageResource(getDrawableByName(weatherData.getIcon()));
         mTodayWeatherDetailsDescription.setText(weatherData.getDescription());
-        mTodayWeatherDetailsHumidity.setText((int) Math.round(mainData.getHumidity()));
-        mTodayWeatherDetailsTemperature.setText((int) Math.round(mainData.getTemperature()));
-        mTodayWeatherDetailsPressure.setText((int) Math.round(mainData.getPressure()));
-        mTodayWeatherDetailsWindSpeed.setText((int) Math.round(windData.getSpeed()));
-        mTodayWeatherDetailsWindDirection.setText((int) Math.round(windData.getDirection()));
+        mTodayWeatherDetailsHumidity.setText(String.format(Locale.US,
+                "%d %s",
+                (int) Math.round(mainData.getHumidity()), measurementUnit.getHumidityUnit()));
+        mTodayWeatherDetailsTemperature.setText(String.format(Locale.US,
+                "%d %s",
+                (int) Math.round(mainData.getTemperature()), measurementUnit.getTemperatureUnit()));
+        mTodayWeatherDetailsPressure.setText(String.format(Locale.US,
+                "%d %s",
+                (int) Math.round(mainData.getPressure()), measurementUnit.getPressureUnit()));
+        mTodayWeatherDetailsWindSpeed.setText(String.format(Locale.US,
+                "%d %s",
+                (int) Math.round(windData.getSpeed()), measurementUnit.getWindSpeedUnit()));
+        mTodayWeatherDetailsWindDirection.setText(String.format(Locale.US,
+                "%d %s",
+                (int) Math.round(windData.getDirection()), measurementUnit.getWindDirectionUnit()));
     }
 
     private int getDrawableByName(final String value) {
         return getResources().getIdentifier(value, "drawable", requireContext().getPackageName());
+    }
+
+    private void setPreference(CurrentWeatherDataResponse data) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(data);
+        editor.putString("currentWeatherData", json);
+        editor.apply();
     }
 }

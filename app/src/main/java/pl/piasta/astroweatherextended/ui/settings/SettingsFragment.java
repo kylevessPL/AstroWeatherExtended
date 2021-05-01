@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
@@ -18,18 +20,21 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import pl.piasta.astroweatherextended.R;
-import pl.piasta.astroweatherextended.model.CoordinatesResponse;
+import pl.piasta.astroweatherextended.model.GeocodingResponse;
+import pl.piasta.astroweatherextended.model.ReverseGeocodingResponse;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     private SettingsViewModel mModel;
 
     private EditTextPreference mTown;
-    private EditTextPreference mLatitude;
-    private EditTextPreference mLongtitude;
+    private CoordinatesPreference mLatitude;
+    private CoordinatesPreference mLongtitude;
     private ListPreference mTemperatureUnit;
     private SwitchPreferenceCompat mAutoSync;
     private ListPreference mSyncFrequency;
+
+    private Snackbar mSnackbar;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -42,7 +47,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mTemperatureUnit = findPreference("temperature_unit");
         mAutoSync = findPreference("auto_sync");
         mSyncFrequency = findPreference("sync_frequency");
-        mTown.setOnPreferenceChangeListener((preference, newValue) -> !(((String) newValue).isEmpty()));
         setPersistenceState();
         setupListeners();
         observeModel();
@@ -75,30 +79,91 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         editor.putBoolean(mAutoSync.getKey(), mAutoSync.isChecked());
         editor.putString(mSyncFrequency.getKey(), mSyncFrequency.getValue());
         editor.apply();
+        ((AppCompatActivity) requireActivity()).onSupportNavigateUp();
     }
 
     private void setupListeners() {
-        mTown.setOnPreferenceChangeListener((preference, newValue) -> {
-            mModel.retrieveCoordinatesData(newValue.toString());
-            return false;
-        });
+        findPreference("coordinates_set").setOnPreferenceClickListener(preference ->
+                setCoordinatesSetClickListener());
+        mTown.setOnPreferenceClickListener(this::setTownClickListener);
+        mTown.setOnPreferenceChangeListener((preference, newValue) -> setTownChangeListener(newValue));
+        mLatitude.setOnPreferenceChangeListener((preference1, newValue1) ->
+                setLatitudeClickListener(newValue1));
     }
 
     private void observeModel() {
         mModel.getCoordinatesResponse().observe(this, this::setCoordinatesData);
+        mModel.getReverseCoordinatesResponse().observe(this, this::setTownData);
         mModel.getToastMessage().observe(this,
                 message -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
-        mModel.getSnackbarMessage().observe(this,
-                message -> Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
-                        .setAction("DISMISS", view -> {})
-                        .show());
+        mModel.getSnackbarMessage().observe(this, message -> {
+            mSnackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
+                    .setAction("DISMISS", view -> {});
+            mSnackbar.show();
+        });
     }
 
-    private void setCoordinatesData(CoordinatesResponse coordinatesData) {
+    private void setCoordinatesData(GeocodingResponse data) {
         NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
         numberFormat.setMinimumFractionDigits(6);
-        mTown.setText(coordinatesData.getTown() + " " + coordinatesData.getCountryCode());
-        mLatitude.setText(numberFormat.format(coordinatesData.getLatitude()));
-        mLongtitude.setText(numberFormat.format(coordinatesData.getLongtitude()));
+        mTown.setText(data.getTown() + " " + data.getCountryCode());
+        mLatitude.setText(numberFormat.format(data.getLatitude()));
+        mLongtitude.setText(numberFormat.format(data.getLongtitude()));
+    }
+
+    private void setTownData(ReverseGeocodingResponse data) {
+        NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
+        numberFormat.setMinimumFractionDigits(6);
+        if (data.getLocalNamesData() != null && data.getLocalNamesData().getPolishName() != null) {
+            mTown.setText(data.getLocalNamesData().getPolishName() + " " + data.getCountryCode());
+        } else {
+            mTown.setText(data.getTown() + " " + data.getCountryCode());
+        }
+        mLatitude.setText(numberFormat.format(data.getLatitude()));
+        mLongtitude.setText(numberFormat.format(data.getLongtitude()));
+    }
+
+    private boolean setLatitudeClickListener(final Object value) {
+        String latitude = value.toString();
+        if (isCoordinatesPreferenceValid(latitude)) {
+            getPreferenceManager().showDialog(mLongtitude);
+            mLongtitude.setOnPreferenceChangeListener((preference2, newValue) -> {
+                String longtitude = newValue.toString();
+                if (isCoordinatesPreferenceValid(longtitude)) {
+                    mModel.retrieveReverseCoordinatesData(
+                            Double.parseDouble(latitude),
+                            Double.parseDouble(longtitude)
+                    );
+                }
+                return false;
+            });
+        }
+        return false;
+    }
+
+    private boolean setTownChangeListener(final Object newValue) {
+        if (!newValue.toString().isEmpty()) {
+            mModel.fetchCoordinatesData(newValue.toString());
+        }
+        return false;
+    }
+
+    private boolean setTownClickListener(final Preference preference) {
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
+        }
+        return onPreferenceTreeClick(preference);
+    }
+
+    private boolean setCoordinatesSetClickListener() {
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
+        }
+        getPreferenceManager().showDialog(mLatitude);
+        return true;
+    }
+
+    private boolean isCoordinatesPreferenceValid(String value) {
+        return !(value.isEmpty() || value.matches("^[.\\-]{1,2}"));
     }
 }

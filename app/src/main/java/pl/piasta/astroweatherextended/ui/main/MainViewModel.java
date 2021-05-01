@@ -1,5 +1,6 @@
 package pl.piasta.astroweatherextended.ui.main;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -24,6 +25,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import pl.piasta.astroweatherextended.model.CurrentWeatherDataResponse;
 import pl.piasta.astroweatherextended.model.DailyForecastResponse;
+import pl.piasta.astroweatherextended.repository.WeatherRepository;
+import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
 import pl.piasta.astroweatherextended.util.GlobalVariables;
 import pl.piasta.astroweatherextended.util.SingleLiveEvent;
@@ -34,6 +37,7 @@ public class MainViewModel extends ViewModel {
 
     private final ExecutorService mSingleExecutor = Executors.newSingleThreadExecutor();
     private final ScheduledThreadPoolExecutor mScheduledExecutor = new ScheduledThreadPoolExecutor(1);
+    private final WeatherRepository mWeatherRepository = new WeatherRepository();
 
     private MutableLiveData<String> mTime;
     private MutableLiveData<String> mLastUpdateCheck;
@@ -49,16 +53,16 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<String> mFullMoonDate;
     private MutableLiveData<String> mMoonPhaseValue;
     private MutableLiveData<String> mMoonLunarMonthDay;
-
-    private MutableLiveData<CurrentWeatherDataResponse> mCurrentWeatherData;
-    private MutableLiveData<DailyForecastResponse> mDailyForecastData;
-
+    private LiveData<CurrentWeatherDataResponse> mCurrentWeatherData;
+    private LiveData<DailyForecastResponse> mDailyForecastData;
     private SingleLiveEvent<String> mToastMessage;
     private SingleLiveEvent<String> mSnackbarMessage;
 
     private ScheduledFuture<?> mUpdateTask;
     private UpdateInterval mUpdateInterval;
-    private String mTown;
+    private MeasurementUnit mMeasurementUnit;
+    private double mLatitude;
+    private double mLongtitude;
 
     public MainViewModel() {
         mScheduledExecutor.setRemoveOnCancelPolicy(true);
@@ -163,14 +167,14 @@ public class MainViewModel extends ViewModel {
         return mMoonLunarMonthDay;
     }
 
-    public MutableLiveData<CurrentWeatherDataResponse> getCurrentWeatherData() {
+    public LiveData<CurrentWeatherDataResponse> getCurrentWeatherData() {
         if (mCurrentWeatherData == null) {
             mCurrentWeatherData = new MutableLiveData<>();
         }
         return mCurrentWeatherData;
     }
 
-    public MutableLiveData<DailyForecastResponse> getDailyForecastData() {
+    public LiveData<DailyForecastResponse> getDailyForecastData() {
         if (mDailyForecastData == null) {
             mDailyForecastData = new MutableLiveData<>();
         }
@@ -198,40 +202,46 @@ public class MainViewModel extends ViewModel {
         });
     }
 
-    public void refreshData(Double latitude, Double longtitude) {
+    public void refreshData(String town, Double latitude, Double longtitude, MeasurementUnit measurementUnit) {
         if (!GlobalVariables.sIsNetworkConnected) {
             mToastMessage.setValue("No Internet connection");
-            return;
         }
-        mSingleExecutor.execute(() -> updateData());
+        mSingleExecutor.execute(() -> updateData(town, latitude, longtitude, measurementUnit));
     }
 
-    public void setupDataUpdate(UpdateInterval updateInterval, int delay, String town) {
+    public void setupDataUpdate(UpdateInterval updateInterval,
+                                int delay,
+                                String town,
+                                Double latitude, Double longtitude,
+                                MeasurementUnit measurementUnit) {
         mSingleExecutor.execute(() -> {
-            if (mTown.equals(town) && updateInterval.equals(mUpdateInterval)) {
+            if (updateInterval.equals(mUpdateInterval) && measurementUnit.equals(mMeasurementUnit) &&
+                    mLatitude == latitude && mLongtitude == longtitude) {
                 return;
             }
             tearDownDataUpdate();
-            if (!mTown.equals(town) && updateInterval.equals(UpdateInterval.DISABLED)) {
-                updateData(town);
+            if ((mLatitude != latitude || mLongtitude != longtitude || mMeasurementUnit != measurementUnit) &&
+                    updateInterval.equals(UpdateInterval.DISABLED)
+            ) {
+                updateData(town, latitude, longtitude, measurementUnit);
             } else if (!updateInterval.equals(UpdateInterval.DISABLED)) {
-                mUpdateTask = mScheduledExecutor.scheduleWithFixedDelay(() -> {
-                    if (GlobalVariables.sIsNetworkConnected) {
-                        updateData(town);
-                    }
-                }, delay, updateInterval.getInterval(), updateInterval.getUnit());
+                mUpdateTask = mScheduledExecutor.scheduleWithFixedDelay(() ->
+                                updateData(town, latitude, longtitude, measurementUnit),
+                        delay, updateInterval.getInterval(), updateInterval.getUnit());
             }
             mUpdateInterval = updateInterval;
-            mTown = town;
+            mMeasurementUnit = measurementUnit;
+            mLatitude = latitude;
+            mLongtitude = longtitude;
         });
     }
 
-    public void updateLastUpdateCheckTime() {
-        mSingleExecutor.execute(this::setLastUpdateCheckTime);
-    }
-
-    private void updateData(String town) {
-        //TODO pobranie json wspolrzednych z miasta
+    private void updateData(String town, double latitude, double longtitude, MeasurementUnit measurementUnit) {
+        if (!GlobalVariables.sIsNetworkConnected) {
+            return;
+        }
+        fetchCurrentWeatherData(town, measurementUnit);
+        fetchDailyForecastData(town, measurementUnit);
         calculateAstro(latitude, longtitude);
         setLastUpdateCheckTime();
     }
@@ -252,6 +262,16 @@ public class MainViewModel extends ViewModel {
         final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
         LocalTime time = LocalTime.now();
         return time.format(formatter);
+    }
+
+    private void fetchCurrentWeatherData(String town, MeasurementUnit measurementUnit) {
+        mCurrentWeatherData =
+                mWeatherRepository.getCurrentWeatherData(town, measurementUnit, GlobalVariables.API_KEY);
+    }
+
+    private void fetchDailyForecastData(String town, MeasurementUnit measurementUnit) {
+        mDailyForecastData =
+                mWeatherRepository.getDailyForecast(town, measurementUnit, GlobalVariables.API_KEY);
     }
 
     private void calculateAstro(Double latitude, Double longtitude) {

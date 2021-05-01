@@ -8,16 +8,22 @@
             app:title="@string/town_title"
             app:useSimpleSummaryProvider="true" />
 
-        <EditTextPreference
+        <Preference
+            app:key="coordinates_set"
+            app:title="@string/coordinates_set_title" />
+
+        <pl.piasta.astroweatherextended.ui.settings.CoordinatesPreference
             app:defaultValue="@string/latitude_default"
             app:key="latitude"
+            app:type="latitude"
             app:title="@string/latitude_title"
             app:useSimpleSummaryProvider="true"
             app:enabled="false" />
 
-        <EditTextPreference
+        <pl.piasta.astroweatherextended.ui.settings.CoordinatesPreference
             app:defaultValue="@string/longtitude_default"
             app:key="longtitude"
+            app:type="longtitude"
             app:title="@string/longtitude_title"
             app:useSimpleSummaryProvider="true"
             app:enabled="false" />

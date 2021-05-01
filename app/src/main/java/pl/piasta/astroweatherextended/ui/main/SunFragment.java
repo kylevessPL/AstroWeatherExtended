@@ -49,8 +49,13 @@ public class SunFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadPreferences();
         observeModel();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPreferences();
     }
 
     @NonNull

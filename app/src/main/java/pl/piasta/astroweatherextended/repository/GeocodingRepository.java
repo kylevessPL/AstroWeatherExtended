@@ -4,7 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import pl.piasta.astroweatherextended.model.CoordinatesResponse;
+import pl.piasta.astroweatherextended.model.GeocodingResponse;
+import pl.piasta.astroweatherextended.model.ReverseGeocodingResponse;
 import pl.piasta.astroweatherextended.repository.retrofit.RetrofitRequest;
 import pl.piasta.astroweatherextended.service.GeocodingService;
 import retrofit2.Call;
@@ -19,15 +20,15 @@ public class GeocodingRepository {
         mWeatherService = RetrofitRequest.getRetrofitInstance().create(GeocodingService.class);
     }
 
-    public LiveData<CoordinatesResponse> getCoordinates(String query, String key) {
-        final MutableLiveData<CoordinatesResponse> data = new MutableLiveData<>();
+    public LiveData<GeocodingResponse> getCoordinates(String query, String key) {
+        final MutableLiveData<GeocodingResponse> data = new MutableLiveData<>();
         mWeatherService.getCoordinates(query, key)
-                .enqueue(new Callback<CoordinatesResponse>() {
+                .enqueue(new Callback<GeocodingResponse>() {
 
                     @Override
                     public void onResponse(
-                            @NonNull Call<CoordinatesResponse> call,
-                            @NonNull Response<CoordinatesResponse> response) {
+                            @NonNull Call<GeocodingResponse> call,
+                            @NonNull Response<GeocodingResponse> response) {
                         if (response.body() != null) {
                             data.setValue(response.body());
                         } else {
@@ -37,7 +38,34 @@ public class GeocodingRepository {
 
                     @Override
                     public void onFailure(
-                            @NonNull Call<CoordinatesResponse> call,
+                            @NonNull Call<GeocodingResponse> call,
+                            @NonNull Throwable t
+                    ) {
+                        data.setValue(null);
+                    }
+                });
+        return data;
+    }
+
+    public LiveData<ReverseGeocodingResponse> getTown(Double latitude, Double longtitude, String key) {
+        final MutableLiveData<ReverseGeocodingResponse> data = new MutableLiveData<>();
+        mWeatherService.getTown(latitude, longtitude, key)
+                .enqueue(new Callback<ReverseGeocodingResponse>() {
+
+                    @Override
+                    public void onResponse(
+                            @NonNull Call<ReverseGeocodingResponse> call,
+                            @NonNull Response<ReverseGeocodingResponse> response) {
+                        if (response.body() != null) {
+                            data.setValue(response.body());
+                        } else {
+                            data.setValue(null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            @NonNull Call<ReverseGeocodingResponse> call,
                             @NonNull Throwable t
                     ) {
                         data.setValue(null);

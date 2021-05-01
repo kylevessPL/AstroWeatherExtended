@@ -15,9 +15,9 @@ public class DayData {
     @SerializedName("weather")
     private List<WeatherData> mWeatherDataList;
     @SerializedName("speed")
-    private Double mSpeed;
+    private Double mWindSpeed;
     @SerializedName("deg")
-    private Double mDirection;
+    private Double mWindDirection;
 
     public TemperatureData getTemperatureData() {
         return mTemperatureData;
@@ -35,12 +35,12 @@ public class DayData {
         return mWeatherDataList;
     }
 
-    public Double getSpeed() {
-        return mSpeed;
+    public Double getWindSpeed() {
+        return mWindSpeed;
     }
 
-    public Double getDirection() {
-        return mDirection;
+    public Double getWindDirection() {
+        return mWindDirection;
     }
 
 }
