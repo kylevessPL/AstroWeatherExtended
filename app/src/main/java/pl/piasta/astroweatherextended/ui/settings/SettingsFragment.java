@@ -3,7 +3,6 @@ package pl.piasta.astroweatherextended.ui.settings;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,6 +21,7 @@ import java.util.Locale;
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.model.GeocodingResponse;
 import pl.piasta.astroweatherextended.model.ReverseGeocodingResponse;
+import pl.piasta.astroweatherextended.util.AppUtils;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -95,10 +95,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mModel.getGeocodingResponse().observe(this, this::setCoordinatesData);
         mModel.getReverseGeocodingResponse().observe(this, this::setTownData);
         mModel.getToastMessage().observe(this,
-                message -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
+                message -> AppUtils.createToast(requireActivity(), message).show());
         mModel.getSnackbarMessage().observe(this, message -> {
-            mSnackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE)
-                    .setAction("DISMISS", view -> {});
+            mSnackbar = AppUtils.createSnackbar(requireView(), message);
             mSnackbar.show();
         });
     }
@@ -125,11 +124,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private boolean setLatitudeClickListener(final Object value) {
         String latitude = value.toString();
-        if (isCoordinatesPreferenceValid(latitude)) {
+        if (AppUtils.isCoordinateValid(latitude)) {
             getPreferenceManager().showDialog(mLongtitude);
             mLongtitude.setOnPreferenceChangeListener((preference2, newValue) -> {
                 String longtitude = newValue.toString();
-                if (isCoordinatesPreferenceValid(longtitude)) {
+                if (AppUtils.isCoordinateValid(longtitude)) {
                     mModel.retrieveReverseCoordinatesData(
                             Double.parseDouble(latitude),
                             Double.parseDouble(longtitude)
@@ -161,9 +160,5 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
         getPreferenceManager().showDialog(mLatitude);
         return true;
-    }
-
-    private boolean isCoordinatesPreferenceValid(String value) {
-        return !(value.isEmpty() || value.matches("^[.\\-]{1,2}"));
     }
 }

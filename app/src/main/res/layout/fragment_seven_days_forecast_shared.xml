@@ -4,100 +4,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context=".ui.main.SevenDaysForecastFragment"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    tools:context=".ui.main.SevenDaysForecastFragment">
 
     <TableLayout
         android:id="@+id/day_forecast_1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="0dp"
         android:orientation="vertical">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/day_forecast_title_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
-                android:adjustViewBounds="true"
                 android:contentDescription="@string/day_title"
                 android:textColor="@color/white" />
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:id="@+id/day_forecast_icon_1"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_04n" />
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginEnd="5dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_info_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_description_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_32" />
-
             <TextView
                 android:id="@+id/day_weather_details_temperature_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-        </TableRow>
+        </LinearLayout>
 
         <TableRow
             android:layout_width="match_parent"
@@ -109,9 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_humidity_32" />
 
             <TextView
@@ -133,9 +89,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_pressure_32" />
 
             <TextView
@@ -157,9 +112,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_speed_32" />
 
             <TextView
@@ -181,9 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_direction_32" />
 
             <TextView
@@ -203,85 +156,43 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/day_forecast_title_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
-                android:adjustViewBounds="true"
                 android:contentDescription="@string/day_title"
                 android:textColor="@color/white" />
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:id="@+id/day_forecast_icon_4"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_04n" />
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginEnd="5dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_info_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_description_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_32" />
-
             <TextView
                 android:id="@+id/day_weather_details_temperature_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-        </TableRow>
+        </LinearLayout>
 
         <TableRow
             android:layout_width="match_parent"
@@ -293,9 +204,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_humidity_32" />
 
             <TextView
@@ -317,9 +227,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_pressure_32" />
 
             <TextView
@@ -341,9 +250,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_speed_32" />
 
             <TextView
@@ -365,9 +273,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_direction_32" />
 
             <TextView
@@ -385,10 +292,8 @@
         android:id="@+id/day_forecast_2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TableRow
             android:layout_width="match_parent"
@@ -399,100 +304,55 @@
                 android:id="@+id/day_forecast_title_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
-                android:adjustViewBounds="true"
                 android:contentDescription="@string/day_title"
                 android:textColor="@color/white" />
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:id="@+id/day_forecast_icon_2"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_04n" />
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginEnd="5dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_info_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_description_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_32" />
-
             <TextView
                 android:id="@+id/day_weather_details_temperature_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-        </TableRow>
+        </LinearLayout>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_humidity_32" />
 
             <TextView
                 android:id="@+id/day_weather_details_humidity_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -502,21 +362,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_pressure_32" />
 
             <TextView
                 android:id="@+id/day_weather_details_pressure_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -526,21 +386,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_speed_32" />
 
             <TextView
                 android:id="@+id/day_weather_details_wind_speed_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -550,21 +410,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_direction_32" />
 
             <TextView
                 android:id="@+id/day_weather_details_wind_direction_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -585,101 +445,56 @@
                 android:id="@+id/day_forecast_title_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
-                android:adjustViewBounds="true"
                 android:contentDescription="@string/day_title"
                 android:textColor="@color/white" />
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="12dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:id="@+id/day_forecast_icon_5"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_04n" />
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginEnd="5dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_info_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_description_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_32"
-                tools:ignore="TooManyViews" />
-
             <TextView
                 android:id="@+id/day_weather_details_temperature_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-        </TableRow>
+        </LinearLayout>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_humidity_32" />
 
             <TextView
                 android:id="@+id/day_weather_details_humidity_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -689,21 +504,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_pressure_32" />
 
             <TextView
                 android:id="@+id/day_weather_details_pressure_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -713,21 +528,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_speed_32" />
 
             <TextView
                 android:id="@+id/day_weather_details_wind_speed_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -737,21 +552,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_direction_32" />
 
             <TextView
                 android:id="@+id/day_weather_details_wind_direction_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -763,107 +578,61 @@
         android:id="@+id/day_forecast_3"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="0dp"
         android:orientation="vertical">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/day_forecast_title_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
-                android:adjustViewBounds="true"
                 android:contentDescription="@string/day_title"
                 android:textColor="@color/white" />
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:id="@+id/day_forecast_icon_3"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_04n" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginEnd="5dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_info_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_description_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_32" />
+                android:src="@drawable/ic_04n"
+                tools:ignore="TooManyViews" />
 
             <TextView
                 android:id="@+id/day_weather_details_temperature_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-        </TableRow>
+        </LinearLayout>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:gravity="bottom">
+            android:gravity="bottom"
+            tools:ignore="TooManyViews">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_humidity_32" />
 
             <TextView
@@ -885,9 +654,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_pressure_32" />
 
             <TextView
@@ -909,9 +677,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_speed_32" />
 
             <TextView
@@ -933,9 +700,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_direction_32" />
 
             <TextView
@@ -955,85 +721,43 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/day_forecast_title_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
-                android:adjustViewBounds="true"
                 android:contentDescription="@string/day_title"
                 android:textColor="@color/white" />
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal">
 
             <ImageView
                 android:id="@+id/day_forecast_icon_6"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_span="2"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_04n" />
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="17dp"
-                android:layout_marginEnd="5dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_info_32" />
-
-            <TextView
-                android:id="@+id/day_weather_details_description_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
-                android:contentDescription="@string/weather_icon"
-                android:src="@drawable/ic_temperature_32" />
-
             <TextView
                 android:id="@+id/day_weather_details_temperature_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
-        </TableRow>
+        </LinearLayout>
 
         <TableRow
             android:layout_width="match_parent"
@@ -1045,9 +769,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_humidity_32" />
 
             <TextView
@@ -1069,9 +792,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_pressure_32" />
 
             <TextView
@@ -1093,9 +815,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_speed_32" />
 
             <TextView
@@ -1117,9 +838,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/weather_icon"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_wind_direction_32" />
 
             <TextView

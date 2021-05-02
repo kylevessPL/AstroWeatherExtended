@@ -2,7 +2,6 @@ package pl.piasta.astroweatherextended.ui.favourites;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -10,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -24,6 +21,7 @@ import java.util.stream.Collectors;
 
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.model.GeocodingResponse;
+import pl.piasta.astroweatherextended.util.AppUtils;
 
 public class FavouritesActivity extends AppCompatActivity {
 
@@ -69,11 +67,9 @@ public class FavouritesActivity extends AppCompatActivity {
     private void observeModel() {
         mModel.getGeocodingResponse().observe(this, this::setCoordinatesData);
         mModel.getToastMessage().observe(this,
-                message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+                message -> AppUtils.createToast(this, message).show());
         mModel.getSnackbarMessage().observe(this,
-                message -> Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-                        .setAction("DISMISS", view -> {})
-                        .show());
+                message -> AppUtils.createSnackbar(findViewById(android.R.id.content), message).show());
     }
 
     private void setCoordinatesData(GeocodingResponse coordinatesData) {

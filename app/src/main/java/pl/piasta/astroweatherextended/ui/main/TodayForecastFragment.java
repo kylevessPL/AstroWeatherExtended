@@ -23,6 +23,7 @@ import pl.piasta.astroweatherextended.model.base.WeatherData;
 import pl.piasta.astroweatherextended.model.base.WindData;
 import pl.piasta.astroweatherextended.ui.base.BaseFragment;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
+import pl.piasta.astroweatherextended.util.AppUtils;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -110,7 +111,7 @@ public class TodayForecastFragment extends BaseFragment {
         mTodayWeatherHeaderTemperature.setText(String.format(Locale.US,
                 "%d %s",
                 (int) Math.round(mainData.getTemperature()), measurementUnit.getTemperatureUnit()));
-        mTodayWeatherIcon.setImageResource(getDrawableByName(weatherData.getIcon()));
+        mTodayWeatherIcon.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
         mTodayWeatherDetailsDescription.setText(weatherData.getDescription());
         mTodayWeatherDetailsHumidity.setText(String.format(Locale.US,
                 "%d%s",
@@ -127,10 +128,6 @@ public class TodayForecastFragment extends BaseFragment {
         mTodayWeatherDetailsWindDirection.setText(String.format(Locale.US,
                 "%d%s",
                 (int) Math.round(windData.getDirection()), measurementUnit.getWindDirectionUnit()));
-    }
-
-    private int getDrawableByName(final String value) {
-        return getResources().getIdentifier("ic_" + value, "drawable", requireActivity().getPackageName());
     }
 
     private void setPreference(CurrentWeatherDataResponse data) {

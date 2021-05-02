@@ -12,7 +12,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +40,7 @@ import java.util.Set;
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
+import pl.piasta.astroweatherextended.util.AppUtils;
 import pl.piasta.astroweatherextended.util.CheckNetwork;
 import pl.piasta.astroweatherextended.util.GlobalVariables;
 
@@ -249,19 +249,22 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
         });
         mModel.getToastMessage().observe(this, message ->
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+                AppUtils.createToast(this, message).show());
         mModel.getSnackbarMessage().observe(this, message -> {
-            mSnackbar = Snackbar.make(findViewById(R.id.mainActivity), message, Snackbar.LENGTH_INDEFINITE)
-                    .setAction("DISMISS", view -> {});
+            mSnackbar = AppUtils.createSnackbar(findViewById(R.id.mainActivity), message);
             mSnackbar.show();
         });
     }
 
     private void loadPreferences() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
         String town = mSharedPreferences.getString("town", TOWN_DEFAULT);
         String latitude = mSharedPreferences.getString("latitude", LATITUDE_DEFAULT);
         String longtitude = mSharedPreferences.getString("longtitude", LONGTITUDE_DEFAULT);
-        String lastUpdateCheck = mSharedPreferences.getString("lastUpdateCheck", LocalDateTime.now().toString());
+        String lastUpdateCheck = mSharedPreferences.getString(
+                "lastUpdateCheck", 
+                LocalDateTime.now().format(formatter)
+        );
         this.mTown.setText(town);
         this.mLatitude.setText(latitude);
         this.mLongitude.setText(longtitude);

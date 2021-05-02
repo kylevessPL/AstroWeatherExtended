@@ -26,6 +26,7 @@ import pl.piasta.astroweatherextended.model.base.TemperatureData;
 import pl.piasta.astroweatherextended.model.base.WeatherData;
 import pl.piasta.astroweatherextended.ui.base.BaseFragment;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
+import pl.piasta.astroweatherextended.util.AppUtils;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -49,12 +50,6 @@ public class SevenDaysForecastFragment extends BaseFragment {
     private ImageView mDayForecastIcon4;
     private ImageView mDayForecastIcon5;
     private ImageView mDayForecastIcon6;
-    private TextView mDayWeatherDetailsDescription1;
-    private TextView mDayWeatherDetailsDescription2;
-    private TextView mDayWeatherDetailsDescription3;
-    private TextView mDayWeatherDetailsDescription4;
-    private TextView mDayWeatherDetailsDescription5;
-    private TextView mDayWeatherDetailsDescription6;
     private TextView mDayWeatherDetailsTemperature1;
     private TextView mDayWeatherDetailsTemperature2;
     private TextView mDayWeatherDetailsTemperature3;
@@ -92,7 +87,6 @@ public class SevenDaysForecastFragment extends BaseFragment {
         View root = inflater.inflate(R.layout.fragment_seven_days_forecast_shared, container, false);
         loadWeatherDetailsTitles(root);
         loadWeatherDetailsIcons(root);
-        loadWeatherDetailsDescription(root);
         loadWeatherDetailsTemperature(root);
         loadWeatherDetaisHumidity(root);
         loadWeatherDetailsPressure(root);
@@ -166,15 +160,6 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mDayWeatherDetailsTemperature6 = view.findViewById(R.id.day_weather_details_temperature_6);
     }
 
-    private void loadWeatherDetailsDescription(final View view) {
-        mDayWeatherDetailsDescription1 = view.findViewById(R.id.day_weather_details_description_1);
-        mDayWeatherDetailsDescription2 = view.findViewById(R.id.day_weather_details_description_2);
-        mDayWeatherDetailsDescription3 = view.findViewById(R.id.day_weather_details_description_3);
-        mDayWeatherDetailsDescription4 = view.findViewById(R.id.day_weather_details_description_4);
-        mDayWeatherDetailsDescription5 = view.findViewById(R.id.day_weather_details_description_5);
-        mDayWeatherDetailsDescription6 = view.findViewById(R.id.day_weather_details_description_6);
-    }
-
     private void loadWeatherDetailsTitles(final View view) {
         mDayForecastTitle1 = view.findViewById(R.id.day_forecast_title_1);
         mDayForecastTitle2 = view.findViewById(R.id.day_forecast_title_2);
@@ -217,8 +202,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         WeatherData weatherData = dayData.getWeatherDataList().get(0);
         TemperatureData temperatureData = dayData.getTemperatureData();
         mDayForecastTitle1.setText(getTitleText(1));
-        mDayForecastIcon1.setImageResource(getDrawableByName(weatherData.getIcon()));
-        mDayWeatherDetailsDescription1.setText(weatherData.getDescription());
+        mDayForecastIcon1.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
         mDayWeatherDetailsHumidity1.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
         mDayWeatherDetailsTemperature1.setText(
                 getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
@@ -231,8 +215,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         WeatherData weatherData = dayData.getWeatherDataList().get(0);
         TemperatureData temperatureData = dayData.getTemperatureData();
         mDayForecastTitle2.setText(getTitleText(2));
-        mDayForecastIcon2.setImageResource(getDrawableByName(weatherData.getIcon()));
-        mDayWeatherDetailsDescription2.setText(weatherData.getDescription());
+        //mDayForecastIcon2.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
         mDayWeatherDetailsHumidity2.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
         mDayWeatherDetailsTemperature2.setText(
                 getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
@@ -245,8 +228,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         WeatherData weatherData = dayData.getWeatherDataList().get(0);
         TemperatureData temperatureData = dayData.getTemperatureData();
         mDayForecastTitle3.setText(getTitleText(3));
-        mDayForecastIcon3.setImageResource(getDrawableByName(weatherData.getIcon()));
-        mDayWeatherDetailsDescription3.setText(weatherData.getDescription());
+        mDayForecastIcon3.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
         mDayWeatherDetailsHumidity3.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
         mDayWeatherDetailsTemperature3.setText(
                 getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
@@ -259,8 +241,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         WeatherData weatherData = dayData.getWeatherDataList().get(0);
         TemperatureData temperatureData = dayData.getTemperatureData();
         mDayForecastTitle4.setText(getTitleText(4));
-        mDayForecastIcon4.setImageResource(getDrawableByName(weatherData.getIcon()));
-        mDayWeatherDetailsDescription4.setText(weatherData.getDescription());
+        mDayForecastIcon4.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
         mDayWeatherDetailsHumidity4.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
         mDayWeatherDetailsTemperature4.setText(
                 getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
@@ -273,8 +254,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         WeatherData weatherData = dayData.getWeatherDataList().get(0);
         TemperatureData temperatureData = dayData.getTemperatureData();
         mDayForecastTitle5.setText(getTitleText(5));
-        mDayForecastIcon5.setImageResource(getDrawableByName(weatherData.getIcon()));
-        mDayWeatherDetailsDescription5.setText(weatherData.getDescription());
+        mDayForecastIcon5.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
         mDayWeatherDetailsHumidity5.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
         mDayWeatherDetailsTemperature5.setText(
                 getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
@@ -287,8 +267,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         WeatherData weatherData = dayData.getWeatherDataList().get(0);
         TemperatureData temperatureData = dayData.getTemperatureData();
         mDayForecastTitle6.setText(getTitleText(6));
-        mDayForecastIcon6.setImageResource(getDrawableByName(weatherData.getIcon()));
-        mDayWeatherDetailsDescription6.setText(weatherData.getDescription());
+        mDayForecastIcon6.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
         mDayWeatherDetailsHumidity6.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
         mDayWeatherDetailsTemperature6.setText(
                 getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));
@@ -332,13 +311,6 @@ public class SevenDaysForecastFragment extends BaseFragment {
         if (data != null) {
             setDailyForecast(data, measurementUnit);
         }
-    }
-
-    private int getDrawableByName(final String value) {
-        return getResources().getIdentifier(
-                "ic_" + value.replaceAll(".$", "n"),
-                "drawable",
-                requireActivity().getPackageName());
     }
 
     private void setPreference(DailyForecastResponse data) {
