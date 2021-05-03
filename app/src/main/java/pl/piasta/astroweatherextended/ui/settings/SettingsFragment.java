@@ -33,6 +33,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private ListPreference mTemperatureUnit;
     private SwitchPreferenceCompat mAutoSync;
     private ListPreference mSyncFrequency;
+    private Preference mCoordinatesSet;
 
     private Snackbar mSnackbar;
 
@@ -47,6 +48,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mTemperatureUnit = findPreference("temperature_unit");
         mAutoSync = findPreference("auto_sync");
         mSyncFrequency = findPreference("sync_frequency");
+        mCoordinatesSet = findPreference("coordinates_set");
         setPersistenceState();
         setupListeners();
         observeModel();
@@ -83,7 +85,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void setupListeners() {
-        findPreference("coordinates_set").setOnPreferenceClickListener(preference ->
+        mCoordinatesSet.setOnPreferenceClickListener(preference ->
                 setCoordinatesSetClickListener());
         mTown.setOnPreferenceClickListener(this::setTownClickListener);
         mTown.setOnPreferenceChangeListener((preference, newValue) -> setTownChangeListener(newValue));
