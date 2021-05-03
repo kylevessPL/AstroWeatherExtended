@@ -36,6 +36,8 @@ public class WeatherRepository {
                     ) {
                         if (response.body() != null) {
                             mCurrentWeatherDataResponse.setValue(response.body());
+                        } else {
+                            mCurrentWeatherDataResponse.setValue(null);
                         }
                     }
 
@@ -60,6 +62,8 @@ public class WeatherRepository {
                     ) {
                         if (response.body() != null) {
                             mDailyForecastResponse.setValue(response.body());
+                        } else {
+                            mDailyForecastResponse.setValue(null);
                         }
                     }
 

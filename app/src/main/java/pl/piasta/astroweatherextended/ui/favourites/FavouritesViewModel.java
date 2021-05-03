@@ -23,7 +23,7 @@ public class FavouritesViewModel extends ViewModel {
         return mToastMessage;
     }
 
-    public void retrieveCoordinatesData(String town) {
+    public void fetchCoordinatesData(String town) {
         if (!GlobalVariables.sIsNetworkConnected) {
             mToastMessage.setValue("Cannot set location without Internet connection");
             return;

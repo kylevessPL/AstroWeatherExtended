@@ -2,7 +2,6 @@ package pl.piasta.astroweatherextended.ui.favourites;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -54,9 +53,7 @@ public class FavouritesActivity extends AppCompatActivity {
                 .collect(Collectors.toList()),
                 (itemId, position) -> {
                     if (itemId == R.id.favourite_set) {
-                        Log.w("LOG", mFavouriteList.get(position));
-                        Log.w("LOG", AppUtils.stripAccents(mFavouriteList.get(position)));
-                        mModel.retrieveCoordinatesData(mFavouriteList.get(position));
+                        mModel.fetchCoordinatesData(mFavouriteList.get(position));
                     } else if (itemId == R.id.favourite_delete) {
                         SharedPreferences.Editor editor = mPreferences.edit();
                         mFavouriteList.remove(position);
@@ -84,7 +81,7 @@ public class FavouritesActivity extends AppCompatActivity {
         NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
         numberFormat.setMinimumFractionDigits(6);
         String town;
-        if (data.getLocalNamesData() != null) {
+        if (data.getLocalNamesData() != null && data.getLocalNamesData().getPolishName() != null) {
             town = data.getLocalNamesData().getPolishName();
         } else {
             town = data.getTown();

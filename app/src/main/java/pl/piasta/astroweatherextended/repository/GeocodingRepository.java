@@ -60,7 +60,10 @@ public class GeocodingRepository {
                             @NonNull Call<List<GeocodingResponse>> call,
                             @NonNull Response<List<GeocodingResponse>> response) {
                         if (response.body() != null && !response.body().isEmpty()) {
-                            mReverseGeocodingResponse.setValue(response.body().get(0));
+                            GeocodingResponse data = response.body().get(0);
+                            data.setLatitude(latitude);
+                            data.setLongtitude(longtitude);
+                            mReverseGeocodingResponse.setValue(data);
                         } else {
                             mReverseGeocodingResponse.setValue(null);
                         }

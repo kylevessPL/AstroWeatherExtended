@@ -11,7 +11,9 @@ import java.util.regex.Pattern;
 
 public final class AppUtils {
 
-    private static final Pattern STRIP_ACCENTS_PATTERN = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+    public static final String DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG";
+
+    private static final Pattern sStripAccentsPattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
 
     public static int getDrawableByName(final Context context, final String value) {
         return context.getResources().getIdentifier(
@@ -40,7 +42,7 @@ public final class AppUtils {
         }
         final StringBuilder decomposed = new StringBuilder(Normalizer.normalize(input, Normalizer.Form.NFD));
         convertRemainingAccentCharacters(decomposed);
-        return STRIP_ACCENTS_PATTERN.matcher(decomposed).replaceAll("");
+        return sStripAccentsPattern.matcher(decomposed).replaceAll("");
     }
 
     private static void convertRemainingAccentCharacters(final StringBuilder decomposed) {

@@ -10,6 +10,7 @@ public class GeocodingResponse {
     private String mTown;
     @SerializedName("local_names")
     private LocalNamesData mLocalNamesData;
+
     @SerializedName("lat")
     private Double mLatitude;
     @SerializedName("lon")
@@ -35,5 +36,13 @@ public class GeocodingResponse {
 
     public String getCountryCode() {
         return mCountryCode;
+    }
+
+    public void setLatitude(final Double latitude) {
+        mLatitude = latitude;
+    }
+
+    public void setLongtitude(final Double longtitude) {
+        mLongtitude = longtitude;
     }
 }

@@ -2,11 +2,14 @@ package pl.piasta.astroweatherextended.ui.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
+import androidx.preference.EditTextPreferenceDialogFragmentCompat;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -88,6 +91,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 setCoordinatesSetClickListener());
         mTown.setOnPreferenceClickListener(this::setTownClickListener);
         mTown.setOnPreferenceChangeListener((preference, newValue) -> setTownChangeListener(newValue));
+        mTown.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_TEXT));
         mLatitude.setOnPreferenceChangeListener((preference1, newValue) ->
                 setLatitudeChangeListener(newValue));
     }
@@ -117,7 +121,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
         numberFormat.setMinimumFractionDigits(6);
         String town;
-        if (data.getLocalNamesData() != null) {
+        if (data.getLocalNamesData() != null && data.getLocalNamesData().getPolishName() != null) {
             town = data.getLocalNamesData().getPolishName();
         } else {
             town = data.getTown();
@@ -130,16 +134,19 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private boolean setLatitudeChangeListener(final Object value) {
         String latitude = value.toString();
         if (AppUtils.isCoordinateValid(latitude)) {
-            onDisplayPreferenceDialog(mLongtitude);
             mLongtitude.setOnPreferenceChangeListener((preference, newValue) ->
                     setLongtitudeChangeListener(latitude, newValue));
+            DialogFragment fragment = EditTextPreferenceDialogFragmentCompat.newInstance(mLongtitude.getKey());
+            fragment.setTargetFragment(this, 0);
+            fragment.show(getParentFragmentManager(), AppUtils.DIALOG_FRAGMENT_TAG);
         }
         return false;
     }
 
     private boolean setLongtitudeChangeListener(final String latitude, final Object value) {
         String longtitude = value.toString();
-        if (AppUtils.isCoordinateValid(longtitude)) {
+        if (AppUtils.isCoordinateValid(longtitude) &&
+                (!latitude.equals(mLatitude.getText()) || !longtitude.equals(mLongtitude.getText()))) {
             mModel.fetchReverseCoordinatesData(Double.parseDouble(latitude), Double.parseDouble(longtitude));
         }
         return false;
