@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,17 +50,17 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public final View mView;
         public final TextView mContent;
         public final Button mFavouriteSet;
+        public final ImageButton mFavouriteDelete;
 
         public ViewHolder(View view) {
             super(view);
-            view.setClickable(true);
-            view.setOnClickListener(this);
-            mView = view;
             mContent = view.findViewById(R.id.content);
             mFavouriteSet = view.findViewById(R.id.favourite_set);
+            mFavouriteDelete = view.findViewById(R.id.favourite_delete);
+            mFavouriteSet.setOnClickListener(this);
+            mFavouriteDelete.setOnClickListener(this);
         }
 
         @NonNull
@@ -71,17 +72,16 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
         @Override
         public void onClick(final View view) {
             int id = view.getId();
-            long itemId = getItemId();
             int position = getBindingAdapterPosition();
             if (id == R.id.favourite_set) {
                 mItems.forEach(item -> item.mSet = false);
                 mItems.get(position).mSet = true;
-                mClickListener.onButtonClicked(itemId, position);
-                notifyDataSetChanged();
+                mClickListener.onButtonClicked(id, position);
+                notifyItemChanged(position);
             } else if (id == R.id.favourite_delete) {
                 mItems.remove(position);
-                mClickListener.onButtonClicked(itemId, position);
-                notifyDataSetChanged();
+                mClickListener.onButtonClicked(id, position);
+                notifyItemRemoved(position);
             }
         }
     }

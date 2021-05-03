@@ -215,7 +215,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         WeatherData weatherData = dayData.getWeatherDataList().get(0);
         TemperatureData temperatureData = dayData.getTemperatureData();
         mDayForecastTitle2.setText(getTitleText(2));
-        //mDayForecastIcon2.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
+        mDayForecastIcon2.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
         mDayWeatherDetailsHumidity2.setText(getHumidityText(dayData.getHumidity(), measurementUnit));
         mDayWeatherDetailsTemperature2.setText(
                 getTemperatureText(temperatureData.getMinTemperature(), temperatureData.getMaxTemperature(), measurementUnit));

@@ -43,8 +43,7 @@
                 android:layout_height="55dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_04n" />
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/day_weather_details_temperature_1"
@@ -181,8 +180,7 @@
                 android:layout_height="55dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_04n" />
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/day_weather_details_temperature_4"
@@ -321,8 +319,7 @@
                 android:layout_height="55dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_04n" />
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/day_weather_details_temperature_2"
@@ -463,8 +460,7 @@
                 android:layout_height="55dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_04n" />
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/day_weather_details_temperature_5"
@@ -607,7 +603,6 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_04n"
                 tools:ignore="TooManyViews" />
 
             <TextView
@@ -746,8 +741,7 @@
                 android:layout_height="55dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_04n" />
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/day_weather_details_temperature_6"

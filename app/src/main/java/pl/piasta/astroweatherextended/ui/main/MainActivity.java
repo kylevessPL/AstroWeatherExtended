@@ -1,5 +1,7 @@
 package pl.piasta.astroweatherextended.ui.main;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -67,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mRefreshButton;
     private CardView mCard;
 
+    private ValueAnimator colorAnimation;
+    private ValueAnimator reverseColorAnimation;
     private Snackbar mSnackbar;
 
     @Override
@@ -87,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
         mModel = new ViewModelProvider(this).get(MainViewModel.class);
         mRefreshButton = findViewById(R.id.refresh);
         mCard = findViewById(R.id.card);
+        createColorAnimation();
+        registerNetworkCallback();
         setupListeners();
         observeModel();
-        CheckNetwork network = new CheckNetwork(getApplicationContext());
-        network.registerNetworkCallback();
         mModel.setCurrentTime();
     }
 
@@ -135,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupPager() {
         ViewPager2 pager = findViewById(R.id.pager);
         pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+
             @Override
             public void onPageSelected(int position) {
                 int color;
@@ -272,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         boolean favourite = mSharedPreferences.getStringSet("favourites", Collections.emptySet())
                 .contains(mTown.getText().toString());
         if (favourite) {
-            mFavourite.setColorFilter(R.color.red);
+            mFavourite.setColorFilter(getColor(R.color.red));
             return;
         }
         mFavourite.clearColorFilter();
@@ -312,16 +317,32 @@ public class MainActivity extends AppCompatActivity {
         mModel.setOfflineDataUseSnackbarMessage();
     }
 
+    private void createColorAnimation() {
+        colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(),
+                getColor(R.color.white), getColor(R.color.red));
+        reverseColorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(),
+                getColor(R.color.red), getColor(R.color.white));
+        colorAnimation.setDuration(150);
+        reverseColorAnimation.setDuration(150);
+        colorAnimation.addUpdateListener(animator -> mFavourite.setColorFilter((int) animator.getAnimatedValue()));
+        reverseColorAnimation.addUpdateListener(animator -> mFavourite.setColorFilter((int) animator.getAnimatedValue()));
+    }
+
+    private void registerNetworkCallback() {
+        CheckNetwork network = new CheckNetwork(getApplicationContext());
+        network.registerNetworkCallback();
+    }
+
     private void setFavourite() {
         String town = mTown.getText().toString();
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         Set<String> set = new HashSet<>(mSharedPreferences.getStringSet("favourites", Collections.emptySet()));
         if (!set.contains(town)) {
             set.add(town);
-            mFavourite.setColorFilter(R.color.red);
+            colorAnimation.start();
         } else {
             set.remove(town);
-            mFavourite.clearColorFilter();
+            reverseColorAnimation.start();
         }
         editor.putStringSet("favourites", set);
         editor.apply();
