@@ -1,14 +1,13 @@
 package pl.piasta.astroweatherextended.repository;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import pl.piasta.astroweatherextended.model.CurrentWeatherDataResponse;
 import pl.piasta.astroweatherextended.model.DailyForecastResponse;
 import pl.piasta.astroweatherextended.repository.retrofit.RetrofitRequest;
 import pl.piasta.astroweatherextended.service.WeatherService;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
+import pl.piasta.astroweatherextended.util.SingleLiveEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,12 +16,16 @@ public class WeatherRepository {
 
     private final WeatherService mWeatherService;
 
+    private final SingleLiveEvent<CurrentWeatherDataResponse> mCurrentWeatherDataResponse;
+    private final SingleLiveEvent<DailyForecastResponse> mDailyForecastResponse;
+
     public WeatherRepository() {
         mWeatherService = RetrofitRequest.getRetrofitInstance().create(WeatherService.class);
+        mCurrentWeatherDataResponse = new SingleLiveEvent<>();
+        mDailyForecastResponse = new SingleLiveEvent<>();
     }
 
-    public LiveData<CurrentWeatherDataResponse> getCurrentWeatherData(String query, MeasurementUnit unit, String apiKey) {
-        final MutableLiveData<CurrentWeatherDataResponse> data = new MutableLiveData<>();
+    public void fetchCurrentWeatherData(String query, MeasurementUnit unit, String apiKey) {
         mWeatherService.getCurrentWeatherData(query, unit, apiKey)
                 .enqueue(new Callback<CurrentWeatherDataResponse>() {
 
@@ -32,7 +35,7 @@ public class WeatherRepository {
                             @NonNull Response<CurrentWeatherDataResponse> response
                     ) {
                         if (response.body() != null) {
-                            data.setValue(response.body());
+                            mCurrentWeatherDataResponse.setValue(response.body());
                         }
                     }
 
@@ -41,14 +44,12 @@ public class WeatherRepository {
                             @NonNull Call<CurrentWeatherDataResponse> call,
                             @NonNull Throwable t
                     ) {
-                        data.setValue(null);
+                        mCurrentWeatherDataResponse.setValue(null);
                     }
                 });
-        return data;
     }
 
-    public LiveData<DailyForecastResponse> getDailyForecast(String query, MeasurementUnit unit, String apiKey) {
-        final MutableLiveData<DailyForecastResponse> data = new MutableLiveData<>();
+    public void fetchDailyForecast(String query, MeasurementUnit unit, String apiKey) {
         mWeatherService.getDailyForecast(query, unit, apiKey)
                 .enqueue(new Callback<DailyForecastResponse>() {
 
@@ -58,7 +59,7 @@ public class WeatherRepository {
                             @NonNull Response<DailyForecastResponse> response
                     ) {
                         if (response.body() != null) {
-                            data.setValue(response.body());
+                            mDailyForecastResponse.setValue(response.body());
                         }
                     }
 
@@ -67,9 +68,16 @@ public class WeatherRepository {
                             @NonNull Call<DailyForecastResponse> call,
                             @NonNull Throwable t
                     ) {
-                        data.setValue(null);
+                        mDailyForecastResponse.setValue(null);
                     }
                 });
-        return data;
+    }
+
+    public SingleLiveEvent<CurrentWeatherDataResponse> getCurrentWeatherDataResponse() {
+        return mCurrentWeatherDataResponse;
+    }
+
+    public SingleLiveEvent<DailyForecastResponse> getDailyForecastResponse() {
+        return mDailyForecastResponse;
     }
 }

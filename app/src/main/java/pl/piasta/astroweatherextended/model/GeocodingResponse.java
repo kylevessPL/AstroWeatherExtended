@@ -2,10 +2,14 @@ package pl.piasta.astroweatherextended.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import pl.piasta.astroweatherextended.model.base.LocalNamesData;
+
 public class GeocodingResponse {
 
     @SerializedName("name")
     private String mTown;
+    @SerializedName("local_names")
+    private LocalNamesData mLocalNamesData;
     @SerializedName("lat")
     private Double mLatitude;
     @SerializedName("lon")
@@ -15,6 +19,10 @@ public class GeocodingResponse {
 
     public String getTown() {
         return mTown;
+    }
+
+    public LocalNamesData getLocalNamesData() {
+        return mLocalNamesData;
     }
 
     public Double getLatitude() {

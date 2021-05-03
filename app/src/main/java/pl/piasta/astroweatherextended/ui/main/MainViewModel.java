@@ -53,8 +53,6 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<String> mFullMoonDate = new MutableLiveData<>();
     private final MutableLiveData<String> mMoonPhaseValue = new MutableLiveData<>();
     private final MutableLiveData<String> mMoonLunarMonthDay = new MutableLiveData<>();
-    private LiveData<CurrentWeatherDataResponse> mCurrentWeatherData = new MutableLiveData<>();
-    private LiveData<DailyForecastResponse> mDailyForecastData = new MutableLiveData<>();
     private final SingleLiveEvent<String> mToastMessage = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mSnackbarMessage = new SingleLiveEvent<>();
 
@@ -125,11 +123,11 @@ public class MainViewModel extends ViewModel {
     }
 
     public LiveData<CurrentWeatherDataResponse> getCurrentWeatherData() {
-        return mCurrentWeatherData;
+        return mWeatherRepository.getCurrentWeatherDataResponse();
     }
 
     public LiveData<DailyForecastResponse> getDailyForecastData() {
-        return mDailyForecastData;
+        return mWeatherRepository.getDailyForecastResponse();
     }
 
     public SingleLiveEvent<String> getToastMessage() {
@@ -210,13 +208,11 @@ public class MainViewModel extends ViewModel {
     }
 
     private void fetchCurrentWeatherData(String town, MeasurementUnit measurementUnit) {
-        mCurrentWeatherData =
-                mWeatherRepository.getCurrentWeatherData(town, measurementUnit, GlobalVariables.API_KEY);
+        mWeatherRepository.fetchCurrentWeatherData(town, measurementUnit, GlobalVariables.API_KEY);
     }
 
     private void fetchDailyForecastData(String town, MeasurementUnit measurementUnit) {
-        mDailyForecastData =
-                mWeatherRepository.getDailyForecast(town, measurementUnit, GlobalVariables.API_KEY);
+        mWeatherRepository.fetchDailyForecast(town, measurementUnit, GlobalVariables.API_KEY);
     }
 
     private void calculateAstro(Double latitude, Double longtitude) {

@@ -20,7 +20,6 @@ import java.util.Locale;
 
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.model.GeocodingResponse;
-import pl.piasta.astroweatherextended.model.ReverseGeocodingResponse;
 import pl.piasta.astroweatherextended.util.AppUtils;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -89,62 +88,66 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 setCoordinatesSetClickListener());
         mTown.setOnPreferenceClickListener(this::setTownClickListener);
         mTown.setOnPreferenceChangeListener((preference, newValue) -> setTownChangeListener(newValue));
-        mLatitude.setOnPreferenceChangeListener((preference1, newValue1) ->
-                setLatitudeClickListener(newValue1));
+        mLatitude.setOnPreferenceChangeListener((preference1, newValue) ->
+                setLatitudeChangeListener(newValue));
     }
 
     private void observeModel() {
-        mModel.getGeocodingResponse().observe(this, this::setCoordinatesData);
-        mModel.getReverseGeocodingResponse().observe(this, this::setTownData);
+        mModel.getGeocodingResponse().observe(this, data -> {
+            if (data == null) {
+                mSnackbar = AppUtils.createSnackbar(requireView(), "Location not found");
+                mSnackbar.show();
+                return;
+            }
+            setCoordinatesData(data);
+        });
+        mModel.getReverseGeocodingResponse().observe(this, data -> {
+            if (data == null) {
+                mSnackbar = AppUtils.createSnackbar(requireView(), "No nearby town for coordinates found");
+                mSnackbar.show();
+                return;
+            }
+            setCoordinatesData(data);
+        });
         mModel.getToastMessage().observe(this,
                 message -> AppUtils.createToast(requireActivity(), message).show());
-        mModel.getSnackbarMessage().observe(this, message -> {
-            mSnackbar = AppUtils.createSnackbar(requireView(), message);
-            mSnackbar.show();
-        });
     }
 
     private void setCoordinatesData(GeocodingResponse data) {
         NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
         numberFormat.setMinimumFractionDigits(6);
-        mTown.setText(data.getTown() + " " + data.getCountryCode());
-        mLatitude.setText(numberFormat.format(data.getLatitude()));
-        mLongtitude.setText(numberFormat.format(data.getLongtitude()));
-    }
-
-    private void setTownData(ReverseGeocodingResponse data) {
-        NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
-        numberFormat.setMinimumFractionDigits(6);
-        if (data.getLocalNamesData() != null && data.getLocalNamesData().getPolishName() != null) {
-            mTown.setText(data.getLocalNamesData().getPolishName() + " " + data.getCountryCode());
+        String town;
+        if (data.getLocalNamesData() != null) {
+            town = data.getLocalNamesData().getPolishName();
         } else {
-            mTown.setText(data.getTown() + " " + data.getCountryCode());
+            town = data.getTown();
         }
+        mTown.setText(town + ", " + data.getCountryCode());
         mLatitude.setText(numberFormat.format(data.getLatitude()));
         mLongtitude.setText(numberFormat.format(data.getLongtitude()));
     }
 
-    private boolean setLatitudeClickListener(final Object value) {
+    private boolean setLatitudeChangeListener(final Object value) {
         String latitude = value.toString();
         if (AppUtils.isCoordinateValid(latitude)) {
-            getPreferenceManager().showDialog(mLongtitude);
-            mLongtitude.setOnPreferenceChangeListener((preference2, newValue) -> {
-                String longtitude = newValue.toString();
-                if (AppUtils.isCoordinateValid(longtitude)) {
-                    mModel.retrieveReverseCoordinatesData(
-                            Double.parseDouble(latitude),
-                            Double.parseDouble(longtitude)
-                    );
-                }
-                return false;
-            });
+            onDisplayPreferenceDialog(mLongtitude);
+            mLongtitude.setOnPreferenceChangeListener((preference, newValue) ->
+                    setLongtitudeChangeListener(latitude, newValue));
         }
         return false;
     }
 
-    private boolean setTownChangeListener(final Object newValue) {
-        if (!newValue.toString().isEmpty()) {
-            mModel.fetchCoordinatesData(newValue.toString());
+    private boolean setLongtitudeChangeListener(final String latitude, final Object value) {
+        String longtitude = value.toString();
+        if (AppUtils.isCoordinateValid(longtitude)) {
+            mModel.fetchReverseCoordinatesData(Double.parseDouble(latitude), Double.parseDouble(longtitude));
+        }
+        return false;
+    }
+
+    private boolean setTownChangeListener(final Object value) {
+        if (!value.toString().isEmpty()) {
+            mModel.fetchCoordinatesData(value.toString());
         }
         return false;
     }
@@ -160,7 +163,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         if (mSnackbar != null) {
             mSnackbar.dismiss();
         }
-        getPreferenceManager().showDialog(mLatitude);
+        onDisplayPreferenceDialog(mLatitude);
         return true;
     }
 }

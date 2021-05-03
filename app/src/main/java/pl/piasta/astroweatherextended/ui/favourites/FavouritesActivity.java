@@ -2,6 +2,7 @@ package pl.piasta.astroweatherextended.ui.favourites;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -53,6 +54,8 @@ public class FavouritesActivity extends AppCompatActivity {
                 .collect(Collectors.toList()),
                 (itemId, position) -> {
                     if (itemId == R.id.favourite_set) {
+                        Log.w("LOG", mFavouriteList.get(position));
+                        Log.w("LOG", AppUtils.stripAccents(mFavouriteList.get(position)));
                         mModel.retrieveCoordinatesData(mFavouriteList.get(position));
                     } else if (itemId == R.id.favourite_delete) {
                         SharedPreferences.Editor editor = mPreferences.edit();
@@ -65,20 +68,30 @@ public class FavouritesActivity extends AppCompatActivity {
     }
 
     private void observeModel() {
-        mModel.getGeocodingResponse().observe(this, this::setCoordinatesData);
+        mModel.getGeocodingResponse().observe(this, data -> {
+            if (data == null) {
+                AppUtils.createSnackbar(findViewById(android.R.id.content), "Location not found").show();
+                return;
+            }
+            setCoordinatesData(data);
+        });
         mModel.getToastMessage().observe(this,
                 message -> AppUtils.createToast(this, message).show());
-        mModel.getSnackbarMessage().observe(this,
-                message -> AppUtils.createSnackbar(findViewById(android.R.id.content), message).show());
     }
 
-    private void setCoordinatesData(GeocodingResponse coordinatesData) {
+    private void setCoordinatesData(GeocodingResponse data) {
         SharedPreferences.Editor editor = mPreferences.edit();
         NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
         numberFormat.setMinimumFractionDigits(6);
-        editor.putString("town", coordinatesData.getTown() + " " + coordinatesData.getCountryCode());
-        editor.putString("latitude", numberFormat.format(coordinatesData.getLatitude()));
-        editor.putString("longtitude", numberFormat.format(coordinatesData.getLongtitude()));
+        String town;
+        if (data.getLocalNamesData() != null) {
+            town = data.getLocalNamesData().getPolishName();
+        } else {
+            town = data.getTown();
+        }
+        editor.putString("town", town + ", " + data.getCountryCode());
+        editor.putString("latitude", numberFormat.format(data.getLatitude()));
+        editor.putString("longtitude", numberFormat.format(data.getLongtitude()));
         editor.apply();
     }
 }

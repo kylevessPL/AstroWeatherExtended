@@ -29,7 +29,9 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.favourite_item, parent, false);
-        return new ViewHolder(view);
+        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int height = view.getMeasuredHeight();
+        return new ViewHolder(view, height);
     }
 
     @Override
@@ -54,8 +56,9 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
         public final Button mFavouriteSet;
         public final ImageButton mFavouriteDelete;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, int height) {
             super(view);
+            view.setMinimumHeight(height);
             mContent = view.findViewById(R.id.content);
             mFavouriteSet = view.findViewById(R.id.favourite_set);
             mFavouriteDelete = view.findViewById(R.id.favourite_delete);
@@ -77,7 +80,7 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
                 mItems.forEach(item -> item.mSet = false);
                 mItems.get(position).mSet = true;
                 mClickListener.onButtonClicked(id, position);
-                notifyItemChanged(position);
+                notifyDataSetChanged();
             } else if (id == R.id.favourite_delete) {
                 mItems.remove(position);
                 mClickListener.onButtonClicked(id, position);
