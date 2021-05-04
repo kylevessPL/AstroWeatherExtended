@@ -30,7 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class TodayForecastFragment extends BaseFragment {
 
     private static final String FRAGMENT_NAME = "TODAY";
-    private static final String TEMPERATURE_UNIT_DEFAULT = "0";
+    private static final String MEASUREMENT_UNIT_TYPE_DEFAULT = "0";
 
     private MainViewModel mModel;
     private SharedPreferences mPreferences;
@@ -85,7 +85,7 @@ public class TodayForecastFragment extends BaseFragment {
         Gson gson = new Gson();
         MeasurementUnit measurementUnit =
                 MeasurementUnit.values()[Integer.parseInt(
-                        mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+                        mPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT))];
         String json = mPreferences.getString("currentWeatherData", "");
         CurrentWeatherDataResponse data = gson.fromJson(json, CurrentWeatherDataResponse.class);
         if (data != null) {
@@ -97,7 +97,7 @@ public class TodayForecastFragment extends BaseFragment {
         mModel.getCurrentWeatherData().observe(getViewLifecycleOwner(), data -> {
             MeasurementUnit measurementUnit =
                     MeasurementUnit.values()[Integer.parseInt(
-                            mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+                            mPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT))];
             setCurrentWeather(data, measurementUnit);
             setPreference(data);
         });

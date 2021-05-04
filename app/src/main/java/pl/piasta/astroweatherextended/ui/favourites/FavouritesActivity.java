@@ -51,18 +51,17 @@ public class FavouritesActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.favourites_list);
         String current = mPreferences.getString("town", TOWN_DEFAULT);
         List<FavouriteItem> list = mFavouriteList.stream()
-                .filter(e -> !e.equals(current))
-                .map(e -> new FavouriteItem(e, false))
+                .filter(town -> !town.equals(current))
+                .map(item -> new FavouriteItem(item, false))
                 .collect(Collectors.toList());
         list.add(0, new FavouriteItem(current, true));
-        recyclerView.setAdapter(new FavouritesRecyclerViewAdapter(list, (itemId, position) -> {
-            if (itemId == R.id.favourite_set) {
-                String item = mFavouriteList.remove(position);
+        recyclerView.setAdapter(new FavouritesRecyclerViewAdapter(list, (id, position) -> {
+            String item = mFavouriteList.remove(position);
+            if (id == R.id.favourite_set) {
                 mFavouriteList.add(0, item);
                 mModel.fetchCoordinatesData(item);
-            } else if (itemId == R.id.favourite_delete) {
+            } else if (id == R.id.favourite_delete) {
                 SharedPreferences.Editor editor = mPreferences.edit();
-                mFavouriteList.remove(position);
                 editor.putStringSet("favourites", new HashSet<>(mFavouriteList));
                 editor.apply();
             }

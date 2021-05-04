@@ -33,7 +33,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class SevenDaysForecastFragment extends BaseFragment {
 
     private static final String FRAGMENT_NAME = "WEEK";
-    private static final String TEMPERATURE_UNIT_DEFAULT = "0";
+    private static final String MEASUREMENT_UNIT_TYPE_DEFAULT = "0";
 
     private MainViewModel mModel;
     private SharedPreferences mPreferences;
@@ -182,7 +182,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         mModel.getDailyForecastData().observe(getViewLifecycleOwner(), data -> {
             MeasurementUnit measurementUnit =
                     MeasurementUnit.values()[Integer.parseInt(
-                            mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+                            mPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT))];
             setDailyForecast(data, measurementUnit);
             setPreference(data);
         });
@@ -305,7 +305,7 @@ public class SevenDaysForecastFragment extends BaseFragment {
         Gson gson = new Gson();
         MeasurementUnit measurementUnit =
                 MeasurementUnit.values()[Integer.parseInt(
-                        mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+                        mPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT))];
         String json = mPreferences.getString("dailyForecastData", "");
         DailyForecastResponse data = gson.fromJson(json, DailyForecastResponse.class);
         if (data != null) {

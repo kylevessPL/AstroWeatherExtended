@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TOWN_DEFAULT = "Warszawa, PL";
     private static final String LATITUDE_DEFAULT = "52.229722";
     private static final String LONGTITUDE_DEFAULT = "21.011667";
-    private static final String TEMPERATURE_UNIT_DEFAULT = "0";
+    private static final String MEASUREMENT_UNIT_TYPE_DEFAULT = "0";
     private static final boolean AUTO_SYNC_DEFAULT = false;
 
     private MainViewModel mModel;
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         double longtitude = Double.parseDouble(mLongitude.getText().toString());
         MeasurementUnit measurementUnit =
                 MeasurementUnit.values()[Integer.parseInt(
-                        mSharedPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+                        mSharedPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT))];
         UpdateInterval updateInterval = UpdateInterval.DISABLED;
         int delay = 0;
         boolean autoSync = mSharedPreferences.getBoolean("auto_sync", AUTO_SYNC_DEFAULT);
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         double longtitude = Double.parseDouble(mLongitude.getText().toString());
         MeasurementUnit measurementUnit =
                 MeasurementUnit.values()[Integer.parseInt(
-                        mSharedPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT))];
+                        mSharedPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT))];
         mModel.refreshData(town, latitude, longtitude, measurementUnit);
     }
 
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("town", mSharedPreferences.getString("town", TOWN_DEFAULT));
             editor.putString("latitude", mSharedPreferences.getString("latitude", LATITUDE_DEFAULT));
             editor.putString("longtitude", mSharedPreferences.getString("longtitude", LONGTITUDE_DEFAULT));
-            editor.putString("temperatureUnit", mSharedPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT));
+            editor.putString("measurement_unit_type", mSharedPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT));
             editor.apply();
             return;
         }
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("town", mPreferences.getString("town", TOWN_DEFAULT));
         editor.putString("latitude", mPreferences.getString("latitude", LATITUDE_DEFAULT));
         editor.putString("longtitude", mPreferences.getString("longtitude", LONGTITUDE_DEFAULT));
-        editor.putString("temperatureUnit", mPreferences.getString("temperatureUnit", TEMPERATURE_UNIT_DEFAULT));
+        editor.putString("measurement_unit_type", mPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT));
         editor.apply();
         mModel.setOfflineDataUseSnackbarMessage();
     }

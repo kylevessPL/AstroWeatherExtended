@@ -32,11 +32,11 @@
     <string name="save">Save</string>
     <string name="town_title">Town</string>
     <string name="town_default">Warszawa, PL</string>
-    <string name="temperature_unit_title">Temperature unit</string>
+    <string name="measurement_unit_type_title">Unit type</string>
     <string name="favourites">Favourites</string>
     <string name="delete">Delete</string>
     <string name="set">Set</string>
-    <string name="measurement_units_header">Measurement units</string>
+    <string name="measurement_units_header">Units of measurement</string>
     <string name="favourite_add">Add to favourites</string>
     <string name="weather_icon">Weather icon</string>
     <string name="day_title">Dzień</string>

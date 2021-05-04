@@ -34,10 +34,10 @@
 
         <ListPreference
             app:defaultValue="0"
-            app:entries="@array/temperature_unit_entries"
-            app:entryValues="@array/temperature_unit_values"
-            app:key="temperature_unit"
-            app:title="@string/temperature_unit_title"
+            app:entries="@array/measurement_unit_type_entries"
+            app:entryValues="@array/measurement_unit_type_values"
+            app:key="measurement_unit_type"
+            app:title="@string/measurement_unit_type_title"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>

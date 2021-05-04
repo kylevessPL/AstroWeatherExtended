@@ -32,7 +32,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private EditTextPreference mTown;
     private CoordinatesPreference mLatitude;
     private CoordinatesPreference mLongtitude;
-    private ListPreference mTemperatureUnit;
+    private ListPreference mMeasurementUnitType;
     private SwitchPreferenceCompat mAutoSync;
     private ListPreference mSyncFrequency;
     private Preference mCoordinatesSet;
@@ -47,7 +47,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mTown = findPreference("town");
         mLatitude = findPreference("latitude");
         mLongtitude = findPreference("longtitude");
-        mTemperatureUnit = findPreference("temperature_unit");
+        mMeasurementUnitType = findPreference("measurement_unit_type");
         mAutoSync = findPreference("auto_sync");
         mSyncFrequency = findPreference("sync_frequency");
         mCoordinatesSet = findPreference("coordinates_set");
@@ -69,7 +69,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mTown.setPersistent(false);
         mLatitude.setPersistent(false);
         mLongtitude.setPersistent(false);
-        mTemperatureUnit.setPersistent(false);
+        mMeasurementUnitType.setPersistent(false);
         mAutoSync.setPersistent(false);
         mSyncFrequency.setPersistent(false);
     }
@@ -79,7 +79,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         editor.putString(mTown.getKey(), mTown.getText());
         editor.putString(mLatitude.getKey(), mLatitude.getText());
         editor.putString(mLongtitude.getKey(), mLongtitude.getText());
-        editor.putString(mTemperatureUnit.getKey(), mTemperatureUnit.getValue());
+        editor.putString(mMeasurementUnitType.getKey(), mMeasurementUnitType.getValue());
         editor.putBoolean(mAutoSync.getKey(), mAutoSync.isChecked());
         editor.putString(mSyncFrequency.getKey(), mSyncFrequency.getValue());
         editor.apply();
