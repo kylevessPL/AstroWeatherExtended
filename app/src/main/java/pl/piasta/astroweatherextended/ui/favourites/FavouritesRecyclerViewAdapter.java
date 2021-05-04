@@ -1,5 +1,6 @@
 package pl.piasta.astroweatherextended.ui.favourites;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,7 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
         public void onClick(final View view) {
             int id = view.getId();
             int position = getBindingAdapterPosition();
+            Log.w("LOG", String.valueOf(position));
             if (id == R.id.favourite_set) {
                 mItems.forEach(item -> item.mSet = false);
                 FavouriteItem item = mItems.remove(position);

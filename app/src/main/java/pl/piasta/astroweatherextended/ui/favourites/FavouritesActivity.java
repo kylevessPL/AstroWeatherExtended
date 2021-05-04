@@ -25,7 +25,7 @@ import pl.piasta.astroweatherextended.util.AppUtils;
 
 public class FavouritesActivity extends AppCompatActivity {
 
-    public static final String TOWN_DEFAULT = "Warszawa";
+    public static final String TOWN_DEFAULT = "Warszawa, PL";
 
     private FavouritesViewModel mModel;
     private SharedPreferences mPreferences;
@@ -50,11 +50,13 @@ public class FavouritesActivity extends AppCompatActivity {
     private void setupRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.favourites_list);
         String current = mPreferences.getString("town", TOWN_DEFAULT);
+        if (mFavouriteList.contains(current)) {
+            mFavouriteList.remove(current);
+            mFavouriteList.add(0, current);
+        }
         List<FavouriteItem> list = mFavouriteList.stream()
-                .filter(town -> !town.equals(current))
-                .map(item -> new FavouriteItem(item, false))
+                .map(town -> new FavouriteItem(town, town.equals(current)))
                 .collect(Collectors.toList());
-        list.add(0, new FavouriteItem(current, true));
         recyclerView.setAdapter(new FavouritesRecyclerViewAdapter(list, (id, position) -> {
             String item = mFavouriteList.remove(position);
             if (id == R.id.favourite_set) {

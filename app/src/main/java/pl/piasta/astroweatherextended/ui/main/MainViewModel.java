@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import pl.piasta.astroweatherextended.model.CurrentWeatherDataResponse;
 import pl.piasta.astroweatherextended.model.DailyForecastResponse;
@@ -140,10 +141,8 @@ public class MainViewModel extends ViewModel {
     }
 
     public void updateClock() {
-        mSingleExecutor.execute(() -> {
-            String time = getCurrentTimeString();
-            mTime.postValue(time);
-        });
+        String timeString = getCurrentTimeString();
+        mTime.setValue(timeString);
     }
 
     public void refreshData(String town, Double latitude, Double longtitude, MeasurementUnit measurementUnit) {
@@ -171,7 +170,7 @@ public class MainViewModel extends ViewModel {
             } else if (!updateInterval.equals(UpdateInterval.DISABLED)) {
                 mUpdateTask = mScheduledExecutor.scheduleWithFixedDelay(() ->
                                 updateData(town, latitude, longtitude, measurementUnit),
-                        delay, updateInterval.getInterval(), updateInterval.getUnit());
+                        delay, TimeUnit.SECONDS.convert(updateInterval.getInterval(), updateInterval.getUnit()), TimeUnit.SECONDS);
             }
             mUpdateInterval = updateInterval;
             mMeasurementUnit = measurementUnit;
@@ -196,11 +195,6 @@ public class MainViewModel extends ViewModel {
             mUpdateTask.cancel(true);
             mUpdateTask = null;
         }
-    }
-
-    public void setCurrentTime() {
-        String timeString = getCurrentTimeString();
-        mTime.setValue(timeString);
     }
 
     private String getCurrentTimeString() {

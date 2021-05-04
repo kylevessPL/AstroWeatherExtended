@@ -49,6 +49,8 @@ public final class AppUtils {
         for (int i = 0; i < decomposed.length(); i++) {
             if (decomposed.charAt(i) == '\u0141') {
                 decomposed.setCharAt(i, 'L');
+            } else if (decomposed.charAt(i) == '\u00f8') {
+                decomposed.setCharAt(i, 'o');
             } else if (decomposed.charAt(i) == '\u0142') {
                 decomposed.setCharAt(i, 'l');
             }

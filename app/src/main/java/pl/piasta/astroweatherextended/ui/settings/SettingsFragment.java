@@ -153,7 +153,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private boolean setTownChangeListener(final Object value) {
-        if (!value.toString().isEmpty()) {
+        String town = value.toString();
+        if (!town.isEmpty() && !town.equals(mTown.getText())) {
             mModel.fetchCoordinatesData(value.toString());
         }
         return false;

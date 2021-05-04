@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         registerNetworkCallback();
         setupListeners();
         observeModel();
-        mModel.setCurrentTime();
     }
 
     @Override
@@ -107,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        registerDateTimeBroadcastReceiver();
         checkDataState();
         loadPreferences();
         setupAutoUpdate();
+        registerDateTimeBroadcastReceiver();
+        mModel.updateClock();
     }
 
     @Override
@@ -266,10 +266,9 @@ public class MainActivity extends AppCompatActivity {
         String town = mSharedPreferences.getString("town", TOWN_DEFAULT);
         String latitude = mSharedPreferences.getString("latitude", LATITUDE_DEFAULT);
         String longtitude = mSharedPreferences.getString("longtitude", LONGTITUDE_DEFAULT);
-        String lastUpdateCheck = mSharedPreferences.getString(
-                "lastUpdateCheck", 
-                LocalDateTime.now().format(formatter)
-        );
+        String lastUpdateCheck = LocalDateTime.parse(mPreferences.getString(
+                "lastUpdateCheck",
+                LocalDateTime.now().toString())).format(formatter);
         this.mTown.setText(town);
         this.mLatitude.setText(latitude);
         this.mLongitude.setText(longtitude);
