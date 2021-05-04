@@ -7,8 +7,6 @@
     android:baselineAligned="false"
     android:paddingTop="15dp"
     android:paddingBottom="15dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
     tools:context=".ui.main.SevenDaysForecastFragment">
 
     <TableLayout
@@ -49,7 +47,6 @@
                 android:id="@+id/day_weather_details_temperature_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -186,7 +183,6 @@
                 android:id="@+id/day_weather_details_temperature_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -325,7 +321,6 @@
                 android:id="@+id/day_weather_details_temperature_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -466,7 +461,6 @@
                 android:id="@+id/day_weather_details_temperature_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -609,7 +603,6 @@
                 android:id="@+id/day_weather_details_temperature_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -747,7 +740,6 @@
                 android:id="@+id/day_weather_details_temperature_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8sp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
