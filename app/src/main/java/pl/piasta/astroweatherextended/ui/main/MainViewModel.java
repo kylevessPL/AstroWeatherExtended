@@ -28,6 +28,7 @@ import pl.piasta.astroweatherextended.model.DailyForecastResponse;
 import pl.piasta.astroweatherextended.repository.WeatherRepository;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
+import pl.piasta.astroweatherextended.util.AppUtils;
 import pl.piasta.astroweatherextended.util.GlobalVariables;
 import pl.piasta.astroweatherextended.util.SingleLiveEvent;
 
@@ -183,6 +184,7 @@ public class MainViewModel extends ViewModel {
         if (!GlobalVariables.sIsNetworkConnected) {
             return;
         }
+        town = AppUtils.stripAccents(town);
         fetchCurrentWeatherData(town, measurementUnit);
         fetchDailyForecastData(town, measurementUnit);
         calculateAstro(latitude, longtitude);
