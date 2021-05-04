@@ -43,25 +43,30 @@ public class FavouritesActivity extends AppCompatActivity {
         mModel = new ViewModelProvider(this).get(FavouritesViewModel.class);
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mFavouriteList = new ArrayList<>(mPreferences.getStringSet("favourites", Collections.emptySet()));
-        RecyclerView recyclerView = findViewById(R.id.favourites_list);
-        recyclerView.setAdapter(new FavouritesRecyclerViewAdapter(
-                mFavouriteList.stream()
-                .map(e -> {
-                    String current = mPreferences.getString("town", TOWN_DEFAULT);
-                    return new FavouriteItem(e, e.equals(current));
-                })
-                .collect(Collectors.toList()),
-                (itemId, position) -> {
-                    if (itemId == R.id.favourite_set) {
-                        mModel.fetchCoordinatesData(mFavouriteList.get(position));
-                    } else if (itemId == R.id.favourite_delete) {
-                        SharedPreferences.Editor editor = mPreferences.edit();
-                        mFavouriteList.remove(position);
-                        editor.putStringSet("favourites", new HashSet<>(mFavouriteList));
-                        editor.apply();
-                    }
-        }));
+        setupRecyclerView();
         observeModel();
+    }
+
+    private void setupRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.favourites_list);
+        String current = mPreferences.getString("town", TOWN_DEFAULT);
+        List<FavouriteItem> list = mFavouriteList.stream()
+                .filter(e -> !e.equals(current))
+                .map(e -> new FavouriteItem(e, false))
+                .collect(Collectors.toList());
+        list.add(0, new FavouriteItem(current, true));
+        recyclerView.setAdapter(new FavouritesRecyclerViewAdapter(list, (itemId, position) -> {
+            if (itemId == R.id.favourite_set) {
+                String item = mFavouriteList.remove(position);
+                mFavouriteList.add(0, item);
+                mModel.fetchCoordinatesData(item);
+            } else if (itemId == R.id.favourite_delete) {
+                SharedPreferences.Editor editor = mPreferences.edit();
+                mFavouriteList.remove(position);
+                editor.putStringSet("favourites", new HashSet<>(mFavouriteList));
+                editor.apply();
+            }
+        }));
     }
 
     private void observeModel() {

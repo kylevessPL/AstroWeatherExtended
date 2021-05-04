@@ -78,7 +78,9 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
             int position = getBindingAdapterPosition();
             if (id == R.id.favourite_set) {
                 mItems.forEach(item -> item.mSet = false);
-                mItems.get(position).mSet = true;
+                FavouriteItem item = mItems.remove(position);
+                item.mSet = true;
+                mItems.add(0, item);
                 mClickListener.onButtonClicked(id, position);
                 notifyDataSetChanged();
             } else if (id == R.id.favourite_delete) {
