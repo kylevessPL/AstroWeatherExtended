@@ -39,7 +39,7 @@
     <string name="measurement_units_header">Units of measurement</string>
     <string name="favourite_add">Add to favourites</string>
     <string name="weather_icon">Weather icon</string>
-    <string name="day_title">Dzień</string>
+    <string name="day_title">Day</string>
     <string name="latitude_default">52.229722</string>
     <string name="longtitude_default">21.011667</string>
     <string name="latitude_title">Latitude</string>
