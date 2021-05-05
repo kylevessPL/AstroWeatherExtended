@@ -1,6 +1,7 @@
 package pl.piasta.astroweatherextended.ui.main;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,11 +49,13 @@ public class TodayForecastFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_today_forecast_shared, container, false);
+        View root = inflater.inflate(R.layout.fragment_today_forecast, container, false);
         mTodayWeatherIcon = root.findViewById(R.id.today_weather_icon);
         mTodayWeatherHeaderTemperature = root.findViewById(R.id.today_weather_header_temperature);
         mTodayWeatherHeaderMain = root.findViewById(R.id.today_weather_header_main);
-        mTodayWeatherDetailsDescription = root.findViewById(R.id.today_weather_details_description);
+        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            mTodayWeatherDetailsDescription = root.findViewById(R.id.today_weather_details_description);
+        }
         mTodayWeatherDetailsTemperature = root.findViewById(R.id.today_weather_details_temperature);
         mTodayWeatherDetailsHumidity = root.findViewById(R.id.today_weather_details_humidity);
         mTodayWeatherDetailsPressure = root.findViewById(R.id.today_weather_details_pressure);
@@ -112,7 +115,9 @@ public class TodayForecastFragment extends BaseFragment {
                 "%d %s",
                 (int) Math.round(mainData.getTemperature()), measurementUnit.getTemperatureUnit()));
         mTodayWeatherIcon.setImageResource(AppUtils.getDrawableByName(requireContext(), weatherData.getIcon()));
-        mTodayWeatherDetailsDescription.setText(weatherData.getDescription());
+        if (mTodayWeatherDetailsDescription != null) {
+            mTodayWeatherDetailsDescription.setText(weatherData.getDescription());
+        }
         mTodayWeatherDetailsHumidity.setText(String.format(Locale.US,
                 "%d%s",
                 (int) Math.round(mainData.getHumidity()), measurementUnit.getHumidityUnit()));

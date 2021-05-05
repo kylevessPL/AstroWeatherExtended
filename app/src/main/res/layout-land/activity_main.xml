@@ -19,6 +19,15 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.AstroWeatherExtended.PopupOverlay" />
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/Theme.AstroWeatherExtended.Tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card"
             android:layout_width="match_parent"
@@ -72,38 +81,42 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textStyle="italic"
-                    app:layout_constraintEnd_toStartOf="@+id/last_update_check_title"
+                    app:layout_constraintEnd_toStartOf="@+id/last_update_check_header"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/longitude"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
-                <TextView
-                    android:id="@+id/last_update_check_title"
+                <LinearLayout
+                    android:id="@+id/last_update_check_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="@string/last_update_check_title"
-                    android:textColor="@color/white"
-                    android:textStyle="italic"
-                    app:layout_constraintEnd_toStartOf="@+id/last_update_check"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toStartOf="@+id/favourite_add"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/latitude"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-                <TextView
-                    android:id="@+id/last_update_check"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="@color/white"
-                    android:textStyle="italic"
-                    app:layout_constraintEnd_toStartOf="@+id/refresh"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/last_update_check_title"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    <TextView
+                        android:id="@+id/last_update_check_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/last_update_check_title"
+                        android:textColor="@color/white"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/last_update_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@color/white"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/favourite_add"
@@ -114,7 +127,7 @@
                     android:src="@drawable/ic_baseline_favorite_32"
                     app:layout_constraintEnd_toStartOf="@id/refresh"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/last_update_check"
+                    app:layout_constraintStart_toEndOf="@+id/last_update_check_header"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -134,12 +147,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            style="@style/Theme.AstroWeatherExtended.Tab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context=".ui.main.TodayForecastFragment"
-    tools:ignore="MissingDefaultResource">
+    tools:context=".ui.main.TodayForecastFragment">
 
     <LinearLayout
         android:id="@+id/today_weather_header"
@@ -25,8 +24,7 @@
             android:layout_marginEnd="@dimen/text_margin"
             android:adjustViewBounds="true"
             android:contentDescription="@string/weather_icon"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_04n" />
+            android:scaleType="fitCenter" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -38,7 +36,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed-light"
-                android:text="20 C"
                 android:textColor="@color/white"
                 android:textSize="40sp" />
 
@@ -47,7 +44,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed-light"
-                android:text="Clouds"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
@@ -72,31 +68,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/weather_icon"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_info_32" />
-
-            <TextView
-                android:id="@+id/today_weather_details_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="partially cloudy"
-                android:textColor="@color/white"
-                android:textSize="23sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="32dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
@@ -106,9 +78,8 @@
                 android:id="@+id/today_weather_details_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 C"
                 android:textColor="@color/white"
-                android:textSize="23sp" />
+                android:textSize="17sp" />
 
 
         </TableRow>
@@ -116,12 +87,12 @@
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:gravity="bottom">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="32dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
@@ -131,21 +102,20 @@
                 android:id="@+id/today_weather_details_humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18 %"
                 android:textColor="@color/white"
-                android:textSize="23sp" />
+                android:textSize="17sp" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:gravity="bottom">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="32dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
@@ -155,21 +125,20 @@
                 android:id="@+id/today_weather_details_pressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18 %"
                 android:textColor="@color/white"
-                android:textSize="23sp" />
+                android:textSize="17sp" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:gravity="bottom">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="32dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
@@ -179,21 +148,20 @@
                 android:id="@+id/today_weather_details_wind_speed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="30 m/s"
                 android:textColor="@color/white"
-                android:textSize="23sp" />
+                android:textSize="17sp" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:gravity="bottom">
 
             <ImageView
                 android:layout_width="69dp"
-                android:layout_height="55dp"
+                android:layout_height="32dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/weather_icon"
                 android:scaleType="fitCenter"
@@ -203,9 +171,8 @@
                 android:id="@+id/today_weather_details_wind_direction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="front"
                 android:textColor="@color/white"
-                android:textSize="23sp" />
+                android:textSize="17sp" />
 
         </TableRow>
 

@@ -19,6 +19,15 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.AstroWeatherExtended.PopupOverlay" />
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/Theme.AstroWeatherExtended.Tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card"
             android:layout_width="match_parent"
@@ -139,12 +148,6 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            style="@style/Theme.AstroWeatherExtended.Tab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

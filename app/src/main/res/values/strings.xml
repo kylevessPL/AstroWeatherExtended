@@ -26,6 +26,7 @@
     <string name="moon_phase_title">Moon phase</string>
     <string name="visibility">Visibility</string>
     <string name="lunar_month_title">Lunar month</string>
+    <string name="moon_phase_lunar_month_title">Moon phase &amp; lunar month</string>
     <string name="date">Date</string>
     <string name="day">Day</string>
     <string name="last_update_check_title">Last update check:</string>

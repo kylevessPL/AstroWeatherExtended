@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dip"
-        app:layout_constraintBottom_toTopOf="@id/moon_phase_title"
+        app:layout_constraintBottom_toTopOf="@id/moon_phase_lunar_month_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/new_full_moon_title">
@@ -155,41 +155,43 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/moon_phase_title"
+        android:id="@+id/moon_phase_lunar_month_title"
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/moon_phase_title"
+        android:text="@string/moon_phase_lunar_month_title"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/blue_700"
         android:paddingStart="0dip"
         android:paddingEnd="0dp"
-        app:layout_constraintBottom_toTopOf="@id/moon_phase"
+        app:layout_constraintBottom_toTopOf="@id/moon_phase_lunar_month"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/new_full_moon" />
 
     <RelativeLayout
-        android:id="@+id/moon_phase"
-        android:layout_width="wrap_content"
+        android:id="@+id/moon_phase_lunar_month"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/lunar_month_title"
+        android:orientation="horizontal"
+        android:padding="8dip"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/moon_phase_title">
+        app:layout_constraintTop_toBottomOf="@id/moon_phase_lunar_month_title">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:orientation="horizontal"
-            android:padding="8dip"
-            tools:ignore="UselessParent">
+            android:layout_marginEnd="5dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:gravity="start"
                 android:text="@string/visibility"
                 android:textStyle="bold" />
 
@@ -197,47 +199,22 @@
                 android:id="@+id/value_moon_phase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:ignore="RelativeOverlap" />
+                android:gravity="end" />
 
         </LinearLayout>
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/lunar_month_title"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lunar_month_title"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/blue_700"
-        android:paddingStart="0dip"
-        android:paddingEnd="0dp"
-        app:layout_constraintBottom_toTopOf="@id/lunar_month"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/moon_phase" />
-
-    <RelativeLayout
-        android:id="@+id/lunar_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lunar_month_title">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:orientation="horizontal"
-            android:padding="8dip"
-            tools:ignore="UselessParent">
+            tools:ignore="RelativeOverlap">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:gravity="start"
                 android:text="@string/day"
                 android:textStyle="bold" />
 
@@ -245,11 +222,10 @@
                 android:id="@+id/day_lunar_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:ignore="RelativeOverlap" />
+                android:gravity="end" />
 
         </LinearLayout>
 
     </RelativeLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
