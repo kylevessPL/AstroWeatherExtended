@@ -53,7 +53,8 @@ public class TodayForecastFragment extends BaseFragment {
         mTodayWeatherIcon = root.findViewById(R.id.today_weather_icon);
         mTodayWeatherHeaderTemperature = root.findViewById(R.id.today_weather_header_temperature);
         mTodayWeatherHeaderMain = root.findViewById(R.id.today_weather_header_main);
-        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+        if (getResources().getBoolean(R.bool.isTablet) ||
+                getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
             mTodayWeatherDetailsDescription = root.findViewById(R.id.today_weather_details_description);
         }
         mTodayWeatherDetailsTemperature = root.findViewById(R.id.today_weather_details_temperature);

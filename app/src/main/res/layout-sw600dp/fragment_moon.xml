@@ -10,7 +10,7 @@
         android:id="@+id/image"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:contentDescription="@string/moon"
         android:src="@drawable/ic_moon"
         app:layout_constraintBottom_toTopOf="@id/rise_set_title"

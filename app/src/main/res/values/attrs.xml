@@ -6,4 +6,6 @@
             <enum name="longtitude" value="1" />
         </attr>
     </declare-styleable>
+
+    <bool name="isTablet">false</bool>
 </resources>
