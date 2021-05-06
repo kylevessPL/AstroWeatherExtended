@@ -1,6 +1,5 @@
 package pl.piasta.astroweatherextended.ui.favourites;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import pl.piasta.astroweatherextended.R;
+import pl.piasta.astroweatherextended.util.GlobalVariables;
 
 public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<FavouritesRecyclerViewAdapter.ViewHolder> {
 
@@ -77,17 +77,19 @@ public class FavouritesRecyclerViewAdapter extends RecyclerView.Adapter<Favourit
         public void onClick(final View view) {
             int id = view.getId();
             int position = getBindingAdapterPosition();
-            Log.w("LOG", String.valueOf(position));
             if (id == R.id.favourite_set) {
+                mClickListener.onButtonClicked(id, position);
+                if (!GlobalVariables.sIsNetworkConnected) {
+                    return;
+                }
                 mItems.forEach(item -> item.mSet = false);
                 FavouriteItem item = mItems.remove(position);
                 item.mSet = true;
                 mItems.add(0, item);
-                mClickListener.onButtonClicked(id, position);
                 notifyDataSetChanged();
             } else if (id == R.id.favourite_delete) {
-                mItems.remove(position);
                 mClickListener.onButtonClicked(id, position);
+                mItems.remove(position);
                 notifyItemRemoved(position);
             }
         }

@@ -99,7 +99,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private void observeModel() {
         mModel.getGeocodingResponse().observe(this, data -> {
             if (data == null) {
-                mSnackbar = AppUtils.createSnackbar(requireView(), "Location not found");
+                mSnackbar = AppUtils.createSnackbar(
+                        requireView(),
+                        Snackbar.LENGTH_INDEFINITE,
+                        "Location not found");
                 mSnackbar.show();
                 return;
             }
@@ -107,7 +110,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         });
         mModel.getReverseGeocodingResponse().observe(this, data -> {
             if (data == null) {
-                mSnackbar = AppUtils.createSnackbar(requireView(), "No nearby town for coordinates found");
+                mSnackbar = AppUtils.createSnackbar(
+                        requireView(),
+                        Snackbar.LENGTH_INDEFINITE,
+                        "No nearby town for coordinates found");
                 mSnackbar.show();
                 return;
             }

@@ -43,7 +43,6 @@ import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
 import pl.piasta.astroweatherextended.util.AppUtils;
-import pl.piasta.astroweatherextended.util.CheckNetwork;
 import pl.piasta.astroweatherextended.util.GlobalVariables;
 
 public class MainActivity extends AppCompatActivity {
@@ -92,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         mRefreshButton = findViewById(R.id.refresh);
         mCard = findViewById(R.id.card);
         createColorAnimation();
-        registerNetworkCallback();
         setupListeners();
         observeModel();
     }
@@ -242,23 +240,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void observeModel() {
+        mModel.getConnectivity().observe(this, this::updateConnectivityStatus);
         mModel.getTime().observe(this, mTime::setText);
-        mModel.getLastUpdateCheck().observe(this, text -> {
-            if (mSnackbar != null) {
-                mSnackbar.dismiss();
-            }
-            mLastUpdateCheck.setText(text);
-            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-            SharedPreferences.Editor editor = mPreferences.edit();
-            editor.putString("lastUpdateCheck", LocalDateTime.parse(text, formatter).toString());
-            editor.apply();
-        });
-        mModel.getToastMessage().observe(this, message ->
-                AppUtils.createToast(this, message).show());
-        mModel.getSnackbarMessage().observe(this, message -> {
-            mSnackbar = AppUtils.createSnackbar(findViewById(R.id.mainActivity), message);
-            mSnackbar.show();
-        });
+        mModel.getLastUpdateCheck().observe(this, this::updateLastUpdateCheck);
+        mModel.getToastMessage().observe(this, message -> AppUtils.createToast(this, message).show());
+    }
+
+    private void updateLastUpdateCheck(final String text) {
+        if (mSnackbar != null) {
+            mSnackbar.dismiss();
+        }
+        mLastUpdateCheck.setText(text);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString("lastUpdateCheck", LocalDateTime.parse(text, formatter).toString());
+        editor.apply();
+    }
+
+    private void updateConnectivityStatus(final Boolean available) {
+        if (available) {
+            mSnackbar = AppUtils.createSnackbar(
+                    findViewById(R.id.mainActivity),
+                    Snackbar.LENGTH_LONG,
+                    "Internet connection restored.");
+        } else {
+            mSnackbar = AppUtils.createSnackbar(
+                    findViewById(R.id.mainActivity),
+                    Snackbar.LENGTH_INDEFINITE,
+                    "No Internet connection. Offline data is used.");
+        }
+        mSnackbar.show();
     }
 
     private void loadPreferences() {
@@ -313,7 +324,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("longtitude", mPreferences.getString("longtitude", LONGTITUDE_DEFAULT));
         editor.putString("measurement_unit_type", mPreferences.getString("measurement_unit_type", MEASUREMENT_UNIT_TYPE_DEFAULT));
         editor.apply();
-        mModel.setOfflineDataUseSnackbarMessage();
     }
 
     private void createColorAnimation() {
@@ -325,11 +335,6 @@ public class MainActivity extends AppCompatActivity {
         reverseColorAnimation.setDuration(150);
         colorAnimation.addUpdateListener(animator -> mFavourite.setColorFilter((int) animator.getAnimatedValue()));
         reverseColorAnimation.addUpdateListener(animator -> mFavourite.setColorFilter((int) animator.getAnimatedValue()));
-    }
-
-    private void registerNetworkCallback() {
-        CheckNetwork network = new CheckNetwork(getApplicationContext());
-        network.registerNetworkCallback();
     }
 
     private void setFavourite() {

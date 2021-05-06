@@ -1,8 +1,11 @@
 package pl.piasta.astroweatherextended.ui.main;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroCalculator.Location;
@@ -30,10 +33,11 @@ import pl.piasta.astroweatherextended.repository.WeatherRepository;
 import pl.piasta.astroweatherextended.ui.base.MeasurementUnit;
 import pl.piasta.astroweatherextended.ui.base.UpdateInterval;
 import pl.piasta.astroweatherextended.util.AppUtils;
+import pl.piasta.astroweatherextended.util.ConnectivityLiveData;
 import pl.piasta.astroweatherextended.util.GlobalVariables;
 import pl.piasta.astroweatherextended.util.SingleLiveEvent;
 
-public class MainViewModel extends ViewModel {
+public class MainViewModel extends AndroidViewModel {
 
     private static final char DEGREE_SYMBOL = '\u00b0';
 
@@ -56,7 +60,8 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<String> mMoonPhaseValue = new MutableLiveData<>();
     private final MutableLiveData<String> mMoonLunarMonthDay = new MutableLiveData<>();
     private final SingleLiveEvent<String> mToastMessage = new SingleLiveEvent<>();
-    private final SingleLiveEvent<String> mSnackbarMessage = new SingleLiveEvent<>();
+
+    private final ConnectivityLiveData mConnectivity;
 
     private ScheduledFuture<?> mUpdateTask;
     private UpdateInterval mUpdateInterval;
@@ -64,7 +69,9 @@ public class MainViewModel extends ViewModel {
     private double mLatitude;
     private double mLongtitude;
 
-    public MainViewModel() {
+    public MainViewModel(@NonNull final Application application) {
+        super(application);
+        mConnectivity = new ConnectivityLiveData(application);
         mScheduledExecutor.setRemoveOnCancelPolicy(true);
     }
 
@@ -136,8 +143,8 @@ public class MainViewModel extends ViewModel {
         return mToastMessage;
     }
 
-    public SingleLiveEvent<String> getSnackbarMessage() {
-        return mSnackbarMessage;
+    public ConnectivityLiveData getConnectivity() {
+        return mConnectivity;
     }
 
     public void updateClock() {
@@ -278,10 +285,5 @@ public class MainViewModel extends ViewModel {
         final NumberFormat numberFormat = DecimalFormat.getInstance(Locale.US);
         numberFormat.setMaximumFractionDigits(2);
         return numberFormat.format(value);
-    }
-
-    public void setOfflineDataUseSnackbarMessage() {
-        mSingleExecutor.execute(() ->
-                mSnackbarMessage.postValue("AstroWeather uses offline data until an Internet connection is established"));
     }
 }

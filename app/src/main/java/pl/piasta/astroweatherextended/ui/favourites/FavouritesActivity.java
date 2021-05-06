@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 import pl.piasta.astroweatherextended.R;
 import pl.piasta.astroweatherextended.model.GeocodingResponse;
 import pl.piasta.astroweatherextended.util.AppUtils;
+import pl.piasta.astroweatherextended.util.GlobalVariables;
 
 public class FavouritesActivity extends AppCompatActivity {
 
@@ -58,11 +61,17 @@ public class FavouritesActivity extends AppCompatActivity {
                 .map(town -> new FavouriteItem(town, town.equals(current)))
                 .collect(Collectors.toList());
         recyclerView.setAdapter(new FavouritesRecyclerViewAdapter(list, (id, position) -> {
-            String item = mFavouriteList.remove(position);
             if (id == R.id.favourite_set) {
+                if (!GlobalVariables.sIsNetworkConnected) {
+                    AppUtils.createToast(this, "Cannot set location without an Internet connection")
+                            .show();
+                    return;
+                }
+                String item = mFavouriteList.remove(position);
                 mFavouriteList.add(0, item);
                 mModel.fetchCoordinatesData(item);
             } else if (id == R.id.favourite_delete) {
+                mFavouriteList.remove(position);
                 SharedPreferences.Editor editor = mPreferences.edit();
                 editor.putStringSet("favourites", new HashSet<>(mFavouriteList));
                 editor.apply();
@@ -73,13 +82,15 @@ public class FavouritesActivity extends AppCompatActivity {
     private void observeModel() {
         mModel.getGeocodingResponse().observe(this, data -> {
             if (data == null) {
-                AppUtils.createSnackbar(findViewById(android.R.id.content), "Location not found").show();
+                AppUtils.createSnackbar(
+                        findViewById(android.R.id.content),
+                        Snackbar.LENGTH_INDEFINITE,
+                        "Location not found")
+                        .show();
                 return;
             }
             setCoordinatesData(data);
         });
-        mModel.getToastMessage().observe(this,
-                message -> AppUtils.createToast(this, message).show());
     }
 
     private void setCoordinatesData(GeocodingResponse data) {

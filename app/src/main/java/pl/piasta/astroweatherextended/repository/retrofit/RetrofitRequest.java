@@ -20,7 +20,7 @@ public class RetrofitRequest {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .client(client)
-                    .baseUrl(GlobalVariables.sBaseUrl)
+                    .baseUrl(GlobalVariables.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(EnumConverterFactory.create())
                     .build();

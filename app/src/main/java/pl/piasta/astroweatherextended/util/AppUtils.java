@@ -30,8 +30,12 @@ public final class AppUtils {
         return Toast.makeText(context, message, Toast.LENGTH_SHORT);
     }
 
-    public static Snackbar createSnackbar(final View view, final String message) {
-        return Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
+    public static Snackbar createSnackbar(
+            final View view,
+            final int length,
+            final String message
+    ) {
+        return Snackbar.make(view, message, length)
                 .setAction("DISMISS", v -> {});
     }
 
