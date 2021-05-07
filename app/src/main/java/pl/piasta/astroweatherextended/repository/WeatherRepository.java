@@ -1,5 +1,7 @@
 package pl.piasta.astroweatherextended.repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import pl.piasta.astroweatherextended.model.CurrentWeatherDataResponse;
@@ -13,6 +15,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WeatherRepository {
+
+    private static final String TAG = WeatherRepository.class.getSimpleName();
 
     private final WeatherService mWeatherService;
 
@@ -35,8 +39,10 @@ public class WeatherRepository {
                             @NonNull Response<CurrentWeatherDataResponse> response
                     ) {
                         if (response.body() != null) {
+                            Log.i(TAG, "Fetch current weather response success");
                             mCurrentWeatherDataResponse.setValue(response.body());
                         } else {
+                            Log.i(TAG, "Fetch current weather response failure");
                             mCurrentWeatherDataResponse.setValue(null);
                         }
                     }
@@ -46,6 +52,7 @@ public class WeatherRepository {
                             @NonNull Call<CurrentWeatherDataResponse> call,
                             @NonNull Throwable t
                     ) {
+                        Log.i(TAG, "Fetch current weather response failure");
                         mCurrentWeatherDataResponse.setValue(null);
                     }
                 });
@@ -61,8 +68,10 @@ public class WeatherRepository {
                             @NonNull Response<DailyForecastResponse> response
                     ) {
                         if (response.body() != null) {
+                            Log.i(TAG, "Fetch daily forecast response success");
                             mDailyForecastResponse.setValue(response.body());
                         } else {
+                            Log.i(TAG, "Fetch daily forecast response failure");
                             mDailyForecastResponse.setValue(null);
                         }
                     }
@@ -72,6 +81,7 @@ public class WeatherRepository {
                             @NonNull Call<DailyForecastResponse> call,
                             @NonNull Throwable t
                     ) {
+                        Log.i(TAG, "Fetch daily forecast response failure");
                         mDailyForecastResponse.setValue(null);
                     }
                 });

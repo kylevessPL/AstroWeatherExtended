@@ -1,5 +1,7 @@
 package pl.piasta.astroweatherextended.repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -14,6 +16,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GeocodingRepository {
+
+    private static final String TAG = GeocodingRepository.class.getSimpleName();
 
     private final GeocodingService mWeatherService;
 
@@ -35,8 +39,10 @@ public class GeocodingRepository {
                             @NonNull Call<List<GeocodingResponse>> call,
                             @NonNull Response<List<GeocodingResponse>> response) {
                         if (response.body() != null && !response.body().isEmpty()) {
+                            Log.i(TAG, "Fetch geocoding data response success");
                             mGeocodingResponse.setValue(response.body().get(0));
                         } else {
+                            Log.i(TAG, "Fetch geocoding data response failure");
                             mGeocodingResponse.setValue(null);
                         }
                     }
@@ -46,6 +52,7 @@ public class GeocodingRepository {
                             @NonNull Call<List<GeocodingResponse>> call,
                             @NonNull Throwable t
                     ) {
+                        Log.i(TAG, "Fetch geocoding data response failure");
                         mGeocodingResponse.setValue(null);
                     }
                 });
@@ -60,11 +67,13 @@ public class GeocodingRepository {
                             @NonNull Call<List<GeocodingResponse>> call,
                             @NonNull Response<List<GeocodingResponse>> response) {
                         if (response.body() != null && !response.body().isEmpty()) {
+                            Log.i(TAG, "Fetch reverse geocoding data response success");
                             GeocodingResponse data = response.body().get(0);
                             data.setLatitude(latitude);
                             data.setLongtitude(longtitude);
                             mReverseGeocodingResponse.setValue(data);
                         } else {
+                            Log.i(TAG, "Fetch reverse geocoding data response failure");
                             mReverseGeocodingResponse.setValue(null);
                         }
                     }
@@ -74,6 +83,7 @@ public class GeocodingRepository {
                             @NonNull Call<List<GeocodingResponse>> call,
                             @NonNull Throwable t
                     ) {
+                        Log.i(TAG, "Fetch reverse geocoding data response failure");
                         mReverseGeocodingResponse.setValue(null);
                     }
                 });

@@ -113,7 +113,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 mSnackbar = AppUtils.createSnackbar(
                         requireView(),
                         Snackbar.LENGTH_INDEFINITE,
-                        "No nearby town for coordinates found");
+                        "No nearby town for coordinates found.");
                 mSnackbar.show();
                 return;
             }
